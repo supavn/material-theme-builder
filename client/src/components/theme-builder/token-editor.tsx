@@ -5,9 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Slider } from "@/components/ui/slider";
 import { Palette, Sun, Moon, Wand2 } from "lucide-react";
 import { ColorScheme } from "@shared/schema";
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+  hexToHsv,
+  hexToHct,
+  hsvToHex,
+  hctToHex,
+  isValidHex,
+  normalizeHex,
+  HSVColor,
+  HCTColor
+} from "@/lib/color-utils";
 
 interface ColorInputProps {
   label: string;
@@ -33,17 +46,215 @@ function ColorInput({ label, colorKey, value, onChange, showContrast, contrastWi
   );
 }
 
-// Simplified compact version for the grid layout
+// Enhanced compact color input with multiple color modes
 function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("native");
+  const [tempHex, setTempHex] = useState(value);
+  const [hsv, setHsv] = useState<HSVColor>(() => hexToHsv(value) || { h: 0, s: 0, v: 0 });
+  const [hct, setHct] = useState<HCTColor>(() => hexToHct(value) || { h: 0, c: 0, t: 0 });
+
+  // Update internal states when value changes
+  React.useEffect(() => {
+    if (isValidHex(value)) {
+      setTempHex(value);
+      const newHsv = hexToHsv(value);
+      const newHct = hexToHct(value);
+      if (newHsv) setHsv(newHsv);
+      if (newHct) setHct(newHct);
+    }
+  }, [value]);
+
+  const handleHexChange = (hex: string) => {
+    setTempHex(hex);
+    if (isValidHex(hex)) {
+      const normalized = normalizeHex(hex);
+      onChange(normalized);
+    }
+  };
+
+  const handleHsvChange = (component: keyof HSVColor, newValue: number) => {
+    const newHsv = { ...hsv, [component]: newValue };
+    setHsv(newHsv);
+    const hex = hsvToHex(newHsv.h, newHsv.s, newHsv.v);
+    onChange(hex);
+  };
+
+  const handleHctChange = (component: keyof HCTColor, newValue: number) => {
+    const newHct = { ...hct, [component]: newValue };
+    setHct(newHct);
+    const hex = hctToHex(newHct.h, newHct.c, newHct.t);
+    onChange(hex);
+  };
+
   return (
     <div className="space-y-1">
       <Label className="text-xs font-medium text-muted-foreground truncate">{label}</Label>
       <div className="flex items-center space-x-1">
-        <button
-          className="w-6 h-6 rounded border border-border flex-shrink-0"
-          style={{ backgroundColor: value }}
-          onClick={() => {}}
-        />
+        <Popover open={isOpen} onOpenChange={setIsOpen}>
+          <PopoverTrigger asChild>
+            <button
+              className="w-6 h-6 rounded border border-border flex-shrink-0 hover:scale-110 transition-transform cursor-pointer"
+              style={{ backgroundColor: value }}
+              aria-label={`Pick color for ${label}`}
+            />
+          </PopoverTrigger>
+          <PopoverContent className="w-80 p-4">
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Palette className="w-4 h-4" />
+                <span className="text-sm font-medium text-foreground">{label}</span>
+              </div>
+
+              <Tabs value={activeTab} onValueChange={setActiveTab}>
+                <TabsList className="grid w-full grid-cols-4">
+                  <TabsTrigger value="native" className="text-xs">Native</TabsTrigger>
+                  <TabsTrigger value="hex" className="text-xs">Hex</TabsTrigger>
+                  <TabsTrigger value="hsv" className="text-xs">HSV</TabsTrigger>
+                  <TabsTrigger value="hct" className="text-xs">HCT</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="native" className="space-y-3 mt-3">
+                  <input
+                    type="color"
+                    value={isValidHex(value) ? value : "#000000"}
+                    onChange={(e) => onChange(e.target.value)}
+                    className="w-full h-10 border border-border rounded-md cursor-pointer"
+                  />
+                </TabsContent>
+
+                <TabsContent value="hex" className="space-y-3 mt-3">
+                  <div className="space-y-2">
+                    <Label className="text-xs text-foreground">Hex Color</Label>
+                    <Input
+                      value={tempHex}
+                      onChange={(e) => handleHexChange(e.target.value)}
+                      placeholder="#000000"
+                      className={`font-mono text-sm ${
+                        !isValidHex(tempHex) && tempHex !== "" 
+                          ? "border-destructive focus:border-destructive" 
+                          : ""
+                      }`}
+                    />
+                    {!isValidHex(tempHex) && tempHex !== "" && (
+                      <p className="text-xs text-destructive">
+                        Please enter a valid hex color (e.g., #FF0000)
+                      </p>
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="hsv" className="space-y-3 mt-3">
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Hue</Label>
+                        <span className="text-xs text-muted-foreground">{hsv.h}°</span>
+                      </div>
+                      <Slider
+                        value={[hsv.h]}
+                        onValueChange={([h]) => handleHsvChange('h', h)}
+                        max={360}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Saturation</Label>
+                        <span className="text-xs text-muted-foreground">{hsv.s}%</span>
+                      </div>
+                      <Slider
+                        value={[hsv.s]}
+                        onValueChange={([s]) => handleHsvChange('s', s)}
+                        max={100}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Value</Label>
+                        <span className="text-xs text-muted-foreground">{hsv.v}%</span>
+                      </div>
+                      <Slider
+                        value={[hsv.v]}
+                        onValueChange={([v]) => handleHsvChange('v', v)}
+                        max={100}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="hct" className="space-y-3 mt-3">
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Hue</Label>
+                        <span className="text-xs text-muted-foreground">{hct.h}°</span>
+                      </div>
+                      <Slider
+                        value={[hct.h]}
+                        onValueChange={([h]) => handleHctChange('h', h)}
+                        max={360}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Chroma</Label>
+                        <span className="text-xs text-muted-foreground">{hct.c}</span>
+                      </div>
+                      <Slider
+                        value={[hct.c]}
+                        onValueChange={([c]) => handleHctChange('c', c)}
+                        max={150}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <Label className="text-xs text-foreground">Tone</Label>
+                        <span className="text-xs text-muted-foreground">{hct.t}%</span>
+                      </div>
+                      <Slider
+                        value={[hct.t]}
+                        onValueChange={([t]) => handleHctChange('t', t)}
+                        max={100}
+                        step={1}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+
+              {/* Preset colors */}
+              <div className="space-y-2">
+                <Label className="text-xs text-foreground">Quick Colors</Label>
+                <div className="grid grid-cols-6 gap-1">
+                  {[
+                    "#6750A4", "#625B71", "#7D5260", "#BA1A1A",
+                    "#F59E0B", "#10B981", "#3B82F6", "#EF4444",
+                    "#8B5CF6", "#EC4899", "#14B8A6", "#F97316"
+                  ].map((color) => (
+                    <button
+                      key={color}
+                      className="w-8 h-8 rounded border border-border hover:scale-110 transition-transform"
+                      style={{ backgroundColor: color }}
+                      onClick={() => onChange(color)}
+                      aria-label={`Select ${color}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
         <Input
           type="text"
           value={value}
