@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { ColorScheme, ThemeExport } from "@shared/schema";
+import { themeStorage, SavedTheme } from "@/lib/theme-storage";
 
 interface ThemeContextType {
   lightTheme: ColorScheme;
@@ -8,6 +9,9 @@ interface ThemeContextType {
   previewTheme: "light" | "dark";
   themeName: string;
   seedColor: string;
+  currentThemeId: string | null;
+  savedThemes: SavedTheme[];
+  recentThemes: SavedTheme[];
   switchEditingTheme: (theme: "light" | "dark") => void;
   switchPreviewTheme: (theme: "light" | "dark") => void;
   updateColor: (key: keyof ColorScheme, value: string) => void;
@@ -17,6 +21,16 @@ interface ThemeContextType {
   exportTheme: () => ThemeExport;
   importTheme: (theme: ThemeExport) => void;
   resetToDefaults: () => void;
+  // Enhanced save/load functionality
+  saveCurrentTheme: (name?: string) => Promise<string>;
+  saveThemeAs: (name: string) => Promise<string>;
+  loadSavedTheme: (id: string) => Promise<boolean>;
+  deleteSavedTheme: (id: string) => Promise<boolean>;
+  duplicateTheme: (id: string, newName?: string) => Promise<string>;
+  renameTheme: (id: string, newName: string) => Promise<boolean>;
+  refreshSavedThemes: () => Promise<void>;
+  exportThemeToFile: (id?: string) => Promise<void>;
+  importThemeFromFile: (file: File) => Promise<boolean>;
 }
 
 // Default Material Design 3 color schemes
@@ -137,6 +151,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("light");
   const [themeName, setThemeName] = useState<string>("Custom Theme");
   const [seedColor, setSeedColor] = useState<string>("#6750A4");
+  const [currentThemeId, setCurrentThemeId] = useState<string | null>(null);
+  const [savedThemes, setSavedThemes] = useState<SavedTheme[]>([]);
+  const [recentThemes, setRecentThemes] = useState<SavedTheme[]>([]);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -448,6 +465,152 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setDarkTheme(defaultDarkTheme);
     setThemeName("Custom Theme");
     setSeedColor("#6750A4");
+    setCurrentThemeId(null);
+  };
+
+  // Enhanced save/load functionality
+  const refreshSavedThemes = async () => {
+    try {
+      const themes = await themeStorage.getAllSavedThemes();
+      const recent = await themeStorage.getRecentThemes();
+      setSavedThemes(themes);
+      setRecentThemes(recent);
+    } catch (error) {
+      console.error("Failed to refresh saved themes:", error);
+    }
+  };
+
+  // Load saved themes on mount
+  useEffect(() => {
+    refreshSavedThemes();
+  }, []);
+
+  // Auto-save current theme periodically
+  useEffect(() => {
+    const autoSaveTimer = setInterval(async () => {
+      try {
+        const currentTheme = exportTheme();
+        await themeStorage.autoSaveTheme(currentTheme);
+      } catch (error) {
+        console.error("Auto-save failed:", error);
+      }
+    }, 30000); // Auto-save every 30 seconds
+
+    return () => clearInterval(autoSaveTimer);
+  }, [lightTheme, darkTheme, themeName, seedColor]);
+
+  const saveCurrentTheme = async (name?: string): Promise<string> => {
+    try {
+      const theme = exportTheme();
+      const id = await themeStorage.saveTheme(theme, name);
+      setCurrentThemeId(id);
+      await refreshSavedThemes();
+      return id;
+    } catch (error) {
+      console.error("Failed to save theme:", error);
+      throw error;
+    }
+  };
+
+  const saveThemeAs = async (name: string): Promise<string> => {
+    try {
+      const theme = exportTheme();
+      const id = await themeStorage.saveThemeAs(theme, name);
+      setCurrentThemeId(id);
+      setThemeName(name);
+      await refreshSavedThemes();
+      return id;
+    } catch (error) {
+      console.error("Failed to save theme as:", error);
+      throw error;
+    }
+  };
+
+  const loadSavedTheme = async (id: string): Promise<boolean> => {
+    try {
+      const theme = await themeStorage.loadTheme(id);
+      if (theme) {
+        importTheme(theme);
+        setCurrentThemeId(id);
+        await refreshSavedThemes();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Failed to load theme:", error);
+      return false;
+    }
+  };
+
+  const deleteSavedTheme = async (id: string): Promise<boolean> => {
+    try {
+      const success = await themeStorage.deleteTheme(id);
+      if (success) {
+        if (currentThemeId === id) {
+          setCurrentThemeId(null);
+        }
+        await refreshSavedThemes();
+      }
+      return success;
+    } catch (error) {
+      console.error("Failed to delete theme:", error);
+      return false;
+    }
+  };
+
+  const duplicateTheme = async (id: string, newName?: string): Promise<string> => {
+    try {
+      const newId = await themeStorage.duplicateTheme(id, newName);
+      await refreshSavedThemes();
+      return newId;
+    } catch (error) {
+      console.error("Failed to duplicate theme:", error);
+      throw error;
+    }
+  };
+
+  const renameTheme = async (id: string, newName: string): Promise<boolean> => {
+    try {
+      const success = await themeStorage.renameTheme(id, newName);
+      if (success) {
+        if (currentThemeId === id) {
+          setThemeName(newName);
+        }
+        await refreshSavedThemes();
+      }
+      return success;
+    } catch (error) {
+      console.error("Failed to rename theme:", error);
+      return false;
+    }
+  };
+
+  const exportThemeToFile = async (id?: string): Promise<void> => {
+    try {
+      if (id) {
+        await themeStorage.exportThemeToFile(id);
+      } else {
+        // Export current theme
+        const tempId = await saveCurrentTheme();
+        await themeStorage.exportThemeToFile(tempId);
+      }
+    } catch (error) {
+      console.error("Failed to export theme to file:", error);
+      throw error;
+    }
+  };
+
+  const importThemeFromFile = async (file: File): Promise<boolean> => {
+    try {
+      const savedTheme = await themeStorage.importThemeFromFile(file);
+      importTheme(savedTheme);
+      setCurrentThemeId(savedTheme.id);
+      await refreshSavedThemes();
+      return true;
+    } catch (error) {
+      console.error("Failed to import theme from file:", error);
+      return false;
+    }
   };
 
   const value: ThemeContextType = {
@@ -457,6 +620,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     previewTheme,
     themeName,
     seedColor,
+    currentThemeId,
+    savedThemes,
+    recentThemes,
     switchEditingTheme,
     switchPreviewTheme,
     updateColor,
@@ -466,6 +632,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     exportTheme,
     importTheme,
     resetToDefaults,
+    // Enhanced save/load functionality
+    saveCurrentTheme,
+    saveThemeAs,
+    loadSavedTheme,
+    deleteSavedTheme,
+    duplicateTheme,
+    renameTheme,
+    refreshSavedThemes,
+    exportThemeToFile,
+    importThemeFromFile,
   };
 
   return (
