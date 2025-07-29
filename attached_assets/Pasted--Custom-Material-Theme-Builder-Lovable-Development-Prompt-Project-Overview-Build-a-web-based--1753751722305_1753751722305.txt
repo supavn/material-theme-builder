@@ -1,0 +1,181 @@
+# Custom Material Theme Builder - Lovable Development Prompt
+
+## Project Overview
+Build a web-based Material Theme Builder for Flutter development teams. This tool will replace the official Material Theme Builder with enhanced flexibility and custom features tailored for Flutter app development.
+
+## Core Requirements
+
+### 1. Technology Stack
+- **Framework**: React with TypeScript
+- **UI Library**: Material-UI (MUI) for consistent Material Design
+- **Code Editor**: Monaco Editor (VS Code editor component)
+- **Styling**: Material Design principles with modern aesthetics
+- **State Management**: React Context or Zustand for theme state
+- **Build Tool**: Vite or Create React App
+
+### 2. Main Features
+
+#### A. Dual Theme Editor
+- **Light Theme Editor**: Complete token editing interface
+- **Dark Theme Editor**: Parallel editing with automatic contrast adjustments
+- **Theme Toggle**: Instant switching between light/dark preview
+- **Sync Mode**: Option to auto-generate dark theme from light theme base
+
+#### B. Token Categories
+Organize color tokens into these sections:
+
+**Core Material Tokens:**
+- Primary colors (primary, onPrimary, primaryContainer, onPrimaryContainer)
+- Secondary colors (secondary, onSecondary, secondaryContainer, onSecondaryContainer)
+- Tertiary colors (tertiary, onTertiary, tertiaryContainer, onTertiaryContainer)
+- Error colors (error, onError, errorContainer, onErrorContainer)
+- Surface colors (surface, onSurface, surfaceVariant, onSurfaceVariant)
+- Background colors (background, onBackground)
+- Outline colors (outline, outlineVariant)
+- Additional Material 3 tokens (surfaceDim, surfaceBright, surfaceContainer variants)
+
+**Custom Enum Tokens:**
+- Warning colors (warning, onWarning, warningContainer, onWarningContainer)
+- Information colors (information, onInformation, informationContainer, onInformationContainer)
+- Success colors (success, onSuccess, successContainer, onSuccessContainer)
+- Default colors (defaultColor, onDefault, defaultContainer, onDefaultContainer)
+- Critical colors (critical, onCritical)
+
+#### C. Color Input Interface
+- **Color Picker**: Modern color picker with hex, RGB, HSL inputs
+- **Palette Generator**: Auto-generate tonal palettes from seed colors
+- **Accessibility Checker**: WCAG contrast ratio validation
+- **Color Harmony**: Suggest complementary colors
+- **Copy/Paste**: Easy color copying between tokens
+
+#### D. Mobile Preview Panel
+Create a comprehensive preview showing Flutter widgets:
+
+**Widget Showcase:**
+- AppBar with actions and navigation
+- Cards with elevation and content
+- Buttons (Filled, Outlined, Text, Elevated)
+- Navigation (Bottom nav, Navigation rail, Drawer)
+- Form elements (TextFields, Checkboxes, Switches)
+- Lists (ListTiles with different states)
+- Chips and badges
+- Snackbars and dialogs
+- Custom enum-themed components (Warning cards, Success alerts, etc.)
+
+**Preview Features:**
+- **Real-time Updates**: Changes reflect immediately
+- **Interactive Elements**: Buttons and controls should be clickable
+- **Multiple Screens**: Show different app screens (Home, Settings, Profile)
+- **Device Frames**: iOS and Android device mockups
+- **Responsive**: Preview adapts to different screen sizes
+
+#### E. Code Export System
+**JSON Export:**
+```json
+{
+  "description": "Custom Material Theme Builder export",
+  "seed": "#0E5DF7",
+  "schemes": {
+    "light": { /* all light theme tokens */ },
+    "dark": { /* all dark theme tokens */ }
+  }
+}
+```
+
+**Dart Export:**
+Generate complete Flutter theme files:
+- `ColorScheme` constants for light/dark
+- `SupaEnumTheme` constants for custom tokens
+- `ThemeData` configuration
+- Ready-to-use theme extension code
+
+#### F. Monaco Editor Integration
+- **JSON Editor**: Edit theme JSON directly with syntax highlighting
+- **Auto-completion**: IntelliSense for theme properties
+- **Validation**: Real-time JSON validation and error highlighting
+- **Format/Prettify**: Code formatting tools
+- **Import**: Load themes from JSON files
+- **Sync**: Two-way sync between visual editor and code editor
+
+### 3. User Interface Design
+
+#### Layout Structure
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Header: Logo, Theme Name, Export Buttons                    │
+├─────────────────┬─────────────────┬─────────────────────────┤
+│ Token Editor    │ Mobile Preview  │ Code Editor (Collapsible)│
+│ (Left Panel)    │ (Center)        │ (Right Panel)           │
+│                 │                 │                         │
+│ • Light/Dark    │ • Widget        │ • Monaco Editor         │
+│   Theme Tabs    │   Showcase      │ • JSON View             │
+│ • Color         │ • Device Frame  │ • Export Options        │
+│   Categories    │ • Interactive   │                         │
+│ • Color Pickers │   Elements      │                         │
+│ • Validation    │ • Live Updates  │                         │
+└─────────────────┴─────────────────┴─────────────────────────┘
+```
+
+#### Visual Design Requirements
+- **Clean Material Design**: Follow Material 3 design principles
+- **Responsive**: Works on desktop, tablet, and mobile
+- **Accessible**: WCAG 2.1 AA compliance
+- **Professional**: Clean, modern interface suitable for developers
+- **Dark Mode**: Support for dark/light app interface (separate from theme being edited)
+
+### 4. Technical Specifications
+
+#### Color Management
+- Support hex, RGB, HSL color formats
+- Implement Material Design color science (HCT color space if possible)
+- Automatic contrast calculation and validation
+- Color blindness simulation tools
+
+#### State Management
+- Persist theme data in localStorage
+- Export/import functionality
+- Undo/redo capabilities
+- Theme versioning
+
+#### Performance
+- Efficient re-rendering for color changes
+- Debounced updates for smooth editing
+- Lazy loading for preview components
+
+### 5. Sample Data
+Initialize with the provided theme structure:
+- Use the seed color `#0E5DF7` as default
+- Pre-populate all Material Design tokens
+- Include the custom enum theme tokens
+- Provide 2-3 preset themes as examples
+
+### 6. Export Features
+- **Download JSON**: Material Theme Builder compatible format
+- **Download Dart**: Complete Flutter theme files
+- **Copy to Clipboard**: Quick copying of individual sections
+- **Share URL**: Shareable links with theme data encoded
+- **GitHub Integration**: Optional direct export to repository
+
+### 7. Additional Features (Nice to Have)
+- **Theme History**: Save and load previous themes
+- **Component Library**: Preview custom Flutter components
+- **Collaborative Editing**: Share themes with team members
+- **Theme Analytics**: Usage statistics and popular color combinations
+- **Plugin System**: Extensible for custom token types
+
+## Development Guidelines
+1. Start with core functionality: token editing and basic preview
+2. Implement Material Design principles consistently
+3. Ensure excellent performance for real-time updates
+4. Focus on developer experience and workflow efficiency
+5. Make the interface intuitive for both designers and developers
+6. Test thoroughly with actual Flutter projects
+
+## Success Criteria
+- Developers can create complete Flutter themes faster than official tools
+- Preview accurately represents actual Flutter app appearance
+- Export generates production-ready code
+- Interface is intuitive and doesn't require documentation
+- Performance remains smooth with complex themes
+
+This tool should become the go-to solution for Flutter teams creating consistent, accessible, and beautiful Material Design themes.
