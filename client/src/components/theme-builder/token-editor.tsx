@@ -236,15 +236,50 @@ function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps
               {/* Preset colors */}
               <div className="space-y-2">
                 <Label className="text-xs text-foreground">Quick Colors</Label>
-                <div className="grid grid-cols-6 gap-1">
+                <div className="grid grid-cols-10 gap-1">
                   {[
-                    "#6750A4", "#625B71", "#7D5260", "#BA1A1A",
-                    "#F59E0B", "#10B981", "#3B82F6", "#EF4444",
-                    "#8B5CF6", "#EC4899", "#14B8A6", "#F97316"
+                    // Essential colors
+                    "#000000", "#FFFFFF", "#1C1B1F", "#FFFBFE",
+                    
+                    // Material Design 3 Primary palette (Purple)
+                    "#6750A4", "#EADDFF", "#21005D", "#4F378B",
+                    
+                    // Material Design 3 Secondary palette (Neutral)
+                    "#625B71", "#E8DEF8", "#1D192B", "#49454F",
+                    
+                    // Material Design 3 Tertiary palette (Pink)
+                    "#7D5260", "#FFD8E4", "#31111D", "#633B48",
+                    
+                    // Material Design 3 Error palette
+                    "#BA1A1A", "#FFDAD6", "#410E0B", "#93000A",
+                    
+                    // Material Design 3 Warning palette (Amber/Orange)
+                    "#F59E0B", "#FFF2CC", "#3D2E00", "#C77C02",
+                    
+                    // Material Design 3 Success palette (Green)
+                    "#10B981", "#D1F2EB", "#002114", "#0F766E",
+                    
+                    // Material Design 3 Info palette (Blue)
+                    "#2563EB", "#E0F2FE", "#0C4A6E", "#1D4ED8",
+                    
+                    // Additional Material tones (Neutral variants)
+                    "#8F8F8F", "#E6E6E6", "#2D2D2D", "#F5F5F5",
+                    
+                    // Material Design surface tones
+                    "#F7F2FA", "#E7E0EC", "#CAC4D0", "#938F99",
+                    
+                    // Material Design accent colors
+                    "#03DAC6", "#FF6B6B", "#4ECDC4", "#45B7D1",
+                    
+                    // Flutter default theme colors
+                    "#2196F3", "#FF9800", "#4CAF50", "#9C27B0",
+                    
+                    // Dark theme variants
+                    "#121212", "#1E1E1E", "#2C2C2C", "#383838"
                   ].map((color) => (
                     <button
                       key={color}
-                      className="w-8 h-8 rounded border border-border hover:scale-110 transition-transform"
+                      className="w-6 h-6 rounded border border-border hover:scale-110 transition-transform"
                       style={{ backgroundColor: color }}
                       onClick={() => onChange(color)}
                       aria-label={`Select ${color}`}
