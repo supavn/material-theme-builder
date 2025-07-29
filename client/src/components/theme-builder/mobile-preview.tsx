@@ -18,7 +18,19 @@ import {
   Smartphone,
   Monitor,
   Sun,
-  Moon
+  Moon,
+  X,
+  Filter,
+  Calendar,
+  Info,
+  ShoppingCart,
+  Settings,
+  Mail,
+  Star,
+  Clock,
+  MapPin,
+  Phone,
+  ChevronDown
 } from "lucide-react";
 
 interface PreviewButtonProps {
@@ -145,108 +157,233 @@ export function MobilePreview() {
                     </div>
                   </div>
 
+                  {/* Search Bar */}
+                  <div className="p-4 pb-0">
+                    <div 
+                      className="flex items-center space-x-3 px-4 py-2 rounded-lg border"
+                      style={{ 
+                        backgroundColor: theme.surfaceContainer,
+                        borderColor: theme.outline 
+                      }}
+                    >
+                      <Search 
+                        className="w-4 h-4"
+                        style={{ color: theme.onSurfaceVariant }}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Search themes, colors..." 
+                        className="flex-1 bg-transparent outline-none text-sm"
+                        style={{ color: theme.onSurface }}
+                      />
+                      <Filter 
+                        className="w-4 h-4 cursor-pointer"
+                        style={{ color: theme.onSurfaceVariant }}
+                      />
+                    </div>
+                  </div>
+
                   {/* Content Area */}
-                  <div className="p-4 space-y-4 overflow-y-auto h-full pb-20">
+                  <div className="p-4 space-y-4 overflow-y-auto h-full">
                     
+                    {/* Badges Section */}
+                    <div className="space-y-3">
+                      <h3 
+                        className="text-sm font-semibold"
+                        style={{ color: theme.onBackground }}
+                      >
+                        Status Badges
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.primary,
+                            color: theme.onPrimary 
+                          }}
+                        >
+                          Primary
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.success,
+                            color: theme.onSuccess 
+                          }}
+                        >
+                          Success
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.warning,
+                            color: theme.onWarning 
+                          }}
+                        >
+                          Warning
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.error,
+                            color: theme.onError 
+                          }}
+                        >
+                          Error
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.information,
+                            color: theme.onInformation 
+                          }}
+                        >
+                          Info
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Chips Section */}
+                    <div className="space-y-3">
+                      <h3 
+                        className="text-sm font-semibold"
+                        style={{ color: theme.onBackground }}
+                      >
+                        Filter Chips
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <div 
+                          className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer"
+                          style={{ 
+                            backgroundColor: theme.primary,
+                            color: theme.onPrimary 
+                          }}
+                        >
+                          <span>Popular</span>
+                        </div>
+                        <div 
+                          className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border"
+                          style={{ 
+                            backgroundColor: theme.surface,
+                            color: theme.onSurface,
+                            borderColor: theme.outline 
+                          }}
+                        >
+                          <span>Recent</span>
+                        </div>
+                        <div 
+                          className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border"
+                          style={{ 
+                            backgroundColor: theme.surface,
+                            color: theme.onSurface,
+                            borderColor: theme.outline 
+                          }}
+                        >
+                          <span>Material</span>
+                          <X className="w-3 h-3" />
+                        </div>
+                        <div 
+                          className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border"
+                          style={{ 
+                            backgroundColor: theme.surface,
+                            color: theme.onSurface,
+                            borderColor: theme.outline 
+                          }}
+                        >
+                          <span>Dark Mode</span>
+                          <X className="w-3 h-3" />
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Cards Section */}
                     <div className="space-y-3">
                       <h3 
                         className="text-sm font-semibold"
                         style={{ color: theme.onBackground }}
                       >
-                        Cards & Elevation
+                        Content Cards
                       </h3>
                       
-                      {/* Primary Container Card */}
+                      {/* Product Card */}
                       <Card 
-                        className="p-4 shadow-sm border"
+                        className="overflow-hidden shadow-sm border"
                         style={{ 
-                          backgroundColor: theme.primaryContainer,
+                          backgroundColor: theme.surface,
                           borderColor: theme.outline 
                         }}
                       >
-                        <CardContent className="p-0">
+                        <div 
+                          className="h-24 flex items-center justify-center"
+                          style={{ backgroundColor: theme.primaryContainer }}
+                        >
+                          <ShoppingCart 
+                            className="w-8 h-8"
+                            style={{ color: theme.primary }}
+                          />
+                        </div>
+                        <CardContent className="p-3">
                           <h4 
-                            className="font-medium mb-2"
-                            style={{ color: theme.onPrimaryContainer }}
+                            className="font-medium mb-1"
+                            style={{ color: theme.onSurface }}
                           >
-                            Primary Container Card
+                            Product Title
                           </h4>
                           <p 
-                            className="text-sm mb-3"
-                            style={{ color: theme.onPrimaryContainer }}
+                            className="text-xs mb-2"
+                            style={{ color: theme.onSurfaceVariant }}
                           >
-                            This card uses primary container color from your theme.
+                            Short description of the product or service offering.
                           </p>
-                          <div className="flex space-x-2">
-                            <PreviewButton variant="filled" color="primary">
-                              Action
-                            </PreviewButton>
-                            <PreviewButton variant="outlined" color="primary">
-                              Secondary
-                            </PreviewButton>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      {/* Warning Card */}
-                      <Card 
-                        className="p-4 shadow-sm border"
-                        style={{ 
-                          backgroundColor: theme.warningContainer,
-                          borderColor: theme.warning 
-                        }}
-                      >
-                        <CardContent className="p-0">
-                          <div className="flex items-start space-x-3">
-                            <AlertTriangle 
-                              className="w-5 h-5 mt-0.5"
-                              style={{ color: theme.warning }}
-                            />
-                            <div className="flex-1">
-                              <h4 
-                                className="font-medium"
-                                style={{ color: theme.onWarningContainer }}
+                          <div className="flex items-center justify-between">
+                            <span 
+                              className="text-sm font-bold"
+                              style={{ color: theme.primary }}
+                            >
+                              $29.99
+                            </span>
+                            <div className="flex items-center space-x-1">
+                              <Star 
+                                className="w-3 h-3 fill-current"
+                                style={{ color: theme.warning }}
+                              />
+                              <span 
+                                className="text-xs"
+                                style={{ color: theme.onSurfaceVariant }}
                               >
-                                Warning Alert
-                              </h4>
-                              <p 
-                                className="text-sm mt-1"
-                                style={{ color: theme.onWarningContainer }}
-                              >
-                                This uses custom warning token from your theme.
-                              </p>
+                                4.5
+                              </span>
                             </div>
                           </div>
                         </CardContent>
                       </Card>
 
-                      {/* Success Card */}
+                      {/* Notification Card */}
                       <Card 
-                        className="p-4 shadow-sm border"
+                        className="p-3 shadow-sm border"
                         style={{ 
-                          backgroundColor: theme.successContainer,
-                          borderColor: theme.success 
+                          backgroundColor: theme.informationContainer,
+                          borderColor: theme.information 
                         }}
                       >
                         <CardContent className="p-0">
                           <div className="flex items-start space-x-3">
-                            <CheckCircle2 
-                              className="w-5 h-5 mt-0.5"
-                              style={{ color: theme.success }}
+                            <Info 
+                              className="w-4 h-4 mt-0.5"
+                              style={{ color: theme.information }}
                             />
                             <div className="flex-1">
                               <h4 
-                                className="font-medium"
-                                style={{ color: theme.onSuccessContainer }}
+                                className="text-sm font-medium"
+                                style={{ color: theme.onInformationContainer }}
                               >
-                                Success Message
+                                Information Notice
                               </h4>
                               <p 
-                                className="text-sm mt-1"
-                                style={{ color: theme.onSuccessContainer }}
+                                className="text-xs mt-1"
+                                style={{ color: theme.onInformationContainer }}
                               >
-                                Theme exported successfully!
+                                Your theme has been saved and is ready for export.
                               </p>
                             </div>
                           </div>
@@ -254,26 +391,65 @@ export function MobilePreview() {
                       </Card>
                     </div>
 
-                    {/* Form Elements */}
+                    {/* Form Section */}
                     <div className="space-y-3">
                       <h3 
                         className="text-sm font-semibold"
                         style={{ color: theme.onBackground }}
                       >
-                        Form Components
+                        Form Elements
                       </h3>
                       
                       <div className="space-y-3">
-                        <input 
-                          type="text" 
-                          placeholder="Text input field" 
-                          className="w-full px-3 py-2 border rounded-lg outline-none"
-                          style={{ 
-                            borderColor: theme.outline,
-                            backgroundColor: theme.surface,
-                            color: theme.onSurface 
-                          }}
-                        />
+                        <div className="space-y-1">
+                          <label 
+                            className="text-xs font-medium"
+                            style={{ color: theme.onSurface }}
+                          >
+                            Email Address
+                          </label>
+                          <input 
+                            type="email" 
+                            placeholder="Enter your email" 
+                            className="w-full px-3 py-2 border rounded-lg outline-none focus:ring-2"
+                            style={{ 
+                              borderColor: theme.outline,
+                              backgroundColor: theme.surface,
+                              color: theme.onSurface 
+                            }}
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label 
+                            className="text-xs font-medium"
+                            style={{ color: theme.onSurface }}
+                          >
+                            Date of Birth
+                          </label>
+                          <div 
+                            className="flex items-center space-x-2 px-3 py-2 border rounded-lg cursor-pointer"
+                            style={{ 
+                              borderColor: theme.outline,
+                              backgroundColor: theme.surface 
+                            }}
+                          >
+                            <Calendar 
+                              className="w-4 h-4"
+                              style={{ color: theme.onSurfaceVariant }}
+                            />
+                            <span 
+                              className="text-sm flex-1"
+                              style={{ color: theme.onSurface }}
+                            >
+                              Select date
+                            </span>
+                            <ChevronDown 
+                              className="w-4 h-4"
+                              style={{ color: theme.onSurfaceVariant }}
+                            />
+                          </div>
+                        </div>
                         
                         <div className="flex items-center space-x-3">
                           <input 
@@ -288,7 +464,7 @@ export function MobilePreview() {
                             className="text-sm"
                             style={{ color: theme.onSurface }}
                           >
-                            Checkbox option
+                            I agree to the terms and conditions
                           </label>
                         </div>
                         
@@ -297,7 +473,7 @@ export function MobilePreview() {
                             className="text-sm"
                             style={{ color: theme.onSurface }}
                           >
-                            Enable notifications
+                            Enable push notifications
                           </span>
                           <div 
                             className="w-12 h-6 rounded-full relative cursor-pointer transition-colors"
@@ -312,13 +488,13 @@ export function MobilePreview() {
                       </div>
                     </div>
 
-                    {/* List Items */}
+                    {/* List Tiles Section */}
                     <div className="space-y-3">
                       <h3 
                         className="text-sm font-semibold"
                         style={{ color: theme.onBackground }}
                       >
-                        List Components
+                        List Tiles
                       </h3>
                       
                       <div className="space-y-1">
@@ -327,11 +503,11 @@ export function MobilePreview() {
                           style={{ backgroundColor: theme.surfaceContainer }}
                         >
                           <div 
-                            className="w-8 h-8 rounded-full flex items-center justify-center"
+                            className="w-10 h-10 rounded-full flex items-center justify-center"
                             style={{ backgroundColor: theme.primaryContainer }}
                           >
                             <Users 
-                              className="w-4 h-4"
+                              className="w-5 h-5"
                               style={{ color: theme.primary }}
                             />
                           </div>
@@ -340,13 +516,13 @@ export function MobilePreview() {
                               className="text-sm font-medium"
                               style={{ color: theme.onSurface }}
                             >
-                              Profile Settings
+                              Account Settings
                             </div>
                             <div 
                               className="text-xs"
                               style={{ color: theme.onSurfaceVariant }}
                             >
-                              Manage your account
+                              Manage your profile and preferences
                             </div>
                           </div>
                           <ChevronRight 
@@ -360,11 +536,11 @@ export function MobilePreview() {
                           style={{ backgroundColor: theme.surfaceContainer }}
                         >
                           <div 
-                            className="w-8 h-8 rounded-full flex items-center justify-center"
+                            className="w-10 h-10 rounded-full flex items-center justify-center"
                             style={{ backgroundColor: theme.warningContainer }}
                           >
                             <Bell 
-                              className="w-4 h-4"
+                              className="w-5 h-5"
                               style={{ color: theme.warning }}
                             />
                           </div>
@@ -383,7 +559,7 @@ export function MobilePreview() {
                             </div>
                           </div>
                           <Badge 
-                            className="text-xs"
+                            className="text-xs px-1.5 py-0.5"
                             style={{ 
                               backgroundColor: theme.error,
                               color: theme.onError 
@@ -392,8 +568,125 @@ export function MobilePreview() {
                             3
                           </Badge>
                         </div>
+
+                        <div 
+                          className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors hover:opacity-80"
+                          style={{ backgroundColor: theme.surfaceContainer }}
+                        >
+                          <div 
+                            className="w-10 h-10 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: theme.secondaryContainer }}
+                          >
+                            <Settings 
+                              className="w-5 h-5"
+                              style={{ color: theme.secondary }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div 
+                              className="text-sm font-medium"
+                              style={{ color: theme.onSurface }}
+                            >
+                              App Settings
+                            </div>
+                            <div 
+                              className="text-xs"
+                              style={{ color: theme.onSurfaceVariant }}
+                            >
+                              Theme, language, and more
+                            </div>
+                          </div>
+                          <ChevronRight 
+                            className="w-4 h-4"
+                            style={{ color: theme.onSurfaceVariant }}
+                          />
+                        </div>
+
+                        <div 
+                          className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors hover:opacity-80"
+                          style={{ backgroundColor: theme.surfaceContainer }}
+                        >
+                          <div 
+                            className="w-10 h-10 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: theme.tertiaryContainer }}
+                          >
+                            <Mail 
+                              className="w-5 h-5"
+                              style={{ color: theme.tertiary }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <div 
+                                  className="text-sm font-medium"
+                                  style={{ color: theme.onSurface }}
+                                >
+                                  Messages
+                                </div>
+                                <div 
+                                  className="text-xs"
+                                  style={{ color: theme.onSurfaceVariant }}
+                                >
+                                  Latest: Welcome to the app!
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div 
+                                  className="text-xs"
+                                  style={{ color: theme.onSurfaceVariant }}
+                                >
+                                  2m ago
+                                </div>
+                                <Clock 
+                                  className="w-3 h-3 ml-auto mt-0.5"
+                                  style={{ color: theme.onSurfaceVariant }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div 
+                          className="flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors hover:opacity-80"
+                          style={{ backgroundColor: theme.surfaceContainer }}
+                        >
+                          <div 
+                            className="w-10 h-10 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: theme.successContainer }}
+                          >
+                            <MapPin 
+                              className="w-5 h-5"
+                              style={{ color: theme.success }}
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div 
+                              className="text-sm font-medium"
+                              style={{ color: theme.onSurface }}
+                            >
+                              Location Services
+                            </div>
+                            <div 
+                              className="text-xs"
+                              style={{ color: theme.onSurfaceVariant }}
+                            >
+                              San Francisco, CA
+                            </div>
+                          </div>
+                          <div 
+                            className="w-12 h-6 rounded-full relative cursor-pointer transition-colors"
+                            style={{ backgroundColor: theme.success }}
+                          >
+                            <div 
+                              className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full shadow-sm"
+                              style={{ backgroundColor: theme.onSuccess }}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <div className="pb-24"></div>
                   </div>
 
                   {/* Bottom Navigation */}
