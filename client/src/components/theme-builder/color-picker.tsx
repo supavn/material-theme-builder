@@ -42,7 +42,7 @@ export function ColorPicker({ label, value, onChange, description }: ColorPicker
 
   return (
     <div className="space-y-2">
-      <Label className="text-sm font-medium">{label}</Label>
+      <Label className="text-sm font-medium text-foreground">{label}</Label>
       {description && (
         <p className="text-xs text-muted-foreground">{description}</p>
       )}
@@ -64,12 +64,12 @@ export function ColorPicker({ label, value, onChange, description }: ColorPicker
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <Palette className="w-4 h-4" />
-                <span className="text-sm font-medium">Color Picker</span>
+                <span className="text-sm font-medium text-foreground">Color Picker</span>
               </div>
               
               {/* Native color input */}
               <div className="space-y-2">
-                <Label className="text-xs">Select Color</Label>
+                <Label className="text-xs text-foreground">Select Color</Label>
                 <input
                   type="color"
                   value={isValidHex(value) ? value : "#000000"}
@@ -80,7 +80,7 @@ export function ColorPicker({ label, value, onChange, description }: ColorPicker
 
               {/* Preset colors */}
               <div className="space-y-2">
-                <Label className="text-xs">Quick Colors</Label>
+                <Label className="text-xs text-foreground">Quick Colors</Label>
                 <div className="grid grid-cols-6 gap-1">
                   {[
                     "#6750A4", "#625B71", "#7D5260", "#BA1A1A",

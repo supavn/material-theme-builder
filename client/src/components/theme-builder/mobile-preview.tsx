@@ -70,7 +70,7 @@ export function MobilePreview() {
       <div className="p-4">
         {/* Preview Controls */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-semibold">Mobile Preview</h2>
+          <h2 className="text-sm font-semibold text-foreground">Mobile Preview</h2>
           
           <div className="flex items-center space-x-2">
             <span className="text-xs text-muted-foreground">Theme:</span>

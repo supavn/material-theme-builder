@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useTheme } from "./theme-context";
 import { TokenEditor } from "./token-editor";
+import { MonacoEditor } from "./monaco-editor";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -64,6 +65,24 @@ export function ThemeEditor() {
       toast({
         title: "Error",
         description: "Failed to copy JSON to clipboard",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleFormatJson = () => {
+    try {
+      const parsed = JSON.parse(jsonCode);
+      const formatted = JSON.stringify(parsed, null, 2);
+      setJsonCode(formatted);
+      toast({
+        title: "Success",
+        description: "JSON formatted successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Invalid JSON format. Cannot format.",
         variant: "destructive",
       });
     }
@@ -144,7 +163,7 @@ export function ThemeEditor() {
       {/* Header with Import Button */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">Theme Editor</h2>
+          <h2 className="text-lg font-semibold text-foreground">Theme Editor</h2>
           <div className="flex items-center space-x-2">
             <Badge variant="secondary" className="text-xs">
               Live Editing
@@ -187,8 +206,16 @@ export function ThemeEditor() {
               {/* JSON Editor Header */}
               <div className="p-4 border-b border-border">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium">JSON Configuration</h3>
+                  <h3 className="text-sm font-medium text-foreground">JSON Configuration</h3>
                   <div className="flex space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleFormatJson}
+                    >
+                      <Code2 className="w-4 h-4 mr-2" />
+                      Format
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"
@@ -217,17 +244,15 @@ export function ThemeEditor() {
 
               {/* JSON Editor */}
               <div className="flex-1 overflow-hidden">
-                <textarea
-                  className="w-full h-full p-4 text-sm font-mono bg-muted/30 border-none outline-none resize-none"
+                <MonacoEditor
                   value={jsonCode}
-                  onChange={(e) => setJsonCode(e.target.value)}
-                  placeholder="JSON theme configuration will appear here..."
-                  spellCheck={false}
+                  onChange={setJsonCode}
+                  language="json"
                 />
               </div>
 
               {/* JSON Editor Footer */}
-              <div className="p-4 border-t border-border bg-muted/30">
+              <div className="p-4 border-t border-border bg-muted/50">
                 <div className="text-xs text-muted-foreground space-y-1">
                   <div className="flex justify-between">
                     <span>Lines:</span>

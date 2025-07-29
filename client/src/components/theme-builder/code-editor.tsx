@@ -234,7 +234,7 @@ class CustomColors extends ThemeExtension<CustomColors> {
       {/* Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold">Code Export</h3>
+          <h3 className="text-lg font-semibold text-foreground">Code Export</h3>
           <Badge variant="secondary" className="text-xs">
             Live Preview
           </Badge>

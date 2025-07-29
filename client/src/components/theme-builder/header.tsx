@@ -56,7 +56,7 @@ export function Header({ onToggleAppTheme, appDarkMode }: HeaderProps) {
             <Palette className="w-4 h-4 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold">Material Theme Builder</h1>
+            <h1 className="text-xl font-semibold text-foreground">Material Theme Builder</h1>
             <p className="text-sm text-muted-foreground">Flutter Theme Designer</p>
           </div>
         </div>

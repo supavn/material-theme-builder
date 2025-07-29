@@ -80,7 +80,7 @@ export function TokenEditor() {
         {/* Header with Theme Toggle and Auto Generate */}
         <div className="mb-4 space-y-3">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium">Editing Mode</Label>
+            <Label className="text-sm font-medium text-foreground">Editing Mode</Label>
             <Button
               onClick={generatePalette}
               size="sm"
