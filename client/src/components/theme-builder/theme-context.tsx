@@ -222,47 +222,202 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     };
 
-    // Simple color variations
-    const lighten = (color: string, amount: number) => {
-      const rgb = hexToRgb(color);
-      return rgbToHex(
-        Math.min(255, Math.round(rgb.r + (255 - rgb.r) * amount)),
-        Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount)),
-        Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount))
-      );
+    // Advanced Material Design 3 color generation using HSL
+    const hexToHsl = (hex: string): [number, number, number] => {
+      const rgb = hexToRgb(hex);
+      const r = rgb.r / 255;
+      const g = rgb.g / 255;
+      const b = rgb.b / 255;
+
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      let h = 0, s = 0, l = (max + min) / 2;
+
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+
+      return [h * 360, s * 100, l * 100];
     };
 
-    const darken = (color: string, amount: number) => {
-      const rgb = hexToRgb(color);
-      return rgbToHex(
-        Math.max(0, Math.round(rgb.r * (1 - amount))),
-        Math.max(0, Math.round(rgb.g * (1 - amount))),
-        Math.max(0, Math.round(rgb.b * (1 - amount)))
-      );
+    const hslToHex = (h: number, s: number, l: number): string => {
+      h = h / 360;
+      s = s / 100;
+      l = l / 100;
+
+      const hue2rgb = (p: number, q: number, t: number) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+
+      let r, g, b;
+      if (s === 0) {
+        r = g = b = l;
+      } else {
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+      }
+
+      return rgbToHex(Math.round(r * 255), Math.round(g * 255), Math.round(b * 255));
     };
 
-    // Generate new light theme
+    // Material Design color generation with proper tonal relationships
+    const [seedH, seedS, seedL] = hexToHsl(seed);
+    
+    const generateVariant = (hueShift: number, satAdjust: number, lightAdjust: number) => {
+      const newH = (seedH + hueShift) % 360;
+      const newS = Math.max(0, Math.min(100, seedS + satAdjust));
+      const newL = Math.max(0, Math.min(100, seedL + lightAdjust));
+      return hslToHex(newH, newS, newL);
+    };
+
+    // Generate new light theme with Material Design 3 principles
     const newLightTheme: ColorScheme = {
-      ...defaultLightTheme,
+      // Primary colors
       primary: seed,
-      primaryContainer: lighten(seed, 0.8),
-      onPrimaryContainer: darken(seed, 0.8),
-      secondary: darken(seed, 0.3),
-      secondaryContainer: lighten(seed, 0.9),
-      onSecondaryContainer: darken(seed, 0.7),
+      onPrimary: seedL > 50 ? "#000000" : "#FFFFFF",
+      primaryContainer: generateVariant(0, -20, 35),
+      onPrimaryContainer: generateVariant(0, 0, -40),
+      
+      // Secondary colors (30° hue shift for harmony)
+      secondary: generateVariant(30, -15, -10),
+      onSecondary: "#FFFFFF",
+      secondaryContainer: generateVariant(30, -20, 40),
+      onSecondaryContainer: generateVariant(30, 0, -35),
+      
+      // Tertiary colors (60° hue shift for vibrancy)
+      tertiary: generateVariant(60, -10, -5),
+      onTertiary: "#FFFFFF",
+      tertiaryContainer: generateVariant(60, -20, 45),
+      onTertiaryContainer: generateVariant(60, 0, -30),
+      
+      // Error colors (Material Design standard)
+      error: "#BA1A1A",
+      onError: "#FFFFFF",
+      errorContainer: "#FFDAD6",
+      onErrorContainer: "#410002",
+      
+      // Surface colors
+      surface: "#FEF7FF",
+      onSurface: "#1C1B1F",
+      surfaceVariant: generateVariant(0, -30, 85),
+      onSurfaceVariant: generateVariant(0, -10, 30),
+      surfaceDim: generateVariant(0, -40, 75),
+      surfaceBright: "#FEF7FF",
+      surfaceContainer: generateVariant(0, -35, 90),
+      surfaceContainerLow: generateVariant(0, -40, 95),
+      surfaceContainerHigh: generateVariant(0, -30, 88),
+      surfaceContainerHighest: generateVariant(0, -25, 85),
+      
+      // Background
+      background: "#FEF7FF",
+      onBackground: "#1C1B1F",
+      
+      // Outline
+      outline: generateVariant(0, -20, 50),
+      outlineVariant: generateVariant(0, -30, 75),
+      
+      // Custom tokens
+      warning: "#F59E0B",
+      onWarning: "#FFFFFF",
+      warningContainer: "#FEF3C7",
+      onWarningContainer: "#451A03",
+      information: generateVariant(180, 0, -20),
+      onInformation: "#FFFFFF",
+      informationContainer: generateVariant(180, -20, 85),
+      onInformationContainer: generateVariant(180, 0, -35),
+      success: "#10B981",
+      onSuccess: "#FFFFFF",
+      successContainer: "#D1FAE5",
+      onSuccessContainer: "#064E3B",
+      defaultColor: seed,
+      onDefault: seedL > 50 ? "#000000" : "#FFFFFF",
+      defaultContainer: generateVariant(0, -20, 35),
+      onDefaultContainer: generateVariant(0, 0, -40),
+      critical: "#EF4444",
+      onCritical: "#FFFFFF",
     };
 
-    // Generate new dark theme
+    // Generate new dark theme with appropriate contrast adjustments
     const newDarkTheme: ColorScheme = {
-      ...defaultDarkTheme,
-      primary: lighten(seed, 0.3),
-      onPrimary: darken(seed, 0.6),
-      primaryContainer: darken(seed, 0.2),
-      onPrimaryContainer: lighten(seed, 0.8),
-      secondary: lighten(seed, 0.1),
-      onSecondary: darken(seed, 0.5),
-      secondaryContainer: darken(seed, 0.4),
-      onSecondaryContainer: lighten(seed, 0.9),
+      // Primary colors for dark theme
+      primary: generateVariant(0, 0, 30),
+      onPrimary: generateVariant(0, 0, -40),
+      primaryContainer: generateVariant(0, -10, -25),
+      onPrimaryContainer: generateVariant(0, -10, 40),
+      
+      // Secondary colors
+      secondary: generateVariant(30, -15, 20),
+      onSecondary: generateVariant(30, 0, -35),
+      secondaryContainer: generateVariant(30, -10, -20),
+      onSecondaryContainer: generateVariant(30, -10, 45),
+      
+      // Tertiary colors
+      tertiary: generateVariant(60, -10, 25),
+      onTertiary: generateVariant(60, 0, -30),
+      tertiaryContainer: generateVariant(60, -10, -15),
+      onTertiaryContainer: generateVariant(60, -10, 50),
+      
+      // Error colors for dark theme
+      error: "#FFB4AB",
+      onError: "#690005",
+      errorContainer: "#93000A",
+      onErrorContainer: "#FFDAD6",
+      
+      // Surface colors for dark theme
+      surface: "#1C1B1F",
+      onSurface: "#E6E1E5",
+      surfaceVariant: generateVariant(0, -20, 15),
+      onSurfaceVariant: generateVariant(0, -10, 70),
+      surfaceDim: generateVariant(0, -30, 8),
+      surfaceBright: generateVariant(0, -20, 25),
+      surfaceContainer: generateVariant(0, -25, 18),
+      surfaceContainerLow: generateVariant(0, -30, 12),
+      surfaceContainerHigh: generateVariant(0, -20, 22),
+      surfaceContainerHighest: generateVariant(0, -15, 28),
+      
+      // Background
+      background: "#1C1B1F",
+      onBackground: "#E6E1E5",
+      
+      // Outline
+      outline: generateVariant(0, -20, 45),
+      outlineVariant: generateVariant(0, -30, 25),
+      
+      // Custom tokens for dark theme
+      warning: "#FBBF24",
+      onWarning: "#78350F",
+      warningContainer: "#92400E",
+      onWarningContainer: "#FEF3C7",
+      information: generateVariant(180, 0, 40),
+      onInformation: generateVariant(180, 0, -30),
+      informationContainer: generateVariant(180, -10, -20),
+      onInformationContainer: generateVariant(180, -10, 85),
+      success: "#34D399",
+      onSuccess: "#065F46",
+      successContainer: "#047857",
+      onSuccessContainer: "#D1FAE5",
+      defaultColor: generateVariant(0, 0, 30),
+      onDefault: generateVariant(0, 0, -40),
+      defaultContainer: generateVariant(0, -10, -25),
+      onDefaultContainer: generateVariant(0, -10, 40),
+      critical: "#F87171",
+      onCritical: "#7F1D1D",
     };
 
     setLightTheme(newLightTheme);

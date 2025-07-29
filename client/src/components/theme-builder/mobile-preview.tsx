@@ -16,7 +16,9 @@ import {
   CheckCircle2,
   AlertTriangle,
   Smartphone,
-  Monitor
+  Monitor,
+  Sun,
+  Moon
 } from "lucide-react";
 
 interface PreviewButtonProps {
@@ -67,34 +69,18 @@ export function MobilePreview() {
     <div className="h-full bg-muted overflow-y-auto">
       <div className="p-4">
         {/* Preview Controls */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex space-x-2">
-            <Button
-              variant={deviceType === "android" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDeviceType("android")}
-            >
-              <Smartphone className="w-4 h-4 mr-2" />
-              Android
-            </Button>
-            <Button
-              variant={deviceType === "ios" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDeviceType("ios")}
-            >
-              <Monitor className="w-4 h-4 mr-2" />
-              iOS
-            </Button>
-          </div>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-semibold">Mobile Preview</h2>
           
-          <div className="flex items-center space-x-3">
-            <span className="text-sm text-muted-foreground">Preview Theme:</span>
+          <div className="flex items-center space-x-2">
+            <span className="text-xs text-muted-foreground">Theme:</span>
             <div className="flex bg-muted rounded-lg p-1">
               <Button
                 variant={previewTheme === "light" ? "default" : "ghost"}
                 size="sm"
                 onClick={() => switchPreviewTheme("light")}
               >
+                <Sun className="w-3 h-3 mr-1" />
                 Light
               </Button>
               <Button
@@ -102,6 +88,7 @@ export function MobilePreview() {
                 size="sm"
                 onClick={() => switchPreviewTheme("dark")}
               >
+                <Moon className="w-3 h-3 mr-1" />
                 Dark
               </Button>
             </div>
