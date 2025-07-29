@@ -86,10 +86,11 @@ export const themeSchemes = z.object({
 
 // Full theme export format
 export const themeExport = z.object({
-  description: z.string(),
+  description: z.string().optional(),
   seed: z.string(),
   schemes: themeSchemes,
   themeName: z.string().optional(),
+  timestamp: z.string().optional(),
 });
 
 export type MaterialColorScheme = z.infer<typeof materialColorScheme>;

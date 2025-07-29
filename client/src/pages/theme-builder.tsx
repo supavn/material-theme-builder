@@ -1,8 +1,7 @@
 import { ThemeProvider } from "@/components/theme-builder/theme-context";
 import { Header } from "@/components/theme-builder/header";
-import { TokenEditor } from "@/components/theme-builder/token-editor";
+import { ThemeEditor } from "@/components/theme-builder/theme-editor";
 import { MobilePreview } from "@/components/theme-builder/mobile-preview";
-import { CodeEditor } from "@/components/theme-builder/code-editor";
 import { useEffect, useState } from "react";
 
 export default function ThemeBuilder() {
@@ -31,9 +30,15 @@ export default function ThemeBuilder() {
         <Header onToggleAppTheme={toggleAppTheme} appDarkMode={appDarkMode} />
         
         <div className="flex h-[calc(100vh-73px)] overflow-hidden">
-          <TokenEditor />
-          <MobilePreview />
-          <CodeEditor />
+          {/* Theme Editor - 2/3 width */}
+          <div className="w-2/3 border-r border-border">
+            <ThemeEditor />
+          </div>
+          
+          {/* Mobile Preview - 1/3 width */}
+          <div className="w-1/3">
+            <MobilePreview />
+          </div>
         </div>
       </div>
     </ThemeProvider>

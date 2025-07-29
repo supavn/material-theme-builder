@@ -90,7 +90,7 @@ export function TokenEditor() {
   };
 
   return (
-    <div className="w-88 bg-card border-r border-border overflow-y-auto">
+    <div className="h-full bg-card overflow-y-auto">
       <div className="p-6">
         {/* Theme Toggle */}
         <div className="mb-6">

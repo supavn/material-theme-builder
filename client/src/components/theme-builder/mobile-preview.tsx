@@ -64,8 +64,8 @@ export function MobilePreview() {
   const theme = previewTheme === "light" ? lightTheme : darkTheme;
   
   return (
-    <div className="flex-1 bg-muted overflow-y-auto">
-      <div className="p-6">
+    <div className="h-full bg-muted overflow-y-auto">
+      <div className="p-4">
         {/* Preview Controls */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex space-x-2">

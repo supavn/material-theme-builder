@@ -15,6 +15,7 @@ interface ThemeContextType {
   setSeedColor: (color: string) => void;
   generatePalette: () => void;
   exportTheme: () => ThemeExport;
+  importTheme: (theme: ThemeExport) => void;
   resetToDefaults: () => void;
 }
 
@@ -38,6 +39,14 @@ const defaultLightTheme: ColorScheme = {
   onErrorContainer: "#410002",
   surface: "#FEF7FF",
   onSurface: "#1C1B1F",
+  surfaceVariant: "#E7E0EC",
+  onSurfaceVariant: "#49454F",
+  surfaceDim: "#DED8E1",
+  surfaceBright: "#FEF7FF",
+  surfaceContainer: "#F3EDF7",
+  surfaceContainerLow: "#F7F2FA",
+  surfaceContainerHigh: "#ECE6F0",
+  surfaceContainerHighest: "#E6E0E9",
   background: "#FEF7FF",
   onBackground: "#1C1B1F",
   outline: "#79747E",
@@ -47,24 +56,20 @@ const defaultLightTheme: ColorScheme = {
   onWarning: "#FFFFFF",
   warningContainer: "#FEF3C7",
   onWarningContainer: "#451A03",
-  success: "#10B981",
-  onSuccess: "#FFFFFF",
-  successContainer: "#D1FAE5",
-  onSuccessContainer: "#064E3B",
   information: "#3B82F6",
   onInformation: "#FFFFFF",
   informationContainer: "#DBEAFE",
   onInformationContainer: "#1E3A8A",
+  success: "#10B981",
+  onSuccess: "#FFFFFF",
+  successContainer: "#D1FAE5",
+  onSuccessContainer: "#064E3B",
+  defaultColor: "#6750A4",
+  onDefault: "#FFFFFF",
+  defaultContainer: "#EADDFF",
+  onDefaultContainer: "#21005D",
   critical: "#EF4444",
   onCritical: "#FFFFFF",
-  // Additional surface variants
-  surfaceContainer: "#F3EDF7",
-  onSurfaceVariant: "#49454F",
-  inverseSurface: "#313033",
-  inverseOnSurface: "#F4EFF4",
-  inversePrimary: "#D0BCFF",
-  scrim: "#000000",
-  shadow: "#000000",
 };
 
 const defaultDarkTheme: ColorScheme = {
@@ -86,6 +91,14 @@ const defaultDarkTheme: ColorScheme = {
   onErrorContainer: "#FFDAD6",
   surface: "#1C1B1F",
   onSurface: "#E6E1E5",
+  surfaceVariant: "#49454F",
+  onSurfaceVariant: "#CAC4D0",
+  surfaceDim: "#141218",
+  surfaceBright: "#3B383E",
+  surfaceContainer: "#211F26",
+  surfaceContainerLow: "#1C1B1F",
+  surfaceContainerHigh: "#2B2930",
+  surfaceContainerHighest: "#36343B",
   background: "#1C1B1F",
   onBackground: "#E6E1E5",
   outline: "#938F99",
@@ -95,24 +108,20 @@ const defaultDarkTheme: ColorScheme = {
   onWarning: "#78350F",
   warningContainer: "#92400E",
   onWarningContainer: "#FEF3C7",
-  success: "#34D399",
-  onSuccess: "#065F46",
-  successContainer: "#047857",
-  onSuccessContainer: "#D1FAE5",
   information: "#60A5FA",
   onInformation: "#1E3A8A",
   informationContainer: "#1E40AF",
   onInformationContainer: "#DBEAFE",
+  success: "#34D399",
+  onSuccess: "#065F46",
+  successContainer: "#047857",
+  onSuccessContainer: "#D1FAE5",
+  defaultColor: "#D0BCFF",
+  onDefault: "#381E72",
+  defaultContainer: "#4F378B",
+  onDefaultContainer: "#EADDFF",
   critical: "#F87171",
   onCritical: "#7F1D1D",
-  // Additional surface variants
-  surfaceContainer: "#211F26",
-  onSurfaceVariant: "#CAC4D0",
-  inverseSurface: "#E6E1E5",
-  inverseOnSurface: "#313033",
-  inversePrimary: "#6750A4",
-  scrim: "#000000",
-  shadow: "#000000",
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -272,6 +281,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     };
   };
 
+  const importTheme = (theme: ThemeExport) => {
+    setLightTheme(theme.schemes.light);
+    setDarkTheme(theme.schemes.dark);
+    setThemeName(theme.themeName || "Imported Theme");
+    setSeedColor(theme.seed || "#6750A4");
+  };
+
   const resetToDefaults = () => {
     setLightTheme(defaultLightTheme);
     setDarkTheme(defaultDarkTheme);
@@ -293,6 +309,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setSeedColor,
     generatePalette,
     exportTheme,
+    importTheme,
     resetToDefaults,
   };
 
