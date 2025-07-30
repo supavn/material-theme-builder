@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { TokenEditor } from './components/TokenEditor';
+import { JsonEditor } from './components/JsonEditor';
+import { useTheme } from './hooks/useTheme';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, updateTheme } = useTheme();
+  const [activeTab, setActiveTab] = useState<'tokens' | 'json'>('tokens');
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-layout">
+      <main className="panel editor-panel">
+        <div className="tab-header">
+          <button
+            className={`tab-button ${activeTab === 'tokens' ? 'active' : ''}`}
+            onClick={() => setActiveTab('tokens')}
+          >
+            Token Editor
+          </button>
+          <button
+            className={`tab-button ${activeTab === 'json' ? 'active' : ''}`}
+            onClick={() => setActiveTab('json')}
+          >
+            JSON Editor
+          </button>
+        </div>
+        
+        <div className="tab-content">
+          {activeTab === 'tokens' && (
+            <TokenEditor theme={theme} onThemeChange={updateTheme} />
+          )}
+          {activeTab === 'json' && (
+            <JsonEditor theme={theme} onThemeChange={updateTheme} />
+          )}
+        </div>
+      </main>
+      
+      <aside className="panel mobile-preview">
+        <h2>Mobile Preview</h2>
+        {/* TODO: Mobile preview UI goes here */}
+      </aside>
+    </div>
+  );
 }
 
-export default App
+export default App;
