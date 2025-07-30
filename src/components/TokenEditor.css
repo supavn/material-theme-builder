@@ -115,9 +115,20 @@
 
 .group-tokens {
   padding: 12px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 8px;
+  max-width: 100%;
+}
+
+.group-tokens.compact {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.group-tokens.very-compact {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 4px;
 }
 
 /* Responsive adjustments */
@@ -138,10 +149,26 @@
   }
   
   .group-tokens {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 6px;
     padding: 8px;
   }
   
   .auto-calculate-section {
     padding: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .group-tokens {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .group-tokens.compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .group-tokens.very-compact {
+    grid-template-columns: repeat(4, 1fr);
   }
 } 
