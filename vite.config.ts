@@ -35,5 +35,6 @@ export default defineConfig({
       deny: ["**/.*"],
     },
     port: 3000,
+    host: "localhost"
   },
 });

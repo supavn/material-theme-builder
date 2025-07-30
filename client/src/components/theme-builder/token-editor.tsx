@@ -520,6 +520,54 @@ export function TokenEditor() {
                 onChange={(value) => handleColorChange("onSurface", value)}
               />
               <CompactColorInput
+                label="Surface Variant"
+                colorKey="surfaceVariant"
+                value={currentTheme.surfaceVariant}
+                onChange={(value) => handleColorChange("surfaceVariant", value)}
+              />
+              <CompactColorInput
+                label="On Surface Variant"
+                colorKey="onSurfaceVariant"
+                value={currentTheme.onSurfaceVariant}
+                onChange={(value) => handleColorChange("onSurfaceVariant", value)}
+              />
+              <CompactColorInput
+                label="Surface Dim"
+                colorKey="surfaceDim"
+                value={currentTheme.surfaceDim}
+                onChange={(value) => handleColorChange("surfaceDim", value)}
+              />
+              <CompactColorInput
+                label="Surface Bright"
+                colorKey="surfaceBright"
+                value={currentTheme.surfaceBright}
+                onChange={(value) => handleColorChange("surfaceBright", value)}
+              />
+              <CompactColorInput
+                label="Surface Container"
+                colorKey="surfaceContainer"
+                value={currentTheme.surfaceContainer}
+                onChange={(value) => handleColorChange("surfaceContainer", value)}
+              />
+              <CompactColorInput
+                label="Surface Container Low"
+                colorKey="surfaceContainerLow"
+                value={currentTheme.surfaceContainerLow}
+                onChange={(value) => handleColorChange("surfaceContainerLow", value)}
+              />
+              <CompactColorInput
+                label="Surface Container High"
+                colorKey="surfaceContainerHigh"
+                value={currentTheme.surfaceContainerHigh}
+                onChange={(value) => handleColorChange("surfaceContainerHigh", value)}
+              />
+              <CompactColorInput
+                label="Surface Container Highest"
+                colorKey="surfaceContainerHighest"
+                value={currentTheme.surfaceContainerHighest}
+                onChange={(value) => handleColorChange("surfaceContainerHighest", value)}
+              />
+              <CompactColorInput
                 label="Background"
                 colorKey="background"
                 value={currentTheme.background}
@@ -550,7 +598,7 @@ export function TokenEditor() {
 
           {/* Custom Tokens */}
           <div className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Custom Tokens</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Warning</h3>
             <div className="grid grid-cols-2 gap-2">
               <CompactColorInput
                 label="Warning"
@@ -565,6 +613,27 @@ export function TokenEditor() {
                 onChange={(value) => handleColorChange("onWarning", value)}
               />
               <CompactColorInput
+                label="Warning Container"
+                colorKey="warningContainer"
+                value={currentTheme.warningContainer}
+                onChange={(value) => handleColorChange("warningContainer", value)}
+              />
+              <CompactColorInput
+                label="On Warning Container"
+                colorKey="onWarningContainer"
+                value={currentTheme.onWarningContainer}
+                onChange={(value) => handleColorChange("onWarningContainer", value)}
+              />
+            </div>
+          </div>
+
+          <Separator className="my-3" />
+
+          {/* Success Colors */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Success</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <CompactColorInput
                 label="Success"
                 colorKey="success"
                 value={currentTheme.success}
@@ -577,6 +646,27 @@ export function TokenEditor() {
                 onChange={(value) => handleColorChange("onSuccess", value)}
               />
               <CompactColorInput
+                label="Success Container"
+                colorKey="successContainer"
+                value={currentTheme.successContainer}
+                onChange={(value) => handleColorChange("successContainer", value)}
+              />
+              <CompactColorInput
+                label="On Success Container"
+                colorKey="onSuccessContainer"
+                value={currentTheme.onSuccessContainer}
+                onChange={(value) => handleColorChange("onSuccessContainer", value)}
+              />
+            </div>
+          </div>
+
+          <Separator className="my-3" />
+
+          {/* Information Colors */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Information</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <CompactColorInput
                 label="Information"
                 colorKey="information"
                 value={currentTheme.information}
@@ -588,6 +678,60 @@ export function TokenEditor() {
                 value={currentTheme.onInformation}
                 onChange={(value) => handleColorChange("onInformation", value)}
               />
+              <CompactColorInput
+                label="Information Container"
+                colorKey="informationContainer"
+                value={currentTheme.informationContainer}
+                onChange={(value) => handleColorChange("informationContainer", value)}
+              />
+              <CompactColorInput
+                label="On Information Container"
+                colorKey="onInformationContainer"
+                value={currentTheme.onInformationContainer}
+                onChange={(value) => handleColorChange("onInformationContainer", value)}
+              />
+            </div>
+          </div>
+
+          <Separator className="my-3" />
+
+          {/* Default Colors */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Default</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <CompactColorInput
+                label="Default"
+                colorKey="defaultColor"
+                value={currentTheme.defaultColor}
+                onChange={(value) => handleColorChange("defaultColor", value)}
+              />
+              <CompactColorInput
+                label="On Default"
+                colorKey="onDefault"
+                value={currentTheme.onDefault}
+                onChange={(value) => handleColorChange("onDefault", value)}
+              />
+              <CompactColorInput
+                label="Default Container"
+                colorKey="defaultContainer"
+                value={currentTheme.defaultContainer}
+                onChange={(value) => handleColorChange("defaultContainer", value)}
+              />
+              <CompactColorInput
+                label="On Default Container"
+                colorKey="onDefaultContainer"
+                value={currentTheme.onDefaultContainer}
+                onChange={(value) => handleColorChange("onDefaultContainer", value)}
+              />
+            </div>
+          </div>
+
+          <Separator className="my-3" />
+
+          {/* Critical Colors */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Critical</h3>
+            <div className="grid grid-cols-2 gap-2">
               <CompactColorInput
                 label="Critical"
                 colorKey="critical"
