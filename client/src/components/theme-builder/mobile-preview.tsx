@@ -216,15 +216,6 @@ export function MobilePreview() {
                         <Badge 
                           className="text-xs px-2 py-1"
                           style={{ 
-                            backgroundColor: theme.warning,
-                            color: theme.onWarning 
-                          }}
-                        >
-                          Warning
-                        </Badge>
-                        <Badge 
-                          className="text-xs px-2 py-1"
-                          style={{ 
                             backgroundColor: theme.error,
                             color: theme.onError 
                           }}
@@ -234,11 +225,29 @@ export function MobilePreview() {
                         <Badge 
                           className="text-xs px-2 py-1"
                           style={{ 
+                            backgroundColor: theme.warning,
+                            color: theme.onWarning 
+                          }}
+                        >
+                          Warning
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
                             backgroundColor: theme.information,
                             color: theme.onInformation 
                           }}
                         >
                           Info
+                        </Badge>
+                        <Badge 
+                          className="text-xs px-2 py-1"
+                          style={{ 
+                            backgroundColor: theme.defaultColor,
+                            color: theme.onDefault 
+                          }}
+                        >
+                          Default
                         </Badge>
                       </div>
                     </div>
