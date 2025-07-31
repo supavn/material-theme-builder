@@ -25,7 +25,7 @@ export default function ThemeBuilder() {
   };
 
   return (
-    <ThemeProvider>
+    <ThemeProvider appDarkMode={appDarkMode}>
       <div className="min-h-screen bg-background text-foreground">
         <Header onToggleAppTheme={toggleAppTheme} appDarkMode={appDarkMode} />
         
