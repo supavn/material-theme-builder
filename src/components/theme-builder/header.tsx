@@ -1,6 +1,7 @@
 import { useTheme } from "./theme-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Palette, Moon, Sun, Download, FileText } from "lucide-react";
 import { exportToJSON, exportToDart } from "./export-utils";
 import { useToast } from "@/hooks/use-toast";
@@ -71,13 +72,20 @@ export function Header({ onToggleAppTheme, appDarkMode }: HeaderProps) {
           className="w-48"
         />
         
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={onToggleAppTheme}
-        >
-          {appDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={onToggleAppTheme}
+            >
+              {appDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Toggle site theme (affects editor)</p>
+          </TooltipContent>
+        </Tooltip>
         
         <div className="flex space-x-2">
           <Button

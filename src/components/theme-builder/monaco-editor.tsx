@@ -13,11 +13,67 @@ export function MonacoEditor({
   onChange, 
   language = "json"
 }: MonacoEditorProps) {
-  const { lightTheme, darkTheme, previewTheme } = useTheme();
+  const { lightTheme, darkTheme, previewTheme, appDarkMode } = useTheme();
   const editorRef = useRef<any>(null);
   
-  // Get the current theme colors
-  const theme = previewTheme === "light" ? lightTheme : darkTheme;
+  // Get the current theme colors based on app dark mode (not preview theme)
+  const theme = appDarkMode ? darkTheme : lightTheme;
+  
+  // Use app dark mode for Monaco editor base theme
+  const editorDarkMode = appDarkMode;
+
+  // Helper function to create Monaco theme
+  const createMonacoTheme = (themeColors: any, darkMode: boolean) => ({
+    base: darkMode ? "vs-dark" : "vs",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: themeColors.onSurfaceVariant },
+      { token: "keyword", foreground: themeColors.primary },
+      { token: "string", foreground: themeColors.secondary },
+      { token: "number", foreground: themeColors.tertiary },
+      { token: "delimiter", foreground: themeColors.onSurface },
+      { token: "operator", foreground: themeColors.onSurface },
+      { token: "type", foreground: themeColors.error },
+      { token: "class", foreground: themeColors.warning },
+      { token: "function", foreground: themeColors.success },
+      { token: "variable", foreground: themeColors.information },
+    ],
+    colors: {
+      "editor.background": themeColors.background,
+      "editor.foreground": themeColors.onBackground,
+      "editor.lineHighlightBackground": themeColors.surfaceContainer,
+      "editor.selectionBackground": themeColors.primaryContainer,
+      "editor.inactiveSelectionBackground": themeColors.surfaceContainer,
+      "editor.findMatchBackground": themeColors.warningContainer,
+      "editor.findMatchHighlightBackground": themeColors.warningContainer,
+      "editorCursor.foreground": themeColors.primary,
+      "editorWhitespace.foreground": themeColors.outline,
+      "editorIndentGuide.background": themeColors.outline,
+      "editorIndentGuide.activeBackground": themeColors.primary,
+      "editorLineNumber.foreground": themeColors.onSurfaceVariant,
+      "editorLineNumber.activeForeground": themeColors.primary,
+      "editorRuler.foreground": themeColors.outline,
+      "editorCodeLens.foreground": themeColors.onSurfaceVariant,
+      "editorBracketMatch.background": themeColors.surfaceContainer,
+      "editorBracketMatch.border": themeColors.primary,
+      "editorOverviewRuler.border": themeColors.outline,
+      "editorOverviewRuler.findMatchForeground": themeColors.warning,
+      "editorOverviewRuler.errorForeground": themeColors.error,
+      "editorOverviewRuler.warningForeground": themeColors.warning,
+      "editorOverviewRuler.infoForeground": themeColors.information,
+      "editorError.foreground": themeColors.error,
+      "editorWarning.foreground": themeColors.warning,
+      "editorInfo.foreground": themeColors.information,
+      "editorHint.foreground": themeColors.success,
+      "editorGutter.background": themeColors.background,
+      "editorGutter.modifiedBackground": themeColors.warning,
+      "editorGutter.addedBackground": themeColors.success,
+      "editorGutter.deletedBackground": themeColors.error,
+      "diffEditor.insertedTextBackground": themeColors.successContainer,
+      "diffEditor.removedTextBackground": themeColors.errorContainer,
+      "diffEditor.diagonalFill": themeColors.outline,
+    },
+  });
   
   // Monaco editor options
   const options = {
@@ -76,64 +132,15 @@ export function MonacoEditor({
     },
   };
 
-  // Custom theme for Monaco editor
-  const monacoTheme = {
-    base: previewTheme === "dark" ? "vs-dark" : "vs",
-    inherit: true,
-    rules: [
-      { token: "comment", foreground: theme.onSurfaceVariant },
-      { token: "keyword", foreground: theme.primary },
-      { token: "string", foreground: theme.secondary },
-      { token: "number", foreground: theme.tertiary },
-      { token: "delimiter", foreground: theme.onSurface },
-      { token: "operator", foreground: theme.onSurface },
-      { token: "type", foreground: theme.error },
-      { token: "class", foreground: theme.warning },
-      { token: "function", foreground: theme.success },
-      { token: "variable", foreground: theme.information },
-    ],
-    colors: {
-      "editor.background": theme.background,
-      "editor.foreground": theme.onBackground,
-      "editor.lineHighlightBackground": theme.surfaceContainer,
-      "editor.selectionBackground": theme.primaryContainer,
-      "editor.inactiveSelectionBackground": theme.surfaceContainer,
-      "editor.findMatchBackground": theme.warningContainer,
-      "editor.findMatchHighlightBackground": theme.warningContainer,
-      "editorCursor.foreground": theme.primary,
-      "editorWhitespace.foreground": theme.outline,
-      "editorIndentGuide.background": theme.outline,
-      "editorIndentGuide.activeBackground": theme.primary,
-      "editorLineNumber.foreground": theme.onSurfaceVariant,
-      "editorLineNumber.activeForeground": theme.primary,
-      "editorRuler.foreground": theme.outline,
-      "editorCodeLens.foreground": theme.onSurfaceVariant,
-      "editorBracketMatch.background": theme.surfaceContainer,
-      "editorBracketMatch.border": theme.primary,
-      "editorOverviewRuler.border": theme.outline,
-      "editorOverviewRuler.findMatchForeground": theme.warning,
-      "editorOverviewRuler.errorForeground": theme.error,
-      "editorOverviewRuler.warningForeground": theme.warning,
-      "editorOverviewRuler.infoForeground": theme.information,
-      "editorError.foreground": theme.error,
-      "editorWarning.foreground": theme.warning,
-      "editorInfo.foreground": theme.information,
-      "editorHint.foreground": theme.success,
-      "editorGutter.background": theme.background,
-      "editorGutter.modifiedBackground": theme.warning,
-      "editorGutter.addedBackground": theme.success,
-      "editorGutter.deletedBackground": theme.error,
-      "diffEditor.insertedTextBackground": theme.successContainer,
-      "diffEditor.removedTextBackground": theme.errorContainer,
-      "diffEditor.diagonalFill": theme.outline,
-    },
-  };
+
 
   const handleEditorDidMount = (editor: any, monaco: any) => {
     editorRef.current = editor;
     
-    // Set the custom theme
-    monaco.editor.defineTheme("material-theme", monacoTheme);
+    // Create and set the custom theme
+    console.log("Monaco editor mounted, appDarkMode:", appDarkMode, "theme colors:", theme);
+    const initialTheme = createMonacoTheme(theme, editorDarkMode);
+    monaco.editor.defineTheme("material-theme", initialTheme);
     monaco.editor.setTheme("material-theme");
     
     // Configure JSON language features
@@ -151,16 +158,18 @@ export function MonacoEditor({
     onChange(value || "");
   };
 
-  // Update theme when preview theme changes
+  // Update theme when app dark mode changes
   useEffect(() => {
     if (editorRef.current) {
       const monaco = (window as any).monaco;
       if (monaco) {
-        monaco.editor.defineTheme("material-theme", monacoTheme);
+        console.log("Updating Monaco theme, appDarkMode:", appDarkMode, "theme colors:", theme);
+        const updatedTheme = createMonacoTheme(theme, editorDarkMode);
+        monaco.editor.defineTheme("material-theme", updatedTheme);
         monaco.editor.setTheme("material-theme");
       }
     }
-  }, [previewTheme, theme]);
+  }, [theme, appDarkMode, editorDarkMode]);
 
   return (
     <div className="w-full h-full">

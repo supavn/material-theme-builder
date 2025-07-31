@@ -85,7 +85,7 @@ export function MobilePreview() {
           <h2 className="text-sm font-semibold text-foreground">Mobile Preview</h2>
           
           <div className="flex items-center space-x-2">
-            <span className="text-xs text-muted-foreground">Theme:</span>
+            <span className="text-xs text-muted-foreground">Preview:</span>
             <div className="flex bg-muted rounded-lg p-1">
               <Button
                 variant={previewTheme === "light" ? "default" : "ghost"}

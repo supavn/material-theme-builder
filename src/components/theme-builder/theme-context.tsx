@@ -7,6 +7,7 @@ interface ThemeContextType {
   darkTheme: ColorScheme;
   currentEditingTheme: "light" | "dark";
   previewTheme: "light" | "dark";
+  appDarkMode: boolean;
   themeName: string;
   seedColor: string;
   currentThemeId: string | null;
@@ -142,9 +143,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 interface ThemeProviderProps {
   children: ReactNode;
+  appDarkMode: boolean;
 }
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
   const [lightTheme, setLightTheme] = useState<ColorScheme>(defaultLightTheme);
   const [darkTheme, setDarkTheme] = useState<ColorScheme>(defaultDarkTheme);
   const [currentEditingTheme, setCurrentEditingTheme] = useState<"light" | "dark">("light");
@@ -618,6 +620,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     darkTheme,
     currentEditingTheme,
     previewTheme,
+    appDarkMode,
     themeName,
     seedColor,
     currentThemeId,
