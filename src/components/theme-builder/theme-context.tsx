@@ -15,7 +15,6 @@ interface ThemeContextType {
   savedThemes: SavedTheme[];
   recentThemes: SavedTheme[];
   switchEditingTheme: (theme: "light" | "dark") => void;
-  switchPreviewTheme: (theme: "light" | "dark") => void;
   updateColor: (key: keyof ColorScheme, value: string) => void;
   setThemeName: (name: string) => void;
   setSeedColor: (color: string) => void;
@@ -51,6 +50,11 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
   const [darkTheme, setDarkTheme] = useState<ColorScheme>(defaultDarkTheme);
   const [currentEditingTheme, setCurrentEditingTheme] = useState<"light" | "dark">("light");
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("light");
+
+  // Sync previewTheme with appDarkMode
+  useEffect(() => {
+    setPreviewTheme(appDarkMode ? "dark" : "light");
+  }, [appDarkMode]);
   const [themeName, setThemeName] = useState<string>("Custom Theme");
   const [seedColor, setSeedColor] = useState<string>("#6750A4");
   const [currentThemeId, setCurrentThemeId] = useState<string | null>(null);
@@ -108,10 +112,6 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
 
   const switchEditingTheme = (theme: "light" | "dark") => {
     setCurrentEditingTheme(theme);
-  };
-
-  const switchPreviewTheme = (theme: "light" | "dark") => {
-    setPreviewTheme(theme);
   };
 
   const updateColor = (key: keyof ColorScheme, value: string) => {
@@ -597,7 +597,6 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
     savedThemes,
     recentThemes,
     switchEditingTheme,
-    switchPreviewTheme,
     updateColor,
     setThemeName,
     setSeedColor,

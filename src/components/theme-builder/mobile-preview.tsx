@@ -72,7 +72,7 @@ function PreviewButton({ children, variant = "filled", color = "primary", style 
 }
 
 export function MobilePreview() {
-  const { lightTheme, darkTheme, previewTheme, switchPreviewTheme } = useTheme();
+  const { lightTheme, darkTheme, previewTheme, appDarkMode } = useTheme();
   const [deviceType, setDeviceType] = useState<"android" | "ios">("android");
   
   const theme = previewTheme === "light" ? lightTheme : darkTheme;
@@ -85,24 +85,19 @@ export function MobilePreview() {
           <h2 className="text-sm font-semibold text-foreground">Mobile Preview</h2>
           
           <div className="flex items-center space-x-2">
-            <span className="text-xs text-muted-foreground">Preview:</span>
-            <div className="flex bg-muted rounded-lg p-1">
-              <Button
-                variant={previewTheme === "light" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => switchPreviewTheme("light")}
-              >
-                <Sun className="w-3 h-3 mr-1" />
-                Light
-              </Button>
-              <Button
-                variant={previewTheme === "dark" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => switchPreviewTheme("dark")}
-              >
-                <Moon className="w-3 h-3 mr-1" />
-                Dark
-              </Button>
+            <span className="text-xs text-muted-foreground">Theme:</span>
+            <div className="flex items-center space-x-1 px-2 py-1 bg-muted rounded-lg">
+              {appDarkMode ? (
+                <>
+                  <Moon className="w-3 h-3" />
+                  <span className="text-xs font-medium">Dark</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="w-3 h-3" />
+                  <span className="text-xs font-medium">Light</span>
+                </>
+              )}
             </div>
           </div>
         </div>
