@@ -5,6 +5,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      width: {
+        '100': '25rem', // 400px (25% larger than w-80 which is 20rem/320px)
+      },
+      height: {
+        '800': '50rem', // 800px (25% larger than 640px)
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
