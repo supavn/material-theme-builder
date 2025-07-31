@@ -247,6 +247,128 @@ export function MobilePreview() {
                       </div>
                     </div>
 
+                    {/* Tag Colors Section */}
+                    <div className="space-y-3">
+                      <h3 
+                        className="text-sm font-semibold"
+                        style={{ color: theme.onBackground }}
+                      >
+                        Tag Colors
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.blueTagBackground,
+                            color: theme.blueTagText,
+                            borderColor: theme.blueTagBorder 
+                          }}
+                        >
+                          Blue
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.cyanTagBackground,
+                            color: theme.cyanTagText,
+                            borderColor: theme.cyanTagBorder 
+                          }}
+                        >
+                          Cyan
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.geekblueTagBackground,
+                            color: theme.geekblueTagText,
+                            borderColor: theme.geekblueTagBorder 
+                          }}
+                        >
+                          Geekblue
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.goldTagBackground,
+                            color: theme.goldTagText,
+                            borderColor: theme.goldTagBorder 
+                          }}
+                        >
+                          Gold
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.greenTagBackground,
+                            color: theme.greenTagText,
+                            borderColor: theme.greenTagBorder 
+                          }}
+                        >
+                          Green
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.limeTagBackground,
+                            color: theme.limeTagText,
+                            borderColor: theme.limeTagBorder 
+                          }}
+                        >
+                          Lime
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.magentaTagBackground,
+                            color: theme.magentaTagText,
+                            borderColor: theme.magentaTagBorder 
+                          }}
+                        >
+                          Magenta
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.orangeTagBackground,
+                            color: theme.orangeTagText,
+                            borderColor: theme.orangeTagBorder 
+                          }}
+                        >
+                          Orange
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.purpleTagBackground,
+                            color: theme.purpleTagText,
+                            borderColor: theme.purpleTagBorder 
+                          }}
+                        >
+                          Purple
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.redTagBackground,
+                            color: theme.redTagText,
+                            borderColor: theme.redTagBorder 
+                          }}
+                        >
+                          Red
+                        </div>
+                        <div 
+                          className="text-xs px-2 py-1 rounded border"
+                          style={{ 
+                            backgroundColor: theme.volcanoTagBackground,
+                            color: theme.volcanoTagText,
+                            borderColor: theme.volcanoTagBorder 
+                          }}
+                        >
+                          Volcano
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Chips Section */}
                     <div className="space-y-3">
                       <h3 
