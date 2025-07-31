@@ -1,4 +1,4 @@
-import { ColorScheme } from "@shared/schema";
+import { ColorScheme } from "@/types/schema";
 
 // Helper function to convert hex to HSL
 function hexToHsl(hex: string): [number, number, number] {

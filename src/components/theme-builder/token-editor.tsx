@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Palette, Sun, Moon, Wand2 } from "lucide-react";
-import { ColorScheme } from "@shared/schema";
+import { ColorScheme } from "@/types/schema";
 import React, { useState } from "react";
 import {
   hexToHsv,

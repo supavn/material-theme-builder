@@ -1,4 +1,4 @@
-import { ThemeExport } from "@shared/schema";
+import { ThemeExport } from '@/types/schema';
 
 export function exportToJSON(theme: ThemeExport): void {
   const dataStr = JSON.stringify(theme, null, 2);

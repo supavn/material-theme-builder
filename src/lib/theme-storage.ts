@@ -2,19 +2,12 @@
  * Local storage utilities for managing saved themes
  */
 
-import { ThemeExport } from "@shared/schema";
+import { ThemeExport, SavedTheme } from "@/types/schema";
 
 const STORAGE_PREFIX = "materialThemeBuilder_";
 const SAVED_THEMES_KEY = `${STORAGE_PREFIX}savedThemes`;
 const CURRENT_THEME_KEY = `${STORAGE_PREFIX}currentTheme`;
 const RECENT_THEMES_KEY = `${STORAGE_PREFIX}recentThemes`;
-
-export interface SavedTheme extends ThemeExport {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  isAutoSave?: boolean;
-}
 
 export interface ThemeStorageManager {
   // Save theme operations

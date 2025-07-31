@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { copyToClipboard } from "./export-utils";
 import { useToast } from "@/hooks/use-toast";
-import { ThemeExport } from "@shared/schema";
+import { ThemeExport } from "@/types/schema";
 
 export function ThemeEditor() {
   const { 

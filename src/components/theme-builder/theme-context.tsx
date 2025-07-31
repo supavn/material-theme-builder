@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { ColorScheme, ThemeExport } from "@shared/schema";
-import { themeStorage, SavedTheme } from "@/lib/theme-storage";
+import { ColorScheme, ThemeExport, SavedTheme } from "@/types/schema";
+import { themeStorage } from "@/lib/theme-storage";
 
 interface ThemeContextType {
   lightTheme: ColorScheme;
