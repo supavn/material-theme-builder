@@ -67,40 +67,40 @@ export interface ColorScheme {
   criticalContainer?: string;
   onCriticalContainer?: string;
   
-  // Tag color tokens (optional since they might not all be present)
-  blueTagText?: string;
-  blueTagBackground?: string;
-  blueTagBorder?: string;
-  cyanTagText?: string;
-  cyanTagBackground?: string;
-  cyanTagBorder?: string;
-  geekblueTagText?: string;
-  geekblueTagBackground?: string;
-  geekblueTagBorder?: string;
-  goldTagText?: string;
-  goldTagBackground?: string;
-  goldTagBorder?: string;
-  greenTagText?: string;
-  greenTagBackground?: string;
-  greenTagBorder?: string;
-  limeTagText?: string;
-  limeTagBackground?: string;
-  limeTagBorder?: string;
-  magentaTagText?: string;
-  magentaTagBackground?: string;
-  magentaTagBorder?: string;
-  orangeTagText?: string;
-  orangeTagBackground?: string;
-  orangeTagBorder?: string;
-  purpleTagText?: string;
-  purpleTagBackground?: string;
-  purpleTagBorder?: string;
-  redTagText?: string;
-  redTagBackground?: string;
-  redTagBorder?: string;
-  volcanoTagText?: string;
-  volcanoTagBackground?: string;
-  volcanoTagBorder?: string;
+  // Tag color tokens
+  blueTagText: string;
+  blueTagBackground: string;
+  blueTagBorder: string;
+  cyanTagText: string;
+  cyanTagBackground: string;
+  cyanTagBorder: string;
+  geekblueTagText: string;
+  geekblueTagBackground: string;
+  geekblueTagBorder: string;
+  goldTagText: string;
+  goldTagBackground: string;
+  goldTagBorder: string;
+  greenTagText: string;
+  greenTagBackground: string;
+  greenTagBorder: string;
+  limeTagText: string;
+  limeTagBackground: string;
+  limeTagBorder: string;
+  magentaTagText: string;
+  magentaTagBackground: string;
+  magentaTagBorder: string;
+  orangeTagText: string;
+  orangeTagBackground: string;
+  orangeTagBorder: string;
+  purpleTagText: string;
+  purpleTagBackground: string;
+  purpleTagBorder: string;
+  redTagText: string;
+  redTagBackground: string;
+  redTagBorder: string;
+  volcanoTagText: string;
+  volcanoTagBackground: string;
+  volcanoTagBorder: string;
 }
 
 export interface ThemeSchemes {
