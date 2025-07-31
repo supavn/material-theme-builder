@@ -746,6 +746,288 @@ export function TokenEditor() {
               />
             </div>
           </div>
+
+          <Separator className="my-3" />
+
+          {/* Tag Colors */}
+          <div className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tag Colors</h3>
+            
+            {/* Blue Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Blue</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="blueTagText"
+                  value={currentTheme.blueTagText}
+                  onChange={(value) => handleColorChange("blueTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="blueTagBackground"
+                  value={currentTheme.blueTagBackground}
+                  onChange={(value) => handleColorChange("blueTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="blueTagBorder"
+                  value={currentTheme.blueTagBorder}
+                  onChange={(value) => handleColorChange("blueTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Cyan Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Cyan</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="cyanTagText"
+                  value={currentTheme.cyanTagText}
+                  onChange={(value) => handleColorChange("cyanTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="cyanTagBackground"
+                  value={currentTheme.cyanTagBackground}
+                  onChange={(value) => handleColorChange("cyanTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="cyanTagBorder"
+                  value={currentTheme.cyanTagBorder}
+                  onChange={(value) => handleColorChange("cyanTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Geekblue Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Geekblue</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="geekblueTagText"
+                  value={currentTheme.geekblueTagText}
+                  onChange={(value) => handleColorChange("geekblueTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="geekblueTagBackground"
+                  value={currentTheme.geekblueTagBackground}
+                  onChange={(value) => handleColorChange("geekblueTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="geekblueTagBorder"
+                  value={currentTheme.geekblueTagBorder}
+                  onChange={(value) => handleColorChange("geekblueTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Gold Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Gold</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="goldTagText"
+                  value={currentTheme.goldTagText}
+                  onChange={(value) => handleColorChange("goldTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="goldTagBackground"
+                  value={currentTheme.goldTagBackground}
+                  onChange={(value) => handleColorChange("goldTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="goldTagBorder"
+                  value={currentTheme.goldTagBorder}
+                  onChange={(value) => handleColorChange("goldTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Green Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Green</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="greenTagText"
+                  value={currentTheme.greenTagText}
+                  onChange={(value) => handleColorChange("greenTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="greenTagBackground"
+                  value={currentTheme.greenTagBackground}
+                  onChange={(value) => handleColorChange("greenTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="greenTagBorder"
+                  value={currentTheme.greenTagBorder}
+                  onChange={(value) => handleColorChange("greenTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Lime Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Lime</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="limeTagText"
+                  value={currentTheme.limeTagText}
+                  onChange={(value) => handleColorChange("limeTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="limeTagBackground"
+                  value={currentTheme.limeTagBackground}
+                  onChange={(value) => handleColorChange("limeTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="limeTagBorder"
+                  value={currentTheme.limeTagBorder}
+                  onChange={(value) => handleColorChange("limeTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Magenta Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Magenta</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="magentaTagText"
+                  value={currentTheme.magentaTagText}
+                  onChange={(value) => handleColorChange("magentaTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="magentaTagBackground"
+                  value={currentTheme.magentaTagBackground}
+                  onChange={(value) => handleColorChange("magentaTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="magentaTagBorder"
+                  value={currentTheme.magentaTagBorder}
+                  onChange={(value) => handleColorChange("magentaTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Orange Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Orange</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="orangeTagText"
+                  value={currentTheme.orangeTagText}
+                  onChange={(value) => handleColorChange("orangeTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="orangeTagBackground"
+                  value={currentTheme.orangeTagBackground}
+                  onChange={(value) => handleColorChange("orangeTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="orangeTagBorder"
+                  value={currentTheme.orangeTagBorder}
+                  onChange={(value) => handleColorChange("orangeTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Purple Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Purple</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="purpleTagText"
+                  value={currentTheme.purpleTagText}
+                  onChange={(value) => handleColorChange("purpleTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="purpleTagBackground"
+                  value={currentTheme.purpleTagBackground}
+                  onChange={(value) => handleColorChange("purpleTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="purpleTagBorder"
+                  value={currentTheme.purpleTagBorder}
+                  onChange={(value) => handleColorChange("purpleTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Red Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Red</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="redTagText"
+                  value={currentTheme.redTagText}
+                  onChange={(value) => handleColorChange("redTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="redTagBackground"
+                  value={currentTheme.redTagBackground}
+                  onChange={(value) => handleColorChange("redTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="redTagBorder"
+                  value={currentTheme.redTagBorder}
+                  onChange={(value) => handleColorChange("redTagBorder", value)}
+                />
+              </div>
+            </div>
+
+            {/* Volcano Tag */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-muted-foreground">Volcano</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <CompactColorInput
+                  label="Text"
+                  colorKey="volcanoTagText"
+                  value={currentTheme.volcanoTagText}
+                  onChange={(value) => handleColorChange("volcanoTagText", value)}
+                />
+                <CompactColorInput
+                  label="Background"
+                  colorKey="volcanoTagBackground"
+                  value={currentTheme.volcanoTagBackground}
+                  onChange={(value) => handleColorChange("volcanoTagBackground", value)}
+                />
+                <CompactColorInput
+                  label="Border"
+                  colorKey="volcanoTagBorder"
+                  value={currentTheme.volcanoTagBorder}
+                  onChange={(value) => handleColorChange("volcanoTagBorder", value)}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

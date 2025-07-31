@@ -97,6 +97,46 @@ This project is a web-based theme builder for Flutter, focused on Material You (
 - `redTagText`, `redTagBackground`, `redTagBorder`
 - `volcanoTagText`, `volcanoTagBackground`, `volcanoTagBorder`
 
+### Default value for tag color tokens
+
+```json
+{
+  "blueTagText": "#1668DC",
+  "blueTagBackground": "#111A2C",
+  "blueTagBorder": "#15325B",
+  "cyanTagText": "#13A8A8",
+  "cyanTagBackground": "#112123",
+  "cyanTagBorder": "#144848",
+  "geekblueTagText": "#2B4ACB",
+  "geekblueTagBackground": "#131629",
+  "geekblueTagBorder": "#1C2755",
+  "goldTagText": "#D89614",
+  "goldTagBackground": "#2B2111",
+  "goldTagBorder": "#594214",
+  "greenTagText": "#49AA19",
+  "greenTagBackground": "#162312",
+  "greenTagBorder": "#274916",
+  "limeTagText": "#8BBB11",
+  "limeTagBackground": "#1F2611",
+  "limeTagBorder": "#3E4F13",
+  "magentaTagText": "#CB2B83",
+  "magentaTagBackground": "#291321",
+  "magentaTagBorder": "#551C3B",
+  "orangeTagText": "#D87A16",
+  "orangeTagBackground": "#2B1D11",
+  "orangeTagBorder": "#593815",
+  "purpleTagText": "#593815",
+  "purpleTagBackground": "#1A1325",
+  "purpleTagBorder": "#301C4D",
+  "redTagText": "#D32029",
+  "redTagBackground": "#2A1215",
+  "redTagBorder": "#58181C",
+  "volcanoTagText": "#D84A1B",
+  "volcanoTagBackground": "#2B1611",
+  "volcanoTagBorder": "#592716"
+}
+```
+
 ---
 
 ## User Experience (UX) Flow
