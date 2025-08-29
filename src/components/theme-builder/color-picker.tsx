@@ -14,7 +14,7 @@ interface ColorPickerProps {
 
 export function ColorPicker({ label, value, onChange, description }: ColorPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [tempValue, setTempValue] = useState(value);
+  const [tempValue, setTempValue] = useState(value ?? "");
 
   // Validate hex color
   const isValidHex = (color: string) => {
@@ -22,9 +22,11 @@ export function ColorPicker({ label, value, onChange, description }: ColorPicker
   };
 
   const handleInputChange = (inputValue: string) => {
-    setTempValue(inputValue);
+    setTempValue(inputValue ?? "");
     if (isValidHex(inputValue)) {
       onChange(inputValue);
+    } else if (inputValue === "") {
+      // keep it controlled with empty string, do not call onChange
     }
   };
 
@@ -106,7 +108,7 @@ export function ColorPicker({ label, value, onChange, description }: ColorPicker
 
         {/* Hex input */}
         <Input
-          value={tempValue}
+          value={tempValue ?? ""}
           onChange={(e) => handleInputChange(e.target.value)}
           onBlur={handleInputBlur}
           placeholder="#000000"
