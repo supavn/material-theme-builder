@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { ColorScheme, ThemeExport, SavedTheme } from "@/types/schema";
+import targetTheme from "../../../target.generated.json";
+import { getTagHex } from "@/theme";
 import { themeStorage } from "@/lib/theme-storage";
 import { getDefaultTheme } from "./theme-defaults";
 
@@ -90,6 +92,29 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
 
     if (savedSeedColor) {
       setSeedColor(savedSeedColor);
+    }
+
+    // If no saved theme, hydrate from target.generated.json
+    if (!savedLightTheme || !savedDarkTheme) {
+      try {
+        const t: any = targetTheme;
+        const nextLight: Record<string, string> = { ...(t?.schemes?.light || {}) };
+        const nextDark: Record<string, string> = { ...(t?.schemes?.dark || {}) };
+        if (Array.isArray(t?.extendedColors)) {
+          for (const ec of t.extendedColors) {
+            if (ec?.name && ec?.color) {
+              nextLight[ec.name] = ec.color;
+              nextDark[ec.name] = ec.color;
+            }
+          }
+        }
+        if (t?.schemes?.light) setLightTheme(prev => ({ ...prev, ...nextLight }));
+        if (t?.schemes?.dark) setDarkTheme(prev => ({ ...prev, ...nextDark }));
+        if (t?.themeName) setThemeName(t.themeName);
+        if (t?.seed) setSeedColor(t.seed);
+      } catch (err) {
+        console.warn("Failed to hydrate from target.generated.json", err);
+      }
     }
   }, []);
 
@@ -425,9 +450,24 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
     };
   };
 
-  const importTheme = (theme: ThemeExport) => {
-    setLightTheme(theme.schemes.light);
-    setDarkTheme(theme.schemes.dark);
+  const importTheme = (theme: any) => {
+    // Base schemes
+    const nextLight = { ...theme.schemes?.light } as Record<string, string>;
+    const nextDark = { ...theme.schemes?.dark } as Record<string, string>;
+
+    // Compatibility: map extendedColors back into scheme fields if present
+    const extended: Array<{ name: string; color: string }> = Array.isArray(theme.extendedColors) ? theme.extendedColors : [];
+    if (extended.length > 0) {
+      for (const ec of extended) {
+        if (ec && typeof ec.name === "string" && typeof ec.color === "string") {
+          nextLight[ec.name] = ec.color;
+          nextDark[ec.name] = ec.color;
+        }
+      }
+    }
+
+    setLightTheme((prev) => ({ ...prev, ...nextLight } as any));
+    setDarkTheme((prev) => ({ ...prev, ...nextDark } as any));
     setThemeName(theme.themeName || "Imported Theme");
     setSeedColor(theme.seed || "#6750A4");
   };
