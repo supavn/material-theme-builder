@@ -1,0 +1,342 @@
+{
+  "themeName": "",
+  "seed": "#863EF9",
+  "schemes": {
+    "light": {
+      "primary": "#6D14E0",
+      "surfaceTint": "#7628E9",
+      "onPrimary": "#FFFFFF",
+      "primaryContainer": "#863EF9",
+      "onPrimaryContainer": "#F7EDFF",
+      "secondary": "#625882",
+      "onSecondary": "#FFFFFF",
+      "secondaryContainer": "#DBCEFF",
+      "onSecondaryContainer": "#605680",
+      "tertiary": "#71585D",
+      "onTertiary": "#FFFFFF",
+      "tertiaryContainer": "#FFDDE3",
+      "onTertiaryContainer": "#795F65",
+      "error": "#BA1A1A",
+      "onError": "#FFFFFF",
+      "errorContainer": "#FFDAD6",
+      "onErrorContainer": "#93000A",
+      "background": "#FEF7FF",
+      "onBackground": "#1E1A24",
+      "surface": "#FCF8F8",
+      "onSurface": "#1C1B1B",
+      "surfaceVariant": "#E9DEF5",
+      "onSurfaceVariant": "#4A4455",
+      "outline": "#7C7487",
+      "outlineVariant": "#CDC2D8",
+      "shadow": "#000000",
+      "scrim": "#000000",
+      "inverseSurface": "#313030",
+      "inverseOnSurface": "#F4F0EF",
+      "inversePrimary": "#D4BBFF",
+      "primaryFixed": "#EBDCFF",
+      "onPrimaryFixed": "#260059",
+      "primaryFixedDim": "#D4BBFF",
+      "onPrimaryFixedVariant": "#5C00C4",
+      "secondaryFixed": "#E8DEFF",
+      "onSecondaryFixed": "#1E153B",
+      "secondaryFixedDim": "#CCC0F0",
+      "onSecondaryFixedVariant": "#4A4169",
+      "tertiaryFixed": "#FCDAE0",
+      "onTertiaryFixed": "#29161B",
+      "tertiaryFixedDim": "#DFBEC4",
+      "onTertiaryFixedVariant": "#584146",
+      "surfaceDim": "#DDD9D9",
+      "surfaceBright": "#FCF8F8",
+      "surfaceContainerLowest": "#FFFFFF",
+      "surfaceContainerLow": "#F6F3F2",
+      "surfaceContainer": "#F1EDEC",
+      "surfaceContainerHigh": "#EBE7E7",
+      "surfaceContainerHighest": "#E5E2E1"
+    },
+    "dark": {
+      "primary": "#D4BBFF",
+      "surfaceTint": "#D4BBFF",
+      "onPrimary": "#40008C",
+      "primaryContainer": "#863EF9",
+      "onPrimaryContainer": "#F7EDFF",
+      "secondary": "#F6EEFF",
+      "onSecondary": "#332A51",
+      "secondaryContainer": "#DBCEFF",
+      "onSecondaryContainer": "#605680",
+      "tertiary": "#FFFFFF",
+      "onTertiary": "#402B2F",
+      "tertiaryContainer": "#FCDAE0",
+      "onTertiaryContainer": "#775E63",
+      "error": "#FFB4AB",
+      "onError": "#690005",
+      "errorContainer": "#93000A",
+      "onErrorContainer": "#FFDAD6",
+      "background": "#15121C",
+      "onBackground": "#E8DFEE",
+      "surface": "#141313",
+      "onSurface": "#E5E2E1",
+      "surfaceVariant": "#4A4455",
+      "onSurfaceVariant": "#CDC2D8",
+      "outline": "#968DA1",
+      "outlineVariant": "#4A4455",
+      "shadow": "#000000",
+      "scrim": "#000000",
+      "inverseSurface": "#E5E2E1",
+      "inverseOnSurface": "#313030",
+      "inversePrimary": "#7628E9",
+      "primaryFixed": "#EBDCFF",
+      "onPrimaryFixed": "#260059",
+      "primaryFixedDim": "#D4BBFF",
+      "onPrimaryFixedVariant": "#5C00C4",
+      "secondaryFixed": "#E8DEFF",
+      "onSecondaryFixed": "#1E153B",
+      "secondaryFixedDim": "#CCC0F0",
+      "onSecondaryFixedVariant": "#4A4169",
+      "tertiaryFixed": "#FCDAE0",
+      "onTertiaryFixed": "#29161B",
+      "tertiaryFixedDim": "#DFBEC4",
+      "onTertiaryFixedVariant": "#584146",
+      "surfaceDim": "#141313",
+      "surfaceBright": "#3A3939",
+      "surfaceContainerLowest": "#0E0E0E",
+      "surfaceContainerLow": "#1C1B1B",
+      "surfaceContainer": "#201F1F",
+      "surfaceContainerHigh": "#2A2A2A",
+      "surfaceContainerHighest": "#353434"
+    }
+  },
+  "extendedColors": [
+    {
+      "name": "blueTagText",
+      "color": "#1668DC",
+      "description": "blue tag text color",
+      "fallback": "blue tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "blueTagBackground",
+      "color": "#E6F4FF",
+      "description": "blue tag background color",
+      "fallback": "blue tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "blueTagBorder",
+      "color": "#91CAFF",
+      "description": "blue tag border color",
+      "fallback": "blue tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "cyanTagText",
+      "color": "#13A8A8",
+      "description": "cyan tag text color",
+      "fallback": "cyan tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "cyanTagBackground",
+      "color": "#E6FFFB",
+      "description": "cyan tag background color",
+      "fallback": "cyan tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "cyanTagBorder",
+      "color": "#87E8DE",
+      "description": "cyan tag border color",
+      "fallback": "cyan tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "geekblueTagText",
+      "color": "#2B4ACB",
+      "description": "geekblue tag text color",
+      "fallback": "geekblue tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "geekblueTagBackground",
+      "color": "#F0F5FF",
+      "description": "geekblue tag background color",
+      "fallback": "geekblue tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "geekblueTagBorder",
+      "color": "#ADC6FF",
+      "description": "geekblue tag border color",
+      "fallback": "geekblue tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "goldTagText",
+      "color": "#D89614",
+      "description": "gold tag text color",
+      "fallback": "gold tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "goldTagBackground",
+      "color": "#FFFBE6",
+      "description": "gold tag background color",
+      "fallback": "gold tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "goldTagBorder",
+      "color": "#FFD666",
+      "description": "gold tag border color",
+      "fallback": "gold tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "greenTagText",
+      "color": "#49AA19",
+      "description": "green tag text color",
+      "fallback": "green tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "greenTagBackground",
+      "color": "#F6FFED",
+      "description": "green tag background color",
+      "fallback": "green tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "greenTagBorder",
+      "color": "#B7EB8F",
+      "description": "green tag border color",
+      "fallback": "green tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "limeTagText",
+      "color": "#8BBB11",
+      "description": "lime tag text color",
+      "fallback": "lime tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "limeTagBackground",
+      "color": "#FCFFE6",
+      "description": "lime tag background color",
+      "fallback": "lime tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "limeTagBorder",
+      "color": "#EAFF8F",
+      "description": "lime tag border color",
+      "fallback": "lime tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "magentaTagText",
+      "color": "#CB2B83",
+      "description": "magenta tag text color",
+      "fallback": "magenta tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "magentaTagBackground",
+      "color": "#FFF0F6",
+      "description": "magenta tag background color",
+      "fallback": "magenta tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "magentaTagBorder",
+      "color": "#FFADD2",
+      "description": "magenta tag border color",
+      "fallback": "magenta tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "orangeTagText",
+      "color": "#D87A16",
+      "description": "orange tag text color",
+      "fallback": "orange tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "orangeTagBackground",
+      "color": "#FFF7E6",
+      "description": "orange tag background color",
+      "fallback": "orange tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "orangeTagBorder",
+      "color": "#FFD591",
+      "description": "orange tag border color",
+      "fallback": "orange tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "purpleTagText",
+      "color": "#722ED1",
+      "description": "purple tag text color",
+      "fallback": "purple tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "purpleTagBackground",
+      "color": "#F9F0FF",
+      "description": "purple tag background color",
+      "fallback": "purple tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "purpleTagBorder",
+      "color": "#D3ADF7",
+      "description": "purple tag border color",
+      "fallback": "purple tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "redTagText",
+      "color": "#D32029",
+      "description": "red tag text color",
+      "fallback": "red tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "redTagBackground",
+      "color": "#FFF2F0",
+      "description": "red tag background color",
+      "fallback": "red tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "redTagBorder",
+      "color": "#FFCCC7",
+      "description": "red tag border color",
+      "fallback": "red tag border color token",
+      "harmonized": false
+    },
+    {
+      "name": "volcanoTagText",
+      "color": "#D84A1B",
+      "description": "volcano tag text color",
+      "fallback": "volcano tag text color token",
+      "harmonized": false
+    },
+    {
+      "name": "volcanoTagBackground",
+      "color": "#FFF2E8",
+      "description": "volcano tag background color",
+      "fallback": "volcano tag background color token",
+      "harmonized": false
+    },
+    {
+      "name": "volcanoTagBorder",
+      "color": "#FFBB96",
+      "description": "volcano tag border color",
+      "fallback": "volcano tag border color token",
+      "harmonized": false
+    }
+  ],
+  "timestamp": "2025-08-29T08:03:11.918Z"
+}

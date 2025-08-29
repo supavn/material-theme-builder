@@ -172,51 +172,24 @@ export function MobilePreview() {
         {/* Status Overview */}
         <div className="space-y-3">
           <h3 className="text-sm font-semibold" style={{ color: theme.onBackground }}>
-            Status Badges Overview
+            Status Badges
           </h3>
           <div className="flex flex-wrap gap-2">
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.primary, color: theme.onPrimary }}
-            >
-              Primary
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.secondary, color: theme.onSecondary }}
-            >
-              Secondary
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.tertiary, color: theme.onTertiary }}
-            >
-              Tertiary
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.success, color: theme.onSuccess }}
-            >
-              Success
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.warning, color: theme.onWarning }}
-            >
-              Warning
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.error, color: theme.onError }}
-            >
-              Error
-            </Badge>
-            <Badge 
-              className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.information, color: theme.onInformation }}
-            >
-              Info
-            </Badge>
+            {([
+              { key: 'default', label: 'Default', bg: theme.blueTagBackground, text: theme.blueTagText, border: theme.blueTagBorder },
+              { key: 'success', label: 'Success', bg: theme.greenTagBackground, text: theme.greenTagText, border: theme.greenTagBorder },
+              { key: 'warning', label: 'Warning', bg: theme.goldTagBackground, text: theme.goldTagText, border: theme.goldTagBorder },
+              { key: 'error', label: 'Error', bg: theme.redTagBackground, text: theme.redTagText, border: theme.redTagBorder },
+              { key: 'information', label: 'Info', bg: theme.cyanTagBackground, text: theme.cyanTagText, border: theme.cyanTagBorder },
+            ] as const).map(({ key, label, bg, text, border }) => (
+              <span
+                key={key}
+                className="text-xs px-2 py-1 rounded border"
+                style={{ backgroundColor: bg, color: text, borderColor: border }}
+              >
+                {label}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -226,116 +199,17 @@ export function MobilePreview() {
             Tag Colors
           </h3>
           <div className="flex flex-wrap gap-2">
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.blueTagBackground,
-                color: theme.blueTagText,
-                borderColor: theme.blueTagBorder 
-              }}
-            >
-              Blue
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.cyanTagBackground,
-                color: theme.cyanTagText,
-                borderColor: theme.cyanTagBorder 
-              }}
-            >
-              Cyan
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.greenTagBackground,
-                color: theme.greenTagText,
-                borderColor: theme.greenTagBorder 
-              }}
-            >
-              Green
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.goldTagBackground,
-                color: theme.goldTagText,
-                borderColor: theme.goldTagBorder 
-              }}
-            >
-              Gold
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.orangeTagBackground,
-                color: theme.orangeTagText,
-                borderColor: theme.orangeTagBorder 
-              }}
-            >
-              Orange
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.redTagBackground,
-                color: theme.redTagText,
-                borderColor: theme.redTagBorder 
-              }}
-            >
-              Red
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.purpleTagBackground,
-                color: theme.purpleTagText,
-                borderColor: theme.purpleTagBorder 
-              }}
-            >
-              Purple
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.magentaTagBackground,
-                color: theme.magentaTagText,
-                borderColor: theme.magentaTagBorder 
-              }}
-            >
-              Magenta
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.limeTagBackground,
-                color: theme.limeTagText,
-                borderColor: theme.limeTagBorder 
-              }}
-            >
-              Lime
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.geekblueTagBackground,
-                color: theme.geekblueTagText,
-                borderColor: theme.geekblueTagBorder 
-              }}
-            >
-              Geekblue
-            </span>
-            <span 
-              className="text-xs px-2 py-1 rounded border"
-              style={{ 
-                backgroundColor: theme.volcanoTagBackground,
-                color: theme.volcanoTagText,
-                borderColor: theme.volcanoTagBorder 
-              }}
-            >
-              Volcano
-            </span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.blueTagBackground, color: theme.blueTagText, borderColor: theme.blueTagBorder }}>Blue</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.cyanTagBackground, color: theme.cyanTagText, borderColor: theme.cyanTagBorder }}>Cyan</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.greenTagBackground, color: theme.greenTagText, borderColor: theme.greenTagBorder }}>Green</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.goldTagBackground, color: theme.goldTagText, borderColor: theme.goldTagBorder }}>Gold</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.orangeTagBackground, color: theme.orangeTagText, borderColor: theme.orangeTagBorder }}>Orange</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.redTagBackground, color: theme.redTagText, borderColor: theme.redTagBorder }}>Red</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.purpleTagBackground, color: theme.purpleTagText, borderColor: theme.purpleTagBorder }}>Purple</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.magentaTagBackground, color: theme.magentaTagText, borderColor: theme.magentaTagBorder }}>Magenta</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.limeTagBackground, color: theme.limeTagText, borderColor: theme.limeTagBorder }}>Lime</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.geekblueTagBackground, color: theme.geekblueTagText, borderColor: theme.geekblueTagBorder }}>Geekblue</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.volcanoTagBackground, color: theme.volcanoTagText, borderColor: theme.volcanoTagBorder }}>Volcano</span>
           </div>
         </div>
 
