@@ -306,15 +306,15 @@ export function TokenEditor() {
   const {
     lightTheme,
     darkTheme,
-    currentEditingTheme,
-    switchEditingTheme,
+    previewTheme,
+    setPreviewThemeMode,
     updateColor,
     seedColor,
     setSeedColor,
     generatePalette,
   } = useTheme();
 
-  const currentTheme = currentEditingTheme === "light" ? lightTheme : darkTheme;
+  const currentTheme = previewTheme === "light" ? lightTheme : darkTheme;
 
   const handleColorChange = (key: keyof ColorScheme, value: string) => {
     updateColor(key, value);
@@ -339,26 +339,26 @@ export function TokenEditor() {
           
           <div className="flex bg-muted rounded-lg p-1">
             <Button
-              variant={currentEditingTheme === "light" ? "default" : "ghost"}
+              variant={previewTheme === "light" ? "default" : "ghost"}
               size="sm"
-              onClick={() => switchEditingTheme("light")}
+              onClick={() => setPreviewThemeMode("light")}
               className="flex-1"
             >
               <Sun className="w-3 h-3 mr-1" />
               Light
             </Button>
             <Button
-              variant={currentEditingTheme === "dark" ? "default" : "ghost"}
+              variant={previewTheme === "dark" ? "default" : "ghost"}
               size="sm"
-              onClick={() => switchEditingTheme("dark")}
+              onClick={() => setPreviewThemeMode("dark")}
               className="flex-1"
             >
               <Moon className="w-3 h-3 mr-1" />
               Dark
             </Button>
           </div>
-        </div>
-
+          </div>
+        
         {/* Seed Color - Compact */}
         <div className="mb-4">
           <CompactColorInput
