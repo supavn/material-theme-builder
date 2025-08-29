@@ -25,7 +25,7 @@ export default function ThemeBuilder() {
   };
 
   return (
-    <ThemeProvider appDarkMode={appDarkMode}>
+    <ThemeProvider appDarkMode={appDarkMode} onThemeModeChange={(mode) => { const isDark = mode === 'dark'; setAppDarkMode(isDark); document.documentElement.classList.toggle('dark', isDark); localStorage.setItem('app-theme', isDark ? 'dark' : 'light'); }}>
       <div className="min-h-screen bg-background text-foreground">
         <Header onToggleAppTheme={toggleAppTheme} appDarkMode={appDarkMode} />
         

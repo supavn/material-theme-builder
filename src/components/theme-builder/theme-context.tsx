@@ -34,6 +34,8 @@ interface ThemeContextType {
   refreshSavedThemes: () => Promise<void>;
   exportThemeToFile: (id?: string) => Promise<void>;
   importThemeFromFile: (file: File) => Promise<boolean>;
+  // New: control preview theme mode
+  setPreviewThemeMode: (mode: "light" | "dark") => void;
 }
 
 // Default Material Design 3 color schemes
@@ -45,9 +47,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 interface ThemeProviderProps {
   children: ReactNode;
   appDarkMode: boolean;
+  onThemeModeChange?: (mode: "light" | "dark") => void;
 }
 
-export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
+export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: ThemeProviderProps) {
   const [lightTheme, setLightTheme] = useState<ColorScheme>(defaultLightTheme);
   const [darkTheme, setDarkTheme] = useState<ColorScheme>(defaultDarkTheme);
   const [currentEditingTheme, setCurrentEditingTheme] = useState<"light" | "dark">("light");
@@ -654,6 +657,7 @@ export function ThemeProvider({ children, appDarkMode }: ThemeProviderProps) {
     refreshSavedThemes,
     exportThemeToFile,
     importThemeFromFile,
+    setPreviewThemeMode: (mode: "light" | "dark") => { setPreviewTheme(mode); onThemeModeChange?.(mode); },
   };
 
   return (
