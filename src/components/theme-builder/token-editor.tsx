@@ -31,6 +31,13 @@ interface ColorInputProps {
   contrastWith?: string;
 }
 
+interface ExtendedColorInputProps {
+  label: string;
+  tokenName: string;
+  value: string | undefined;
+  onChange: (value: string) => void;
+}
+
 function ColorInput({ label, colorKey, value, onChange, showContrast, contrastWith }: ColorInputProps) {
   return (
     <div className="space-y-1">
@@ -39,6 +46,25 @@ function ColorInput({ label, colorKey, value, onChange, showContrast, contrastWi
         <ColorPicker
           label=""
           value={value}
+          onChange={onChange}
+        />
+      </div>
+    </div>
+  );
+}
+
+// Enhanced compact color input for extended colors
+function ExtendedColorInput({ label, tokenName, value, onChange }: ExtendedColorInputProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const displayValue = value || "#000000";
+
+  return (
+    <div className="space-y-1">
+      <Label className="text-xs font-medium text-muted-foreground">{label}</Label>
+      <div className="flex items-center space-x-2">
+        <ColorPicker
+          label=""
+          value={displayValue}
           onChange={onChange}
         />
       </div>
@@ -306,9 +332,12 @@ export function TokenEditor() {
   const {
     lightTheme,
     darkTheme,
+    extendedColors,
     previewTheme,
     setPreviewThemeMode,
     updateColor,
+    updateExtendedColor,
+    getExtendedColorValue,
     seedColor,
     setSeedColor,
     generatePalette,
@@ -318,6 +347,10 @@ export function TokenEditor() {
 
   const handleColorChange = (key: keyof ColorScheme, value: string) => {
     updateColor(key, value);
+  };
+
+  const handleExtendedColorChange = (name: string, value: string) => {
+    updateExtendedColor(name as any, value);
   };
 
   return (
@@ -473,30 +506,24 @@ export function TokenEditor() {
           {/* Error Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Error</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Error"
-                colorKey="error"
-                value={currentTheme.error}
-                onChange={(value) => handleColorChange("error", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="errorText"
+                value={getExtendedColorValue("errorText")}
+                onChange={(value) => handleExtendedColorChange("errorText", value)}
               />
-              <CompactColorInput
-                label="On Error"
-                colorKey="onError"
-                value={currentTheme.onError}
-                onChange={(value) => handleColorChange("onError", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="errorBackground"
+                value={getExtendedColorValue("errorBackground")}
+                onChange={(value) => handleExtendedColorChange("errorBackground", value)}
               />
-              <CompactColorInput
-                label="Container"
-                colorKey="errorContainer"
-                value={currentTheme.errorContainer}
-                onChange={(value) => handleColorChange("errorContainer", value)}
-              />
-              <CompactColorInput
-                label="On Container"
-                colorKey="onErrorContainer"
-                value={currentTheme.onErrorContainer}
-                onChange={(value) => handleColorChange("onErrorContainer", value)}
+              <ExtendedColorInput
+                label="Border"
+                tokenName="errorBorder"
+                value={getExtendedColorValue("errorBorder")}
+                onChange={(value) => handleExtendedColorChange("errorBorder", value)}
               />
             </div>
           </div>
@@ -599,30 +626,24 @@ export function TokenEditor() {
           {/* Custom Tokens */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Warning</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Warning"
-                colorKey="warning"
-                value={currentTheme.warning}
-                onChange={(value) => handleColorChange("warning", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="warningText"
+                value={getExtendedColorValue("warningText")}
+                onChange={(value) => handleExtendedColorChange("warningText", value)}
               />
-              <CompactColorInput
-                label="On Warning"
-                colorKey="onWarning"
-                value={currentTheme.onWarning}
-                onChange={(value) => handleColorChange("onWarning", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="warningBackground"
+                value={getExtendedColorValue("warningBackground")}
+                onChange={(value) => handleExtendedColorChange("warningBackground", value)}
               />
-              <CompactColorInput
-                label="Warning Container"
-                colorKey="warningContainer"
-                value={currentTheme.warningContainer}
-                onChange={(value) => handleColorChange("warningContainer", value)}
-              />
-              <CompactColorInput
-                label="On Warning Container"
-                colorKey="onWarningContainer"
-                value={currentTheme.onWarningContainer}
-                onChange={(value) => handleColorChange("onWarningContainer", value)}
+              <ExtendedColorInput
+                label="Border"
+                tokenName="warningBorder"
+                value={getExtendedColorValue("warningBorder")}
+                onChange={(value) => handleExtendedColorChange("warningBorder", value)}
               />
             </div>
           </div>
@@ -632,30 +653,24 @@ export function TokenEditor() {
           {/* Success Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Success</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Success"
-                colorKey="success"
-                value={currentTheme.success}
-                onChange={(value) => handleColorChange("success", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="successText"
+                value={getExtendedColorValue("successText")}
+                onChange={(value) => handleExtendedColorChange("successText", value)}
               />
-              <CompactColorInput
-                label="On Success"
-                colorKey="onSuccess"
-                value={currentTheme.onSuccess}
-                onChange={(value) => handleColorChange("onSuccess", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="successBackground"
+                value={getExtendedColorValue("successBackground")}
+                onChange={(value) => handleExtendedColorChange("successBackground", value)}
               />
-              <CompactColorInput
-                label="Success Container"
-                colorKey="successContainer"
-                value={currentTheme.successContainer}
-                onChange={(value) => handleColorChange("successContainer", value)}
-              />
-              <CompactColorInput
-                label="On Success Container"
-                colorKey="onSuccessContainer"
-                value={currentTheme.onSuccessContainer}
-                onChange={(value) => handleColorChange("onSuccessContainer", value)}
+              <ExtendedColorInput
+                label="Border"
+                tokenName="successBorder"
+                value={getExtendedColorValue("successBorder")}
+                onChange={(value) => handleExtendedColorChange("successBorder", value)}
               />
             </div>
           </div>
@@ -665,30 +680,24 @@ export function TokenEditor() {
           {/* Information Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Information</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Information"
-                colorKey="information"
-                value={currentTheme.information}
-                onChange={(value) => handleColorChange("information", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="informationText"
+                value={getExtendedColorValue("informationText")}
+                onChange={(value) => handleExtendedColorChange("informationText", value)}
               />
-              <CompactColorInput
-                label="On Information"
-                colorKey="onInformation"
-                value={currentTheme.onInformation}
-                onChange={(value) => handleColorChange("onInformation", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="informationBackground"
+                value={getExtendedColorValue("informationBackground")}
+                onChange={(value) => handleExtendedColorChange("informationBackground", value)}
               />
-              <CompactColorInput
-                label="Information Container"
-                colorKey="informationContainer"
-                value={currentTheme.informationContainer}
-                onChange={(value) => handleColorChange("informationContainer", value)}
-              />
-              <CompactColorInput
-                label="On Information Container"
-                colorKey="onInformationContainer"
-                value={currentTheme.onInformationContainer}
-                onChange={(value) => handleColorChange("onInformationContainer", value)}
+              <ExtendedColorInput
+                label="Border"
+                tokenName="informationBorder"
+                value={getExtendedColorValue("informationBorder")}
+                onChange={(value) => handleExtendedColorChange("informationBorder", value)}
               />
             </div>
           </div>
@@ -698,30 +707,24 @@ export function TokenEditor() {
           {/* Default Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Default</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Default"
-                colorKey="defaultColor"
-                value={currentTheme.defaultColor}
-                onChange={(value) => handleColorChange("defaultColor", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="defaultText"
+                value={getExtendedColorValue("defaultText")}
+                onChange={(value) => handleExtendedColorChange("defaultText", value)}
               />
-              <CompactColorInput
-                label="On Default"
-                colorKey="onDefault"
-                value={currentTheme.onDefault}
-                onChange={(value) => handleColorChange("onDefault", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="defaultBackground"
+                value={getExtendedColorValue("defaultBackground")}
+                onChange={(value) => handleExtendedColorChange("defaultBackground", value)}
               />
-              <CompactColorInput
-                label="Default Container"
-                colorKey="defaultContainer"
-                value={currentTheme.defaultContainer}
-                onChange={(value) => handleColorChange("defaultContainer", value)}
-              />
-              <CompactColorInput
-                label="On Default Container"
-                colorKey="onDefaultContainer"
-                value={currentTheme.onDefaultContainer}
-                onChange={(value) => handleColorChange("onDefaultContainer", value)}
+              <ExtendedColorInput
+                label="Border"
+                tokenName="defaultBorder"
+                value={getExtendedColorValue("defaultBorder")}
+                onChange={(value) => handleExtendedColorChange("defaultBorder", value)}
               />
             </div>
           </div>
@@ -731,18 +734,24 @@ export function TokenEditor() {
           {/* Critical Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Critical</h3>
-            <div className="grid grid-cols-2 gap-2">
-              <CompactColorInput
-                label="Critical"
-                colorKey="critical"
-                value={currentTheme.critical}
-                onChange={(value) => handleColorChange("critical", value)}
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="criticalText"
+                value={getExtendedColorValue("criticalText")}
+                onChange={(value) => handleExtendedColorChange("criticalText", value)}
               />
-              <CompactColorInput
-                label="On Critical"
-                colorKey="onCritical"
-                value={currentTheme.onCritical}
-                onChange={(value) => handleColorChange("onCritical", value)}
+              <ExtendedColorInput
+                label="Background"
+                tokenName="criticalBackground"
+                value={getExtendedColorValue("criticalBackground")}
+                onChange={(value) => handleExtendedColorChange("criticalBackground", value)}
+              />
+              <ExtendedColorInput
+                label="Border"
+                tokenName="criticalBorder"
+                value={getExtendedColorValue("criticalBorder")}
+                onChange={(value) => handleExtendedColorChange("criticalBorder", value)}
               />
             </div>
           </div>
