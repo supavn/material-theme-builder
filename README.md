@@ -206,6 +206,70 @@ interface CustomEnumTheme {
 }
 ```
 
+## 🔄 Theme Migration
+
+The project has been migrated from the original theme format to a new extended colors structure that matches Figma's Material Theme Builder plugin format. This migration includes:
+
+### Migration Overview
+- **Extended Colors**: All semantic and tag tokens moved from `schemes.light/dark` to `extendedColors` array
+- **Type Safety**: Strict TypeScript types for all extended color names
+- **Runtime Accessors**: Helper functions `getExtended()` and `getExtendedHex()` for accessing extended colors
+- **Automatic Migration**: Scripts to migrate theme files and update code references
+
+### Available Scripts
+
+#### Migration Scripts
+```bash
+# Run the main theme migration
+npm run migrate:theme
+
+# Verify migration results
+npm run verify:migration
+
+# Preview code changes (dry run)
+npm run codemod:tags:dry
+
+# Apply code changes
+npm run codemod:tags
+```
+
+#### Migration Details
+- **Input**: `schemas/original.json` (or fallback to `/mnt/data/original.json`)
+- **Output**: `target.generated.json` with migrated structure
+- **Extended Colors**: 48 total tokens (15 semantic + 33 tag tokens)
+- **Clean Schemes**: All extended tokens removed from light/dark schemes
+- **Type Generation**: Auto-generates `src/theme/extended-tags.generated.ts`
+
+### Extended Colors Structure
+```typescript
+interface ExtendedColor {
+  name: ExtendedTagName;     // e.g., "warningText", "blueTagText"
+  color: string;             // hex color "#RRGGBB"
+  description: string;       // human readable description
+  fallback: string;          // fallback description
+  harmonized: false;         // always false per requirements
+}
+```
+
+### Usage in Code
+```typescript
+import { getExtendedHex, getTagHex } from '@/theme';
+
+// Before migration:
+// const color = theme.schemes.light.warningText;
+
+// After migration:
+const color = getExtendedHex(theme, 'warningText');
+// or with fallback:
+const color = getTagHex(theme, 'warningText'); // returns "#000000" if not found
+```
+
+### Rollback Instructions
+If you need to rollback the migration:
+1. Restore the original `target.generated.json` from backup
+2. Run `npm run codemod:tags` to revert code changes
+3. Restore the original `src/theme/extended-tags.generated.ts`
+
 ## 🔧 Development
 
 ### Tech Stack
@@ -225,10 +289,15 @@ interface CustomEnumTheme {
 
 ### Development Scripts
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run check        # TypeScript type checking
+npm run dev                  # Start development server
+npm run build                # Build for production
+npm run start                # Start production server
+npm run check                # TypeScript type checking
+npm run migrate:theme        # Run theme migration script
+npm run verify:migration     # Verify migration results
+npm run codemod:tags:dry     # Preview codemod changes
+npm run codemod:tags         # Apply codemod changes
+npm run test:theme           # Run theme verification tests
 ```
 
 ## 🎯 Design Principles

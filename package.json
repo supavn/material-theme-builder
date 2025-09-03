@@ -9,9 +9,10 @@
     "preview": "vite preview",
     "check": "tsc",
     "migrate:theme": "tsx scripts/migrate-theme.ts",
+    "verify:migration": "tsx scripts/verify-migration.ts",
     "codemod:tags:dry": "node codemods/replace-tag-tokens.cjs --dry",
     "codemod:tags": "node codemods/replace-tag-tokens.cjs --write",
-    "test:theme": "vitest run --coverage"
+    "test:theme": "tsx scripts/verify-migration.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

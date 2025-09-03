@@ -41,17 +41,26 @@ const TargetSchema = z.object({
   timestamp: z.string().optional().default(new Date().toISOString()),
 });
 
-// Inclusive ordered tag token list boundaries
-const TAG_START = "warningTagText";
+// Inclusive ordered tag token list boundaries - includes semantic tokens and tag tokens
+const TAG_START = "warningText";
 const TAG_END = "volcanoTagBorder";
 
-function isTagTokenKey(key: string): boolean {
+function isExtendedTokenKey(key: string): boolean {
+  const semanticTokens = [
+    "warningText", "warningBackground", "warningBorder",
+    "informationText", "informationBackground", "informationBorder", 
+    "successText", "successBackground", "successBorder",
+    "defaultText", "defaultBackground", "defaultBorder",
+    "errorText", "errorBackground", "errorBorder",
+  ];
+  
   const groups = [
-    "warning", "information", "success", "default", "critical",
     "blue", "cyan", "geekblue", "gold", "green", "lime", "magenta", "orange", "purple", "red", "volcano",
   ];
   const suffixes = ["TagText", "TagBackground", "TagBorder"];
-  return groups.some(g => key.startsWith(g)) && suffixes.some(s => key.endsWith(s));
+  const isTagToken = groups.some(g => key.startsWith(g)) && suffixes.some(s => key.endsWith(s));
+  
+  return semanticTokens.includes(key) || isTagToken;
 }
 
 function descriptionFor(name: string): string {
@@ -89,10 +98,10 @@ function migrate() {
   if (startIndex !== -1 && endIndex !== -1 && endIndex >= startIndex) {
     slice = lightEntries.slice(startIndex, endIndex + 1) as [string, unknown][];
   } else {
-    // Fallback: take all tag tokens in appearance order
-    slice = lightEntries.filter(([k]) => isTagTokenKey(k)) as [string, unknown][];
+    // Fallback: take all extended tokens (semantic + tag) in appearance order
+    slice = lightEntries.filter(([k]) => isExtendedTokenKey(k)) as [string, unknown][];
     if (slice.length === 0) {
-      throw new Error(`Could not locate any tag tokens in original light scheme`);
+      throw new Error(`Could not locate any extended tokens in original light scheme`);
     }
   }
 
@@ -115,10 +124,10 @@ function migrate() {
   });
 
   // Remove tag tokens from schemes.light and schemes.dark
-  const stripTags = (scheme: Record<string, unknown>) => {
+  const stripExtendedTokens = (scheme: Record<string, unknown>) => {
     const clone: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(scheme)) {
-      if (!isTagTokenKey(k)) clone[k] = v;
+      if (!isExtendedTokenKey(k)) clone[k] = v;
     }
     return clone;
   };
@@ -126,8 +135,8 @@ function migrate() {
   const newTarget = {
     ...target,
     schemes: {
-      light: stripTags(target.schemes.light),
-      dark: stripTags(target.schemes.dark),
+      light: stripExtendedTokens(target.schemes.light),
+      dark: stripExtendedTokens(target.schemes.dark),
     },
     extendedColors, // overwrite entirely
   };

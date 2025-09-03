@@ -1,8 +1,10 @@
+import type { ExtendedTagName } from './extended-tags.generated';
+
 export interface ExtendedColor {
-  name: string; // e.g., "warningTagText"
+  name: ExtendedTagName; // e.g., "warningText", "blueTagText"
   color: string; // hex like #RRGGBB
   description: string; // human readable
-  fallback: string; // e.g., "warning tag text color token"
+  fallback: string; // e.g., "warning text color token"
   harmonized: false; // always false per requirements
 }
 
@@ -45,31 +47,7 @@ export interface BaseColorScheme {
   outline: string;
   outlineVariant: string;
 
-  // Custom semantic tokens
-  defaultColor: string;
-  onDefault: string;
-  defaultContainer: string;
-  onDefaultContainer: string;
 
-  success: string;
-  onSuccess: string;
-  successContainer: string;
-  onSuccessContainer: string;
-
-  warning: string;
-  onWarning: string;
-  warningContainer: string;
-  onWarningContainer: string;
-
-  information: string;
-  onInformation: string;
-  informationContainer: string;
-  onInformationContainer: string;
-
-  critical: string;
-  onCritical: string;
-  criticalContainer?: string;
-  onCriticalContainer?: string;
 }
 
 export interface ThemeSchemesTarget {
@@ -85,14 +63,14 @@ export interface ThemeTarget {
   timestamp: string;
 }
 
-export function getExtended(theme: ThemeTarget, name: string): ExtendedColor | undefined {
+export function getExtended(theme: ThemeTarget, name: ExtendedTagName): ExtendedColor | undefined {
   return theme.extendedColors.find(ec => ec.name === name);
 }
 
-export function getExtendedHex(theme: ThemeTarget, name: string): string | undefined {
+export function getExtendedHex(theme: ThemeTarget, name: ExtendedTagName): string | undefined {
   return getExtended(theme, name)?.color;
 }
 
-export function getTagHex(theme: ThemeTarget, token: string) {
+export function getTagHex(theme: ThemeTarget, token: ExtendedTagName): string {
   return getExtendedHex(theme, token) ?? "#000000";
 }

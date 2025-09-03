@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { ColorScheme, ThemeExport, SavedTheme } from "@/types/schema";
+import { ColorScheme, ThemeExport, SavedTheme, ExtendedColor } from "@/types/schema";
 import targetTheme from "../../../target.generated.json";
-import { getTagHex } from "@/theme";
+import { getTagHex, getExtendedHex, ThemeTarget, ExtendedTagName } from "@/theme";
 import { themeStorage } from "@/lib/theme-storage";
 import { getDefaultTheme } from "./theme-defaults";
 
 interface ThemeContextType {
   lightTheme: ColorScheme;
   darkTheme: ColorScheme;
+  extendedColors: ExtendedColor[];
   currentEditingTheme: "light" | "dark";
   previewTheme: "light" | "dark";
   appDarkMode: boolean;
@@ -18,6 +19,8 @@ interface ThemeContextType {
   recentThemes: SavedTheme[];
   switchEditingTheme: (theme: "light" | "dark") => void;
   updateColor: (key: keyof ColorScheme, value: string) => void;
+  updateExtendedColor: (name: ExtendedTagName, value: string) => void;
+  getExtendedColorValue: (name: ExtendedTagName) => string | undefined;
   setThemeName: (name: string) => void;
   setSeedColor: (color: string) => void;
   generatePalette: () => void;
@@ -53,6 +56,7 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: ThemeProviderProps) {
   const [lightTheme, setLightTheme] = useState<ColorScheme>(defaultLightTheme);
   const [darkTheme, setDarkTheme] = useState<ColorScheme>(defaultDarkTheme);
+  const [extendedColors, setExtendedColors] = useState<ExtendedColor[]>([]);
   const [currentEditingTheme, setCurrentEditingTheme] = useState<"light" | "dark">("light");
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("light");
 
@@ -70,6 +74,7 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
   useEffect(() => {
     const savedLightTheme = localStorage.getItem("materialThemeBuilder_lightTheme");
     const savedDarkTheme = localStorage.getItem("materialThemeBuilder_darkTheme");
+    const savedExtendedColors = localStorage.getItem("materialThemeBuilder_extendedColors");
     const savedThemeName = localStorage.getItem("materialThemeBuilder_themeName");
     const savedSeedColor = localStorage.getItem("materialThemeBuilder_seedColor");
 
@@ -89,6 +94,14 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
       }
     }
 
+    if (savedExtendedColors) {
+      try {
+        setExtendedColors(JSON.parse(savedExtendedColors));
+      } catch (e) {
+        console.warn("Failed to parse saved extended colors");
+      }
+    }
+
     if (savedThemeName) {
       setThemeName(savedThemeName);
     }
@@ -98,21 +111,12 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
     }
 
     // If no saved theme, hydrate from target.generated.json
-    if (!savedLightTheme || !savedDarkTheme) {
+    if (!savedLightTheme || !savedDarkTheme || !savedExtendedColors) {
       try {
-        const t: any = targetTheme;
-        const nextLight: Record<string, string> = { ...(t?.schemes?.light || {}) };
-        const nextDark: Record<string, string> = { ...(t?.schemes?.dark || {}) };
-        if (Array.isArray(t?.extendedColors)) {
-          for (const ec of t.extendedColors) {
-            if (ec?.name && ec?.color) {
-              nextLight[ec.name] = ec.color;
-              nextDark[ec.name] = ec.color;
-            }
-          }
-        }
-        if (t?.schemes?.light) setLightTheme(prev => ({ ...prev, ...nextLight }));
-        if (t?.schemes?.dark) setDarkTheme(prev => ({ ...prev, ...nextDark }));
+        const t: ThemeTarget = targetTheme as ThemeTarget;
+        if (t?.schemes?.light) setLightTheme(prev => ({ ...prev, ...t.schemes.light }));
+        if (t?.schemes?.dark) setDarkTheme(prev => ({ ...prev, ...t.schemes.dark }));
+        if (Array.isArray(t?.extendedColors)) setExtendedColors(t.extendedColors);
         if (t?.themeName) setThemeName(t.themeName);
         if (t?.seed) setSeedColor(t.seed);
       } catch (err) {
@@ -129,6 +133,10 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
   useEffect(() => {
     localStorage.setItem("materialThemeBuilder_darkTheme", JSON.stringify(darkTheme));
   }, [darkTheme]);
+
+  useEffect(() => {
+    localStorage.setItem("materialThemeBuilder_extendedColors", JSON.stringify(extendedColors));
+  }, [extendedColors]);
 
   useEffect(() => {
     localStorage.setItem("materialThemeBuilder_themeName", themeName);
@@ -148,6 +156,20 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
     } else {
       setDarkTheme(prev => ({ ...prev, [key]: value }));
     }
+  };
+
+  const updateExtendedColor = (name: ExtendedTagName, value: string) => {
+    setExtendedColors(prev => 
+      prev.map(ec => 
+        ec.name === name 
+          ? { ...ec, color: value }
+          : ec
+      )
+    );
+  };
+
+  const getExtendedColorValue = (name: ExtendedTagName): string | undefined => {
+    return extendedColors.find(ec => ec.name === name)?.color;
   };
 
   // Simple color derivation based on seed color
@@ -279,60 +301,7 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
       outline: generateVariant(0, -20, 50),
       outlineVariant: generateVariant(0, -30, 75),
       
-      // Custom tokens
-      warning: "#F59E0B",
-      onWarning: "#FFFFFF",
-      warningContainer: "#FEF3C7",
-      onWarningContainer: "#451A03",
-      information: generateVariant(180, 0, -20),
-      onInformation: "#FFFFFF",
-      informationContainer: generateVariant(180, -20, 85),
-      onInformationContainer: generateVariant(180, 0, -35),
-      success: "#10B981",
-      onSuccess: "#FFFFFF",
-      successContainer: "#D1FAE5",
-      onSuccessContainer: "#064E3B",
-      defaultColor: seed,
-      onDefault: seedL > 50 ? "#000000" : "#FFFFFF",
-      defaultContainer: generateVariant(0, -20, 35),
-      onDefaultContainer: generateVariant(0, 0, -40),
-      critical: "#EF4444",
-      onCritical: "#FFFFFF",
-      
-      // Tag color tokens
-      blueTagText: defaultLightTheme.blueTagText,
-      blueTagBackground: defaultLightTheme.blueTagBackground,
-      blueTagBorder: defaultLightTheme.blueTagBorder,
-      cyanTagText: defaultLightTheme.cyanTagText,
-      cyanTagBackground: defaultLightTheme.cyanTagBackground,
-      cyanTagBorder: defaultLightTheme.cyanTagBorder,
-      geekblueTagText: defaultLightTheme.geekblueTagText,
-      geekblueTagBackground: defaultLightTheme.geekblueTagBackground,
-      geekblueTagBorder: defaultLightTheme.geekblueTagBorder,
-      goldTagText: defaultLightTheme.goldTagText,
-      goldTagBackground: defaultLightTheme.goldTagBackground,
-      goldTagBorder: defaultLightTheme.goldTagBorder,
-      greenTagText: defaultLightTheme.greenTagText,
-      greenTagBackground: defaultLightTheme.greenTagBackground,
-      greenTagBorder: defaultLightTheme.greenTagBorder,
-      limeTagText: defaultLightTheme.limeTagText,
-      limeTagBackground: defaultLightTheme.limeTagBackground,
-      limeTagBorder: defaultLightTheme.limeTagBorder,
-      magentaTagText: defaultLightTheme.magentaTagText,
-      magentaTagBackground: defaultLightTheme.magentaTagBackground,
-      magentaTagBorder: defaultLightTheme.magentaTagBorder,
-      orangeTagText: defaultLightTheme.orangeTagText,
-      orangeTagBackground: defaultLightTheme.orangeTagBackground,
-      orangeTagBorder: defaultLightTheme.orangeTagBorder,
-      purpleTagText: defaultLightTheme.purpleTagText,
-      purpleTagBackground: defaultLightTheme.purpleTagBackground,
-      purpleTagBorder: defaultLightTheme.purpleTagBorder,
-      redTagText: defaultLightTheme.redTagText,
-      redTagBackground: defaultLightTheme.redTagBackground,
-      redTagBorder: defaultLightTheme.redTagBorder,
-      volcanoTagText: defaultLightTheme.volcanoTagText,
-      volcanoTagBackground: defaultLightTheme.volcanoTagBackground,
-      volcanoTagBorder: defaultLightTheme.volcanoTagBorder,
+
     };
 
     // Generate new dark theme with appropriate contrast adjustments
@@ -402,39 +371,7 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
       onCritical: "#7F1D1D",
       
       // Tag color tokens
-      blueTagText: defaultDarkTheme.blueTagText,
-      blueTagBackground: defaultDarkTheme.blueTagBackground,
-      blueTagBorder: defaultDarkTheme.blueTagBorder,
-      cyanTagText: defaultDarkTheme.cyanTagText,
-      cyanTagBackground: defaultDarkTheme.cyanTagBackground,
-      cyanTagBorder: defaultDarkTheme.cyanTagBorder,
-      geekblueTagText: defaultDarkTheme.geekblueTagText,
-      geekblueTagBackground: defaultDarkTheme.geekblueTagBackground,
-      geekblueTagBorder: defaultDarkTheme.geekblueTagBorder,
-      goldTagText: defaultDarkTheme.goldTagText,
-      goldTagBackground: defaultDarkTheme.goldTagBackground,
-      goldTagBorder: defaultDarkTheme.goldTagBorder,
-      greenTagText: defaultDarkTheme.greenTagText,
-      greenTagBackground: defaultDarkTheme.greenTagBackground,
-      greenTagBorder: defaultDarkTheme.greenTagBorder,
-      limeTagText: defaultDarkTheme.limeTagText,
-      limeTagBackground: defaultDarkTheme.limeTagBackground,
-      limeTagBorder: defaultDarkTheme.limeTagBorder,
-      magentaTagText: defaultDarkTheme.magentaTagText,
-      magentaTagBackground: defaultDarkTheme.magentaTagBackground,
-      magentaTagBorder: defaultDarkTheme.magentaTagBorder,
-      orangeTagText: defaultDarkTheme.orangeTagText,
-      orangeTagBackground: defaultDarkTheme.orangeTagBackground,
-      orangeTagBorder: defaultDarkTheme.orangeTagBorder,
-      purpleTagText: defaultDarkTheme.purpleTagText,
-      purpleTagBackground: defaultDarkTheme.purpleTagBackground,
-      purpleTagBorder: defaultDarkTheme.purpleTagBorder,
-      redTagText: defaultDarkTheme.redTagText,
-      redTagBackground: defaultDarkTheme.redTagBackground,
-      redTagBorder: defaultDarkTheme.redTagBorder,
-      volcanoTagText: defaultDarkTheme.volcanoTagText,
-      volcanoTagBackground: defaultDarkTheme.volcanoTagBackground,
-      volcanoTagBorder: defaultDarkTheme.volcanoTagBorder,
+
     };
 
     setLightTheme(newLightTheme);
@@ -449,28 +386,25 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
         light: lightTheme,
         dark: darkTheme,
       },
+      extendedColors,
       timestamp: new Date().toISOString(),
     };
   };
 
   const importTheme = (theme: any) => {
-    // Base schemes
-    const nextLight = { ...theme.schemes?.light } as Record<string, string>;
-    const nextDark = { ...theme.schemes?.dark } as Record<string, string>;
-
-    // Compatibility: map extendedColors back into scheme fields if present
-    const extended: Array<{ name: string; color: string }> = Array.isArray(theme.extendedColors) ? theme.extendedColors : [];
-    if (extended.length > 0) {
-      for (const ec of extended) {
-        if (ec && typeof ec.name === "string" && typeof ec.color === "string") {
-          nextLight[ec.name] = ec.color;
-          nextDark[ec.name] = ec.color;
-        }
-      }
+    // Import base schemes (without extended colors)
+    if (theme.schemes?.light) {
+      setLightTheme(prev => ({ ...prev, ...theme.schemes.light }));
+    }
+    if (theme.schemes?.dark) {
+      setDarkTheme(prev => ({ ...prev, ...theme.schemes.dark }));
     }
 
-    setLightTheme((prev) => ({ ...prev, ...nextLight } as any));
-    setDarkTheme((prev) => ({ ...prev, ...nextDark } as any));
+    // Import extended colors separately
+    if (Array.isArray(theme.extendedColors)) {
+      setExtendedColors(theme.extendedColors);
+    }
+
     setThemeName(theme.themeName || "Imported Theme");
     setSeedColor(theme.seed || "#6750A4");
   };
@@ -478,6 +412,17 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
   const resetToDefaults = () => {
     setLightTheme(defaultLightTheme);
     setDarkTheme(defaultDarkTheme);
+    
+    // Reset extended colors to defaults from target.generated.json
+    try {
+      const t: ThemeTarget = targetTheme as ThemeTarget;
+      if (Array.isArray(t?.extendedColors)) {
+        setExtendedColors(t.extendedColors);
+      }
+    } catch (err) {
+      console.warn("Failed to reset extended colors", err);
+    }
+    
     setThemeName("Custom Theme");
     setSeedColor("#6750A4");
     setCurrentThemeId(null);
@@ -631,6 +576,7 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
   const value: ThemeContextType = {
     lightTheme,
     darkTheme,
+    extendedColors,
     currentEditingTheme,
     previewTheme,
     appDarkMode,
@@ -641,6 +587,8 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
     recentThemes,
     switchEditingTheme,
     updateColor,
+    updateExtendedColor,
+    getExtendedColorValue,
     setThemeName,
     setSeedColor,
     generatePalette,
