@@ -41,23 +41,45 @@ interface PreviewButtonProps {
 }
 
 function PreviewButton({ children, variant = "filled", color = "primary", style }: PreviewButtonProps) {
-  const { lightTheme, darkTheme, previewTheme } = useTheme();
+  const { lightTheme, darkTheme, previewTheme, getExtendedColorValue } = useTheme();
   const theme = previewTheme === "light" ? lightTheme : darkTheme;
   
   let buttonStyle: React.CSSProperties = { ...style };
   
+  let bgColor: string | undefined;
+  let textColor: string | undefined;
+  let borderColor: string | undefined;
+
+  if (color === "warning") {
+    bgColor = getExtendedColorValue("warningBackground");
+    textColor = getExtendedColorValue("warningText");
+    borderColor = getExtendedColorValue("warningBorder");
+  } else if (color === "success") {
+    bgColor = getExtendedColorValue("successBackground");
+    textColor = getExtendedColorValue("successText");
+    borderColor = getExtendedColorValue("successBorder");
+  } else if (color === "error") {
+    bgColor = theme.error;
+    textColor = theme.onError;
+    borderColor = theme.error;
+  } else { // primary or secondary
+    bgColor = theme[color];
+    textColor = theme[`on${color.charAt(0).toUpperCase() + color.slice(1)}` as keyof typeof theme];
+    borderColor = theme[color];
+  }
+
   if (variant === "filled") {
     buttonStyle = {
       ...buttonStyle,
-      backgroundColor: theme[color],
-      color: theme[`on${color.charAt(0).toUpperCase() + color.slice(1)}` as keyof typeof theme] || theme.onPrimary,
+      backgroundColor: bgColor,
+      color: textColor,
     };
   } else if (variant === "outlined") {
     buttonStyle = {
       ...buttonStyle,
       backgroundColor: "transparent",
-      color: theme[color],
-      border: `1px solid ${theme[color]}`,
+      color: bgColor, // Use bgColor as the text color for outlined
+      border: `1px solid ${borderColor}`,
     };
   }
   
@@ -72,7 +94,7 @@ function PreviewButton({ children, variant = "filled", color = "primary", style 
 }
 
 export function MobilePreview() {
-  const { lightTheme, darkTheme, previewTheme, appDarkMode } = useTheme();
+  const { lightTheme, darkTheme, previewTheme, appDarkMode, getExtendedColorValue } = useTheme();
   const [deviceType, setDeviceType] = useState<"android" | "ios">("android");
   const [activeTab, setActiveTab] = useState<"home" | "tasks" | "profile">("home");
   const [tasks, setTasks] = useState([
@@ -99,29 +121,95 @@ export function MobilePreview() {
   };
 
   const getPriorityColor = (priority: string) => {
+    const { getExtendedColorValue } = useTheme();
     switch (priority) {
-      case 'critical': return { bg: theme.error, text: theme.onError, border: theme.error };
-      case 'high': return { bg: theme.errorContainer, text: theme.error, border: theme.error };
-      case 'medium': return { bg: theme.warningContainer, text: theme.warning, border: theme.warning };
-      case 'low': return { bg: theme.successContainer, text: theme.success, border: theme.success };
-      case 'info': return { bg: theme.informationContainer, text: theme.information, border: theme.information };
+      case 'critical': return { 
+        bg: getExtendedColorValue("criticalBackground") || theme.errorContainer, 
+        text: getExtendedColorValue("criticalText") || theme.onError, 
+        border: getExtendedColorValue("criticalBorder") || theme.error 
+      };
+      case 'high': return { 
+        bg: getExtendedColorValue("errorBackground") || theme.errorContainer, 
+        text: getExtendedColorValue("errorText") || theme.error, 
+        border: getExtendedColorValue("errorBorder") || theme.error 
+      };
+      case 'medium': return { 
+        bg: getExtendedColorValue("warningBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("warningText") || theme.onSurface, 
+        border: getExtendedColorValue("warningBorder") || theme.outline 
+      };
+      case 'low': return { 
+        bg: getExtendedColorValue("successBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("successText") || theme.onSurface, 
+        border: getExtendedColorValue("successBorder") || theme.outline 
+      };
+      case 'info': return { 
+        bg: getExtendedColorValue("informationBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("informationText") || theme.onSurface, 
+        border: getExtendedColorValue("informationBorder") || theme.outline 
+      };
       default: return { bg: theme.surfaceContainer, text: theme.onSurface, border: theme.outline };
     }
   };
 
   const getCategoryColor = (category: string) => {
+    const { getExtendedColorValue } = useTheme();
     const colors = {
-      work: { bg: theme.blueTagBackground, text: theme.blueTagText, border: theme.blueTagBorder },
-      development: { bg: theme.greenTagBackground, text: theme.greenTagText, border: theme.greenTagBorder },
-      documentation: { bg: theme.purpleTagBackground, text: theme.purpleTagText, border: theme.purpleTagBorder },
-      meeting: { bg: theme.orangeTagBackground, text: theme.orangeTagText, border: theme.orangeTagBorder },
-      research: { bg: theme.cyanTagBackground, text: theme.cyanTagText, border: theme.cyanTagBorder },
-      design: { bg: theme.magentaTagBackground, text: theme.magentaTagText, border: theme.magentaTagBorder },
-      testing: { bg: theme.redTagBackground, text: theme.redTagText, border: theme.redTagBorder },
-      planning: { bg: theme.goldTagBackground, text: theme.goldTagText, border: theme.goldTagBorder },
-      review: { bg: theme.geekblueTagBackground, text: theme.geekblueTagText, border: theme.geekblueTagBorder },
-      maintenance: { bg: theme.limeTagBackground, text: theme.limeTagText, border: theme.limeTagBorder },
-      deployment: { bg: theme.volcanoTagBackground, text: theme.volcanoTagText, border: theme.volcanoTagBorder },
+      work: { 
+        bg: getExtendedColorValue("blueTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("blueTagText") || theme.onSurface, 
+        border: getExtendedColorValue("blueTagBorder") || theme.outline 
+      },
+      development: { 
+        bg: getExtendedColorValue("greenTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("greenTagText") || theme.onSurface, 
+        border: getExtendedColorValue("greenTagBorder") || theme.outline 
+      },
+      documentation: { 
+        bg: getExtendedColorValue("purpleTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("purpleTagText") || theme.onSurface, 
+        border: getExtendedColorValue("purpleTagBorder") || theme.outline 
+      },
+      meeting: { 
+        bg: getExtendedColorValue("orangeTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("orangeTagText") || theme.onSurface, 
+        border: getExtendedColorValue("orangeTagBorder") || theme.outline 
+      },
+      research: { 
+        bg: getExtendedColorValue("cyanTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("cyanTagText") || theme.onSurface, 
+        border: getExtendedColorValue("cyanTagBorder") || theme.outline 
+      },
+      design: { 
+        bg: getExtendedColorValue("magentaTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("magentaTagText") || theme.onSurface, 
+        border: getExtendedColorValue("magentaTagBorder") || theme.outline 
+      },
+      testing: { 
+        bg: getExtendedColorValue("redTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("redTagText") || theme.onSurface, 
+        border: getExtendedColorValue("redTagBorder") || theme.outline 
+      },
+      planning: { 
+        bg: getExtendedColorValue("goldTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("goldTagText") || theme.onSurface, 
+        border: getExtendedColorValue("goldTagBorder") || theme.outline 
+      },
+      review: { 
+        bg: getExtendedColorValue("geekblueTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("geekblueTagText") || theme.onSurface, 
+        border: getExtendedColorValue("geekblueTagBorder") || theme.outline 
+      },
+      maintenance: { 
+        bg: getExtendedColorValue("limeTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("limeTagText") || theme.onSurface, 
+        border: getExtendedColorValue("limeTagBorder") || theme.outline 
+      },
+      deployment: { 
+        bg: getExtendedColorValue("volcanoTagBackground") || theme.surfaceContainer, 
+        text: getExtendedColorValue("volcanoTagText") || theme.onSurface, 
+        border: getExtendedColorValue("volcanoTagBorder") || theme.outline 
+      },
     };
     return colors[category as keyof typeof colors] || { bg: theme.surfaceContainer, text: theme.onSurface, border: theme.outline };
   };
@@ -176,11 +264,11 @@ export function MobilePreview() {
           </h3>
           <div className="flex flex-wrap gap-2">
             {([
-              { key: 'default', label: 'Default', bg: theme.blueTagBackground, text: theme.blueTagText, border: theme.blueTagBorder },
-              { key: 'success', label: 'Success', bg: theme.greenTagBackground, text: theme.greenTagText, border: theme.greenTagBorder },
-              { key: 'warning', label: 'Warning', bg: theme.goldTagBackground, text: theme.goldTagText, border: theme.goldTagBorder },
-              { key: 'error', label: 'Error', bg: theme.redTagBackground, text: theme.redTagText, border: theme.redTagBorder },
-              { key: 'information', label: 'Info', bg: theme.cyanTagBackground, text: theme.cyanTagText, border: theme.cyanTagBorder },
+              { key: 'default', label: 'Default', bg: getExtendedColorValue("defaultBackground"), text: getExtendedColorValue("defaultText"), border: getExtendedColorValue("defaultBorder") },
+              { key: 'success', label: 'Success', bg: getExtendedColorValue("successBackground"), text: getExtendedColorValue("successText"), border: getExtendedColorValue("successBorder") },
+              { key: 'warning', label: 'Warning', bg: getExtendedColorValue("warningBackground"), text: getExtendedColorValue("warningText"), border: getExtendedColorValue("warningBorder") },
+              { key: 'error', label: 'Error', bg: getExtendedColorValue("errorBackground"), text: getExtendedColorValue("errorText"), border: getExtendedColorValue("errorBorder") },
+              { key: 'information', label: 'Info', bg: getExtendedColorValue("informationBackground"), text: getExtendedColorValue("informationText"), border: getExtendedColorValue("informationBorder") },
             ] as const).map(({ key, label, bg, text, border }) => (
               <span
                 key={key}
@@ -199,17 +287,17 @@ export function MobilePreview() {
             Tag Colors
           </h3>
           <div className="flex flex-wrap gap-2">
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.blueTagBackground, color: theme.blueTagText, borderColor: theme.blueTagBorder }}>Blue</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.cyanTagBackground, color: theme.cyanTagText, borderColor: theme.cyanTagBorder }}>Cyan</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.greenTagBackground, color: theme.greenTagText, borderColor: theme.greenTagBorder }}>Green</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.goldTagBackground, color: theme.goldTagText, borderColor: theme.goldTagBorder }}>Gold</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.orangeTagBackground, color: theme.orangeTagText, borderColor: theme.orangeTagBorder }}>Orange</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.redTagBackground, color: theme.redTagText, borderColor: theme.redTagBorder }}>Red</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.purpleTagBackground, color: theme.purpleTagText, borderColor: theme.purpleTagBorder }}>Purple</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.magentaTagBackground, color: theme.magentaTagText, borderColor: theme.magentaTagBorder }}>Magenta</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.limeTagBackground, color: theme.limeTagText, borderColor: theme.limeTagBorder }}>Lime</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.geekblueTagBackground, color: theme.geekblueTagText, borderColor: theme.geekblueTagBorder }}>Geekblue</span>
-            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: theme.volcanoTagBackground, color: theme.volcanoTagText, borderColor: theme.volcanoTagBorder }}>Volcano</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("blueTagBackground"), color: getExtendedColorValue("blueTagText"), borderColor: getExtendedColorValue("blueTagBorder") }}>Blue</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("cyanTagBackground"), color: getExtendedColorValue("cyanTagText"), borderColor: getExtendedColorValue("cyanTagBorder") }}>Cyan</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("greenTagBackground"), color: getExtendedColorValue("greenTagText"), borderColor: getExtendedColorValue("greenTagBorder") }}>Green</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("goldTagBackground"), color: getExtendedColorValue("goldTagText"), borderColor: getExtendedColorValue("goldTagBorder") }}>Gold</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("orangeTagBackground"), color: getExtendedColorValue("orangeTagText"), borderColor: getExtendedColorValue("orangeTagBorder") }}>Orange</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("redTagBackground"), color: getExtendedColorValue("redTagText"), borderColor: getExtendedColorValue("redTagBorder") }}>Red</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("purpleTagBackground"), color: getExtendedColorValue("purpleTagText"), borderColor: getExtendedColorValue("purpleTagBorder") }}>Purple</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("magentaTagBackground"), color: getExtendedColorValue("magentaTagText"), borderColor: getExtendedColorValue("magentaTagBorder") }}>Magenta</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("limeTagBackground"), color: getExtendedColorValue("limeTagText"), borderColor: getExtendedColorValue("limeTagBorder") }}>Lime</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("geekblueTagBackground"), color: getExtendedColorValue("geekblueTagText"), borderColor: getExtendedColorValue("geekblueTagBorder") }}>Geekblue</span>
+            <span className="text-xs px-2 py-1 rounded border" style={{ backgroundColor: getExtendedColorValue("volcanoTagBackground"), color: getExtendedColorValue("volcanoTagText"), borderColor: getExtendedColorValue("volcanoTagBorder") }}>Volcano</span>
           </div>
         </div>
 
@@ -220,7 +308,7 @@ export function MobilePreview() {
             style={{ backgroundColor: theme.surface, borderColor: theme.outline }}
           >
             <div className="flex items-center space-x-2">
-              <CheckCircle2 className="w-5 h-5" style={{ color: theme.success }} />
+              <CheckCircle2 className="w-5 h-5" style={{ color: getExtendedColorValue("successText") }} />
               <div>
                 <div className="text-lg font-bold" style={{ color: theme.onSurface }}>2</div>
                 <div className="text-xs" style={{ color: theme.onSurfaceVariant }}>Completed</div>
@@ -233,7 +321,7 @@ export function MobilePreview() {
             style={{ backgroundColor: theme.surface, borderColor: theme.outline }}
           >
             <div className="flex items-center space-x-2">
-              <Clock className="w-5 h-5" style={{ color: theme.warning }} />
+              <Clock className="w-5 h-5" style={{ color: getExtendedColorValue("warningText") }} />
               <div>
                 <div className="text-lg font-bold" style={{ color: theme.onSurface }}>3</div>
                 <div className="text-xs" style={{ color: theme.onSurfaceVariant }}>Due Today</div>
@@ -356,9 +444,9 @@ export function MobilePreview() {
           <div 
             className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border whitespace-nowrap"
             style={{ 
-              backgroundColor: theme.successContainer,
-              color: theme.success,
-              borderColor: theme.success 
+              backgroundColor: getExtendedColorValue("successBackground"),
+              color: getExtendedColorValue("successText"),
+              borderColor: getExtendedColorValue("successBorder") 
             }}
           >
             <span>Done ({tasks.filter(t => t.completed).length})</span>
@@ -366,9 +454,9 @@ export function MobilePreview() {
           <div 
             className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border whitespace-nowrap"
             style={{ 
-              backgroundColor: theme.errorContainer,
-              color: theme.error,
-              borderColor: theme.error 
+              backgroundColor: getExtendedColorValue("criticalBackground"),
+              color: getExtendedColorValue("criticalText"),
+              borderColor: getExtendedColorValue("criticalBorder") 
             }}
           >
             <span>Critical ({tasks.filter(t => t.priority === 'critical').length})</span>
@@ -487,7 +575,7 @@ export function MobilePreview() {
             className="p-3 text-center border"
             style={{ backgroundColor: theme.surface, borderColor: theme.outline }}
           >
-            <div className="text-lg font-bold" style={{ color: theme.warning }}>
+            <div className="text-lg font-bold" style={{ color: getExtendedColorValue("warningText") }}>
               {tasks.filter(t => !t.completed).length}
             </div>
             <div className="text-xs" style={{ color: theme.onSurfaceVariant }}>
@@ -499,7 +587,7 @@ export function MobilePreview() {
             className="p-3 text-center border"
             style={{ backgroundColor: theme.surface, borderColor: theme.outline }}
           >
-            <div className="text-lg font-bold" style={{ color: theme.success }}>
+            <div className="text-lg font-bold" style={{ color: getExtendedColorValue("successText") }}>
               87%
             </div>
             <div className="text-xs" style={{ color: theme.onSurfaceVariant }}>
@@ -537,9 +625,9 @@ export function MobilePreview() {
           >
             <div 
               className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: theme.warningContainer }}
+              style={{ backgroundColor: getExtendedColorValue("warningBackground") }}
             >
-              <Bell className="w-5 h-5" style={{ color: theme.warning }} />
+              <Bell className="w-5 h-5" style={{ color: getExtendedColorValue("warningText") }} />
             </div>
             <div className="flex-1">
               <div className="text-sm font-medium" style={{ color: theme.onSurface }}>
@@ -580,7 +668,7 @@ export function MobilePreview() {
             </div>
             <Badge 
               className="text-xs px-2 py-1"
-              style={{ backgroundColor: theme.success, color: theme.onSuccess }}
+              style={{ backgroundColor: getExtendedColorValue("successBackground"), color: getExtendedColorValue("successText") }}
             >
               5 New
             </Badge>

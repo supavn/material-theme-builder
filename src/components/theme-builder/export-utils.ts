@@ -1,4 +1,5 @@
 import { ThemeExport } from '@/types/schema';
+import { getExtendedHex } from '@/theme';
 
 export function exportToJSON(theme: ThemeExport): void {
   const dataStr = JSON.stringify(theme, null, 2);
@@ -108,106 +109,94 @@ class ${(theme.themeName || 'Custom').replace(/\s+/g, '')}Theme {
 
   // Custom Enum Theme Extensions
   static const CustomEnumTheme lightCustomTheme = CustomEnumTheme(
-    warning: Color(${hexToInt(theme.schemes.light.warning)}),
-    onWarning: Color(${hexToInt(theme.schemes.light.onWarning)}),
-    warningContainer: Color(${hexToInt(theme.schemes.light.warningContainer)}),
-    onWarningContainer: Color(${hexToInt(theme.schemes.light.onWarningContainer)}),
-    success: Color(${hexToInt(theme.schemes.light.success)}),
-    onSuccess: Color(${hexToInt(theme.schemes.light.onSuccess)}),
-    successContainer: Color(${hexToInt(theme.schemes.light.successContainer)}),
-    onSuccessContainer: Color(${hexToInt(theme.schemes.light.onSuccessContainer)}),
-    information: Color(${hexToInt(theme.schemes.light.information)}),
-    onInformation: Color(${hexToInt(theme.schemes.light.onInformation)}),
-    informationContainer: Color(${hexToInt(theme.schemes.light.informationContainer)}),
-    onInformationContainer: Color(${hexToInt(theme.schemes.light.onInformationContainer)}),
-    critical: Color(${hexToInt(theme.schemes.light.critical)}),
-    onCritical: Color(${hexToInt(theme.schemes.light.onCritical)}),
+    warningText: Color(${hexToInt(getExtendedHex(theme, "warningText") || "#000000")}),
+    warningBackground: Color(${hexToInt(getExtendedHex(theme, "warningBackground") || "#000000")}),
+    warningBorder: Color(${hexToInt(getExtendedHex(theme, "warningBorder") || "#000000")}),
+    successText: Color(${hexToInt(getExtendedHex(theme, "successText") || "#000000")}),
+    successBackground: Color(${hexToInt(getExtendedHex(theme, "successBackground") || "#000000")}),
+    successBorder: Color(${hexToInt(getExtendedHex(theme, "successBorder") || "#000000")}),
+    informationText: Color(${hexToInt(getExtendedHex(theme, "informationText") || "#000000")}),
+    informationBackground: Color(${hexToInt(getExtendedHex(theme, "informationBackground") || "#000000")}),
+    informationBorder: Color(${hexToInt(getExtendedHex(theme, "informationBorder") || "#000000")}),
+    criticalText: Color(${hexToInt(getExtendedHex(theme, "criticalText") || "#000000")}),
+    criticalBackground: Color(${hexToInt(getExtendedHex(theme, "criticalBackground") || "#000000")}),
+    criticalBorder: Color(${hexToInt(getExtendedHex(theme, "criticalBorder") || "#000000")}),
   );
 
   static const CustomEnumTheme darkCustomTheme = CustomEnumTheme(
-    warning: Color(${hexToInt(theme.schemes.dark.warning)}),
-    onWarning: Color(${hexToInt(theme.schemes.dark.onWarning)}),
-    warningContainer: Color(${hexToInt(theme.schemes.dark.warningContainer)}),
-    onWarningContainer: Color(${hexToInt(theme.schemes.dark.onWarningContainer)}),
-    success: Color(${hexToInt(theme.schemes.dark.success)}),
-    onSuccess: Color(${hexToInt(theme.schemes.dark.onSuccess)}),
-    successContainer: Color(${hexToInt(theme.schemes.dark.successContainer)}),
-    onSuccessContainer: Color(${hexToInt(theme.schemes.dark.onSuccessContainer)}),
-    information: Color(${hexToInt(theme.schemes.dark.information)}),
-    onInformation: Color(${hexToInt(theme.schemes.dark.onInformation)}),
-    informationContainer: Color(${hexToInt(theme.schemes.dark.informationContainer)}),
-    onInformationContainer: Color(${hexToInt(theme.schemes.dark.onInformationContainer)}),
-    critical: Color(${hexToInt(theme.schemes.dark.critical)}),
-    onCritical: Color(${hexToInt(theme.schemes.dark.onCritical)}),
+    warningText: Color(${hexToInt(getExtendedHex(theme, "warningText") || "#000000")}),
+    warningBackground: Color(${hexToInt(getExtendedHex(theme, "warningBackground") || "#000000")}),
+    warningBorder: Color(${hexToInt(getExtendedHex(theme, "warningBorder") || "#000000")}),
+    successText: Color(${hexToInt(getExtendedHex(theme, "successText") || "#000000")}),
+    successBackground: Color(${hexToInt(getExtendedHex(theme, "successBackground") || "#000000")}),
+    successBorder: Color(${hexToInt(getExtendedHex(theme, "successBorder") || "#000000")}),
+    informationText: Color(${hexToInt(getExtendedHex(theme, "informationText") || "#000000")}),
+    informationBackground: Color(${hexToInt(getExtendedHex(theme, "informationBackground") || "#000000")}),
+    informationBorder: Color(${hexToInt(getExtendedHex(theme, "informationBorder") || "#000000")}),
+    criticalText: Color(${hexToInt(getExtendedHex(theme, "criticalText") || "#000000")}),
+    criticalBackground: Color(${hexToInt(getExtendedHex(theme, "criticalBackground") || "#000000")}),
+    criticalBorder: Color(${hexToInt(getExtendedHex(theme, "criticalBorder") || "#000000")}),
   );
 }
 
 // Custom Theme Extension Class
 class CustomEnumTheme extends ThemeExtension<CustomEnumTheme> {
   const CustomEnumTheme({
-    required this.warning,
-    required this.onWarning,
-    required this.warningContainer,
-    required this.onWarningContainer,
-    required this.success,
-    required this.onSuccess,
-    required this.successContainer,
-    required this.onSuccessContainer,
-    required this.information,
-    required this.onInformation,
-    required this.informationContainer,
-    required this.onInformationContainer,
-    required this.critical,
-    required this.onCritical,
+    required this.warningText,
+    required this.warningBackground,
+    required this.warningBorder,
+    required this.successText,
+    required this.successBackground,
+    required this.successBorder,
+    required this.informationText,
+    required this.informationBackground,
+    required this.informationBorder,
+    required this.criticalText,
+    required this.criticalBackground,
+    required this.criticalBorder,
   });
 
-  final Color warning;
-  final Color onWarning;
-  final Color warningContainer;
-  final Color onWarningContainer;
-  final Color success;
-  final Color onSuccess;
-  final Color successContainer;
-  final Color onSuccessContainer;
-  final Color information;
-  final Color onInformation;
-  final Color informationContainer;
-  final Color onInformationContainer;
-  final Color critical;
-  final Color onCritical;
+  final Color warningText;
+  final Color warningBackground;
+  final Color warningBorder;
+  final Color successText;
+  final Color successBackground;
+  final Color successBorder;
+  final Color informationText;
+  final Color informationBackground;
+  final Color informationBorder;
+  final Color criticalText;
+  final Color criticalBackground;
+  final Color criticalBorder;
 
   @override
   CustomEnumTheme copyWith({
-    Color? warning,
-    Color? onWarning,
-    Color? warningContainer,
-    Color? onWarningContainer,
-    Color? success,
-    Color? onSuccess,
-    Color? successContainer,
-    Color? onSuccessContainer,
-    Color? information,
-    Color? onInformation,
-    Color? informationContainer,
-    Color? onInformationContainer,
-    Color? critical,
-    Color? onCritical,
+    Color? warningText,
+    Color? warningBackground,
+    Color? warningBorder,
+    Color? successText,
+    Color? successBackground,
+    Color? successBorder,
+    Color? informationText,
+    Color? informationBackground,
+    Color? informationBorder,
+    Color? criticalText,
+    Color? criticalBackground,
+    Color? criticalBorder,
   }) {
     return CustomEnumTheme(
-      warning: warning ?? this.warning,
-      onWarning: onWarning ?? this.onWarning,
-      warningContainer: warningContainer ?? this.warningContainer,
-      onWarningContainer: onWarningContainer ?? this.onWarningContainer,
-      success: success ?? this.success,
-      onSuccess: onSuccess ?? this.onSuccess,
-      successContainer: successContainer ?? this.successContainer,
-      onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
-      information: information ?? this.information,
-      onInformation: onInformation ?? this.onInformation,
-      informationContainer: informationContainer ?? this.informationContainer,
-      onInformationContainer: onInformationContainer ?? this.onInformationContainer,
-      critical: critical ?? this.critical,
-      onCritical: onCritical ?? this.onCritical,
+      warningText: warningText ?? this.warningText,
+      warningBackground: warningBackground ?? this.warningBackground,
+      warningBorder: warningBorder ?? this.warningBorder,
+      successText: successText ?? this.successText,
+      successBackground: successBackground ?? this.successBackground,
+      successBorder: successBorder ?? this.successBorder,
+      informationText: informationText ?? this.informationText,
+      informationBackground: informationBackground ?? this.informationBackground,
+      informationBorder: informationBorder ?? this.informationBorder,
+      criticalText: criticalText ?? this.criticalText,
+      criticalBackground: criticalBackground ?? this.criticalBackground,
+      criticalBorder: criticalBorder ?? this.criticalBorder,
     );
   }
 
@@ -215,20 +204,18 @@ class CustomEnumTheme extends ThemeExtension<CustomEnumTheme> {
   CustomEnumTheme lerp(ThemeExtension<CustomEnumTheme>? other, double t) {
     if (other is! CustomEnumTheme) return this;
     return CustomEnumTheme(
-      warning: Color.lerp(warning, other.warning, t) ?? warning,
-      onWarning: Color.lerp(onWarning, other.onWarning, t) ?? onWarning,
-      warningContainer: Color.lerp(warningContainer, other.warningContainer, t) ?? warningContainer,
-      onWarningContainer: Color.lerp(onWarningContainer, other.onWarningContainer, t) ?? onWarningContainer,
-      success: Color.lerp(success, other.success, t) ?? success,
-      onSuccess: Color.lerp(onSuccess, other.onSuccess, t) ?? onSuccess,
-      successContainer: Color.lerp(successContainer, other.successContainer, t) ?? successContainer,
-      onSuccessContainer: Color.lerp(onSuccessContainer, other.onSuccessContainer, t) ?? onSuccessContainer,
-      information: Color.lerp(information, other.information, t) ?? information,
-      onInformation: Color.lerp(onInformation, other.onInformation, t) ?? onInformation,
-      informationContainer: Color.lerp(informationContainer, other.informationContainer, t) ?? informationContainer,
-      onInformationContainer: Color.lerp(onInformationContainer, other.onInformationContainer, t) ?? onInformationContainer,
-      critical: Color.lerp(critical, other.critical, t) ?? critical,
-      onCritical: Color.lerp(onCritical, other.onCritical, t) ?? onCritical,
+      warningText: Color.lerp(warningText, other.warningText, t) ?? warningText,
+      warningBackground: Color.lerp(warningBackground, other.warningBackground, t) ?? warningBackground,
+      warningBorder: Color.lerp(warningBorder, other.warningBorder, t) ?? warningBorder,
+      successText: Color.lerp(successText, other.successText, t) ?? successText,
+      successBackground: Color.lerp(successBackground, other.successBackground, t) ?? successBackground,
+      successBorder: Color.lerp(successBorder, other.successBorder, t) ?? successBorder,
+      informationText: Color.lerp(informationText, other.informationText, t) ?? informationText,
+      informationBackground: Color.lerp(informationBackground, other.informationBackground, t) ?? informationBackground,
+      informationBorder: Color.lerp(informationBorder, other.informationBorder, t) ?? informationBorder,
+      criticalText: Color.lerp(criticalText, other.criticalText, t) ?? criticalText,
+      criticalBackground: Color.lerp(criticalBackground, other.criticalBackground, t) ?? criticalBackground,
+      criticalBorder: Color.lerp(criticalBorder, other.criticalBorder, t) ?? criticalBorder,
     );
   }
 }`;

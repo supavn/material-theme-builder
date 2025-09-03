@@ -7,7 +7,7 @@ import { copyToClipboard } from "./export-utils";
 import { useToast } from "@/hooks/use-toast";
 
 export function CodeEditor() {
-  const { exportTheme } = useTheme();
+  const { exportTheme, getExtendedHex } = useTheme();
   const [codeFormat, setCodeFormat] = useState<"json" | "dart">("json");
   const { toast } = useToast();
 
@@ -69,37 +69,33 @@ class CustomMaterialTheme {
 
   // Custom Colors Extension for Warning, Success, Information, Critical
   static const CustomColors lightCustomColors = CustomColors(
-    warning: Color(0xFF${theme.schemes.light.warning.substring(1)}),
-    onWarning: Color(0xFF${theme.schemes.light.onWarning.substring(1)}),
-    warningContainer: Color(0xFF${theme.schemes.light.warningContainer.substring(1)}),
-    onWarningContainer: Color(0xFF${theme.schemes.light.onWarningContainer.substring(1)}),
-    success: Color(0xFF${theme.schemes.light.success.substring(1)}),
-    onSuccess: Color(0xFF${theme.schemes.light.onSuccess.substring(1)}),
-    successContainer: Color(0xFF${theme.schemes.light.successContainer.substring(1)}),
-    onSuccessContainer: Color(0xFF${theme.schemes.light.onSuccessContainer.substring(1)}),
-    information: Color(0xFF${theme.schemes.light.information.substring(1)}),
-    onInformation: Color(0xFF${theme.schemes.light.onInformation.substring(1)}),
-    informationContainer: Color(0xFF${theme.schemes.light.informationContainer.substring(1)}),
-    onInformationContainer: Color(0xFF${theme.schemes.light.onInformationContainer.substring(1)}),
-    critical: Color(0xFF${theme.schemes.light.critical.substring(1)}),
-    onCritical: Color(0xFF${theme.schemes.light.onCritical.substring(1)}),
+    warningText: Color(0xFF${getExtendedHex(theme, "warningText")?.substring(1)}),
+    warningBackground: Color(0xFF${getExtendedHex(theme, "warningBackground")?.substring(1)}),
+    warningBorder: Color(0xFF${getExtendedHex(theme, "warningBorder")?.substring(1)}),
+    successText: Color(0xFF${getExtendedHex(theme, "successText")?.substring(1)}),
+    successBackground: Color(0xFF${getExtendedHex(theme, "successBackground")?.substring(1)}),
+    successBorder: Color(0xFF${getExtendedHex(theme, "successBorder")?.substring(1)}),
+    informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
+    informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
+    informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
+    criticalText: Color(0xFF${getExtendedHex(theme, "criticalText")?.substring(1)}),
+    criticalBackground: Color(0xFF${getExtendedHex(theme, "criticalBackground")?.substring(1)}),
+    criticalBorder: Color(0xFF${getExtendedHex(theme, "criticalBorder")?.substring(1)}),
   );
 
   static const CustomColors darkCustomColors = CustomColors(
-    warning: Color(0xFF${theme.schemes.dark.warning.substring(1)}),
-    onWarning: Color(0xFF${theme.schemes.dark.onWarning.substring(1)}),
-    warningContainer: Color(0xFF${theme.schemes.dark.warningContainer.substring(1)}),
-    onWarningContainer: Color(0xFF${theme.schemes.dark.onWarningContainer.substring(1)}),
-    success: Color(0xFF${theme.schemes.dark.success.substring(1)}),
-    onSuccess: Color(0xFF${theme.schemes.dark.onSuccess.substring(1)}),
-    successContainer: Color(0xFF${theme.schemes.dark.successContainer.substring(1)}),
-    onSuccessContainer: Color(0xFF${theme.schemes.dark.onSuccessContainer.substring(1)}),
-    information: Color(0xFF${theme.schemes.dark.information.substring(1)}),
-    onInformation: Color(0xFF${theme.schemes.dark.onInformation.substring(1)}),
-    informationContainer: Color(0xFF${theme.schemes.dark.informationContainer.substring(1)}),
-    onInformationContainer: Color(0xFF${theme.schemes.dark.onInformationContainer.substring(1)}),
-    critical: Color(0xFF${theme.schemes.dark.critical.substring(1)}),
-    onCritical: Color(0xFF${theme.schemes.dark.onCritical.substring(1)}),
+    warningText: Color(0xFF${getExtendedHex(theme, "warningText")?.substring(1)}),
+    warningBackground: Color(0xFF${getExtendedHex(theme, "warningBackground")?.substring(1)}),
+    warningBorder: Color(0xFF${getExtendedHex(theme, "warningBorder")?.substring(1)}),
+    successText: Color(0xFF${getExtendedHex(theme, "successText")?.substring(1)}),
+    successBackground: Color(0xFF${getExtendedHex(theme, "successBackground")?.substring(1)}),
+    successBorder: Color(0xFF${getExtendedHex(theme, "successBorder")?.substring(1)}),
+    informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
+    informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
+    informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
+    criticalText: Color(0xFF${getExtendedHex(theme, "criticalText")?.substring(1)}),
+    criticalBackground: Color(0xFF${getExtendedHex(theme, "criticalBackground")?.substring(1)}),
+    criticalBorder: Color(0xFF${getExtendedHex(theme, "criticalBorder")?.substring(1)}),
   );
 
   static ThemeData get lightTheme => ThemeData(
@@ -118,69 +114,61 @@ class CustomMaterialTheme {
 // Custom Colors Theme Extension
 class CustomColors extends ThemeExtension<CustomColors> {
   const CustomColors({
-    required this.warning,
-    required this.onWarning,
-    required this.warningContainer,
-    required this.onWarningContainer,
-    required this.success,
-    required this.onSuccess,
-    required this.successContainer,
-    required this.onSuccessContainer,
-    required this.information,
-    required this.onInformation,
-    required this.informationContainer,
-    required this.onInformationContainer,
-    required this.critical,
-    required this.onCritical,
+    required this.warningText,
+    required this.warningBackground,
+    required this.warningBorder,
+    required this.successText,
+    required this.successBackground,
+    required this.successBorder,
+    required this.informationText,
+    required this.informationBackground,
+    required this.informationBorder,
+    required this.criticalText,
+    required this.criticalBackground,
+    required this.criticalBorder,
   });
 
-  final Color warning;
-  final Color onWarning;
-  final Color warningContainer;
-  final Color onWarningContainer;
-  final Color success;
-  final Color onSuccess;
-  final Color successContainer;
-  final Color onSuccessContainer;
-  final Color information;
-  final Color onInformation;
-  final Color informationContainer;
-  final Color onInformationContainer;
-  final Color critical;
-  final Color onCritical;
+  final Color warningText;
+  final Color warningBackground;
+  final Color warningBorder;
+  final Color successText;
+  final Color successBackground;
+  final Color successBorder;
+  final Color informationText;
+  final Color informationBackground;
+  final Color informationBorder;
+  final Color criticalText;
+  final Color criticalBackground;
+  final Color criticalBorder;
 
   @override
   CustomColors copyWith({
-    Color? warning,
-    Color? onWarning,
-    Color? warningContainer,
-    Color? onWarningContainer,
-    Color? success,
-    Color? onSuccess,
-    Color? successContainer,
-    Color? onSuccessContainer,
-    Color? information,
-    Color? onInformation,
-    Color? informationContainer,
-    Color? onInformationContainer,
-    Color? critical,
-    Color? onCritical,
+    Color? warningText,
+    Color? warningBackground,
+    Color? warningBorder,
+    Color? successText,
+    Color? successBackground,
+    Color? successBorder,
+    Color? informationText,
+    Color? informationBackground,
+    Color? informationBorder,
+    Color? criticalText,
+    Color? criticalBackground,
+    Color? criticalBorder,
   }) {
     return CustomColors(
-      warning: warning ?? this.warning,
-      onWarning: onWarning ?? this.onWarning,
-      warningContainer: warningContainer ?? this.warningContainer,
-      onWarningContainer: onWarningContainer ?? this.onWarningContainer,
-      success: success ?? this.success,
-      onSuccess: onSuccess ?? this.onSuccess,
-      successContainer: successContainer ?? this.successContainer,
-      onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
-      information: information ?? this.information,
-      onInformation: onInformation ?? this.onInformation,
-      informationContainer: informationContainer ?? this.informationContainer,
-      onInformationContainer: onInformationContainer ?? this.onInformationContainer,
-      critical: critical ?? this.critical,
-      onCritical: onCritical ?? this.onCritical,
+      warningText: warningText ?? this.warningText,
+      warningBackground: warningBackground ?? this.warningBackground,
+      warningBorder: warningBorder ?? this.warningBorder,
+      successText: successText ?? this.successText,
+      successBackground: successBackground ?? this.successBackground,
+      successBorder: successBorder ?? this.successBorder,
+      informationText: informationText ?? this.informationText,
+      informationBackground: informationBackground ?? this.informationBackground,
+      informationBorder: informationBorder ?? this.informationBorder,
+      criticalText: criticalText ?? this.criticalText,
+      criticalBackground: criticalBackground ?? this.criticalBackground,
+      criticalBorder: criticalBorder ?? this.criticalBorder,
     );
   }
 
@@ -188,20 +176,18 @@ class CustomColors extends ThemeExtension<CustomColors> {
   CustomColors lerp(ThemeExtension<CustomColors>? other, double t) {
     if (other is! CustomColors) return this;
     return CustomColors(
-      warning: Color.lerp(warning, other.warning, t)!,
-      onWarning: Color.lerp(onWarning, other.onWarning, t)!,
-      warningContainer: Color.lerp(warningContainer, other.warningContainer, t)!,
-      onWarningContainer: Color.lerp(onWarningContainer, other.onWarningContainer, t)!,
-      success: Color.lerp(success, other.success, t)!,
-      onSuccess: Color.lerp(onSuccess, other.onSuccess, t)!,
-      successContainer: Color.lerp(successContainer, other.successContainer, t)!,
-      onSuccessContainer: Color.lerp(onSuccessContainer, other.onSuccessContainer, t)!,
-      information: Color.lerp(information, other.information, t)!,
-      onInformation: Color.lerp(onInformation, other.onInformation, t)!,
-      informationContainer: Color.lerp(informationContainer, other.informationContainer, t)!,
-      onInformationContainer: Color.lerp(onInformationContainer, other.onInformationContainer, t)!,
-      critical: Color.lerp(critical, other.critical, t)!,
-      onCritical: Color.lerp(onCritical, other.onCritical, t)!,
+      warningText: Color.lerp(warningText, other.warningText, t)!,
+      warningBackground: Color.lerp(warningBackground, other.warningBackground, t)!,
+      warningBorder: Color.lerp(warningBorder, other.warningBorder, t)!,
+      successText: Color.lerp(successText, other.successText, t)!,
+      successBackground: Color.lerp(successBackground, other.successBackground, t)!,
+      successBorder: Color.lerp(successBorder, other.successBorder, t)!,
+      informationText: Color.lerp(informationText, other.informationText, t)!,
+      informationBackground: Color.lerp(informationBackground, other.informationBackground, t)!,
+      informationBorder: Color.lerp(informationBorder, other.informationBorder, t)!,
+      criticalText: Color.lerp(criticalText, other.criticalText, t)!,
+      criticalBackground: Color.lerp(criticalBackground, other.criticalBackground, t)!,
+      criticalBorder: Color.lerp(criticalBorder, other.criticalBorder, t)!,
     );
   }
 }`;
