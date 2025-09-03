@@ -506,24 +506,30 @@ export function TokenEditor() {
           {/* Error Colors */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Error</h3>
-            <div className="grid grid-cols-3 gap-2">
-              <ExtendedColorInput
-                label="Text"
-                tokenName="errorText"
-                value={getExtendedColorValue("errorText")}
-                onChange={(value) => handleExtendedColorChange("errorText", value)}
+            <div className="grid grid-cols-2 gap-2">
+              <CompactColorInput
+                label="Error"
+                colorKey="error"
+                value={currentTheme.error}
+                onChange={(value) => handleColorChange("error", value)}
               />
-              <ExtendedColorInput
-                label="Background"
-                tokenName="errorBackground"
-                value={getExtendedColorValue("errorBackground")}
-                onChange={(value) => handleExtendedColorChange("errorBackground", value)}
+              <CompactColorInput
+                label="On Error"
+                colorKey="onError"
+                value={currentTheme.onError}
+                onChange={(value) => handleColorChange("onError", value)}
               />
-              <ExtendedColorInput
-                label="Border"
-                tokenName="errorBorder"
-                value={getExtendedColorValue("errorBorder")}
-                onChange={(value) => handleExtendedColorChange("errorBorder", value)}
+              <CompactColorInput
+                label="Container"
+                colorKey="errorContainer"
+                value={currentTheme.errorContainer}
+                onChange={(value) => handleColorChange("errorContainer", value)}
+              />
+              <CompactColorInput
+                label="On Container"
+                colorKey="onErrorContainer"
+                value={currentTheme.onErrorContainer}
+                onChange={(value) => handleColorChange("onErrorContainer", value)}
               />
             </div>
           </div>
@@ -752,6 +758,33 @@ export function TokenEditor() {
                 tokenName="criticalBorder"
                 value={getExtendedColorValue("criticalBorder")}
                 onChange={(value) => handleExtendedColorChange("criticalBorder", value)}
+              />
+            </div>
+          </div>
+
+          <Separator className="my-3" />
+
+          {/* Error (Extended) */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Error (Extended)</h3>
+            <div className="grid grid-cols-3 gap-2">
+              <ExtendedColorInput
+                label="Text"
+                tokenName="errorText"
+                value={getExtendedColorValue("errorText")}
+                onChange={(value) => handleExtendedColorChange("errorText", value)}
+              />
+              <ExtendedColorInput
+                label="Background"
+                tokenName="errorBackground"
+                value={getExtendedColorValue("errorBackground")}
+                onChange={(value) => handleExtendedColorChange("errorBackground", value)}
+              />
+              <ExtendedColorInput
+                label="Border"
+                tokenName="errorBorder"
+                value={getExtendedColorValue("errorBorder")}
+                onChange={(value) => handleExtendedColorChange("errorBorder", value)}
               />
             </div>
           </div>
