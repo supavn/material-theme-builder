@@ -123,6 +123,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
         autoSaveTheme.themeName = theme.themeName;
         autoSaveTheme.updatedAt = now;
         autoSaveTheme.timestamp = now;
+        autoSaveTheme.extendedColors = theme.extendedColors;
       } else {
         // Create new auto-save
         const savedTheme: SavedTheme = {
@@ -218,6 +219,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
         themeName: newName || `${theme.themeName} (Copy)`,
         seed: theme.seed,
         schemes: { ...theme.schemes },
+        extendedColors: theme.extendedColors, // Add this line
         timestamp: new Date().toISOString(),
       };
       

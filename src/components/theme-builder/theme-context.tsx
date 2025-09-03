@@ -21,6 +21,7 @@ interface ThemeContextType {
   updateColor: (key: keyof ColorScheme, value: string) => void;
   updateExtendedColor: (name: ExtendedTagName, value: string) => void;
   getExtendedColorValue: (name: ExtendedTagName) => string | undefined;
+  getExtendedHex: (theme: ThemeTarget, name: ExtendedTagName) => string | undefined; // Add this line
   setThemeName: (name: string) => void;
   setSeedColor: (color: string) => void;
   generatePalette: () => void;
@@ -350,29 +351,83 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
       outline: generateVariant(0, -20, 45),
       outlineVariant: generateVariant(0, -30, 25),
       
-      // Custom tokens for dark theme
-      warning: "#FBBF24",
-      onWarning: "#78350F",
-      warningContainer: "#92400E",
-      onWarningContainer: "#FEF3C7",
-      information: generateVariant(180, 0, 40),
-      onInformation: generateVariant(180, 0, -30),
-      informationContainer: generateVariant(180, -10, -20),
-      onInformationContainer: generateVariant(180, -10, 85),
-      success: "#34D399",
-      onSuccess: "#065F46",
-      successContainer: "#047857",
-      onSuccessContainer: "#D1FAE5",
-      defaultColor: generateVariant(0, 0, 30),
-      onDefault: generateVariant(0, 0, -40),
-      defaultContainer: generateVariant(0, -10, -25),
-      onDefaultContainer: generateVariant(0, -10, 40),
-      critical: "#F87171",
-      onCritical: "#7F1D1D",
-      
       // Tag color tokens
 
     };
+
+    const newExtendedColors: ExtendedColor[] = [
+      // Warning colors
+      { name: "warningText", color: "#FBBF24", description: "warning text color", fallback: "#FBBF24", harmonized: false },
+      { name: "warningBackground", color: "#92400E", description: "warning background color", fallback: "#92400E", harmonized: false },
+      { name: "warningBorder", color: "#FEF3C7", description: "warning border color", fallback: "#FEF3C7", harmonized: false },
+
+      // Information colors
+      { name: "informationText", color: generateVariant(180, 0, 40), description: "information text color", fallback: "#e5ebd5", harmonized: false },
+      { name: "informationBackground", color: generateVariant(180, -10, -20), description: "information background color", fallback: "#353d1e", harmonized: false },
+      { name: "informationBorder", color: generateVariant(180, -10, 85), description: "information border color", fallback: "#ffffff", harmonized: false },
+
+      // Success colors
+      { name: "successText", color: "#34D399", description: "success text color", fallback: "#047857", harmonized: false },
+      { name: "successBackground", color: "#047857", description: "success background color", fallback: "#D1FAE5", harmonized: false },
+      { name: "successBorder", color: "#D1FAE5", description: "success border color", fallback: "#065F46", harmonized: false },
+
+      // Default colors (derived from primary)
+      { name: "defaultText", color: generateVariant(0, 0, 30), description: "default text color", fallback: "#6750A4", harmonized: false },
+      { name: "defaultBackground", color: generateVariant(0, -10, -25), description: "default background color", fallback: "#d0cdda", harmonized: false },
+      { name: "defaultBorder", color: generateVariant(0, -10, 40), description: "default border color", fallback: "#110d1b", harmonized: false },
+
+      // Error colors (Material Design standard, already in scheme, but also as extended for consistency)
+      { name: "errorText", color: "#EF4444", description: "error text color", fallback: "#EF4444", harmonized: false },
+      { name: "errorBackground", color: "#7F1D1D", description: "error background color", fallback: "#7F1D1D", harmonized: false },
+      { name: "errorBorder", color: "#F87171", description: "error border color", fallback: "#F87171", harmonized: false },
+
+      // Tag colors (using values from target.json as a starting point)
+      { name: "blueTagText", color: "#1668DC", description: "blue tag text color", fallback: "#1668DC", harmonized: false },
+      { name: "blueTagBackground", color: "#E6F4FF", description: "blue tag background color", fallback: "#E6F4FF", harmonized: false },
+      { name: "blueTagBorder", color: "#91CAFF", description: "blue tag border color", fallback: "#91CAFF", harmonized: false },
+
+      { name: "cyanTagText", color: "#13A8A8", description: "cyan tag text color", fallback: "#13A8A8", harmonized: false },
+      { name: "cyanTagBackground", color: "#E6FFFB", description: "cyan tag background color", fallback: "#E6FFFB", harmonized: false },
+      { name: "cyanTagBorder", color: "#87E8DE", description: "cyan tag border color", fallback: "#87E8DE", harmonized: false },
+
+      { name: "geekblueTagText", color: "#2B4ACB", description: "geekblue tag text color", fallback: "#2B4ACB", harmonized: false },
+      { name: "geekblueTagBackground", color: "#F0F5FF", description: "geekblue tag background color", fallback: "#F0F5FF", harmonized: false },
+      { name: "geekblueTagBorder", color: "#ADC6FF", description: "geekblue tag border color", fallback: "#ADC6FF", harmonized: false },
+
+      { name: "goldTagText", color: "#D89614", description: "gold tag text color", fallback: "#D89614", harmonized: false },
+      { name: "goldTagBackground", color: "#FFFBE6", description: "gold tag background color", fallback: "#FFFBE6", harmonized: false },
+      { name: "goldTagBorder", color: "#FFD666", description: "gold tag border color", fallback: "#FFD666", harmonized: false },
+
+      { name: "greenTagText", color: "#49AA19", description: "green tag text color", fallback: "#49AA19", harmonized: false },
+      { name: "greenTagBackground", color: "#F6FFED", description: "green tag background color", fallback: "#F6FFED", harmonized: false },
+      { name: "greenTagBorder", color: "#B7EB8F", description: "green tag border color", fallback: "#B7EB8F", harmonized: false },
+
+      { name: "limeTagText", color: "#8BBB11", description: "lime tag text color", fallback: "#8BBB11", harmonized: false },
+      { name: "limeTagBackground", color: "#FCFFE6", description: "lime tag background color", fallback: "#FCFFE6", harmonized: false },
+      { name: "limeTagBorder", color: "#EAFF8F", description: "lime tag border color", fallback: "#EAFF8F", harmonized: false },
+
+      { name: "magentaTagText", color: "#CB2B83", description: "magenta tag text color", fallback: "#CB2B83", harmonized: false },
+      { name: "magentaTagBackground", color: "#FFF0F6", description: "magenta tag background color", fallback: "#FFF0F6", harmonized: false },
+      { name: "magentaTagBorder", color: "#FFADD2", description: "magenta tag border color", fallback: "#FFADD2", harmonized: false },
+
+      { name: "orangeTagText", color: "#D87A16", description: "orange tag text color", fallback: "#D87A16", harmonized: false },
+      { name: "orangeTagBackground", color: "#FFF7E6", description: "orange tag background color", fallback: "#FFF7E6", harmonized: false },
+      { name: "orangeTagBorder", color: "#FFD591", description: "orange tag border color", fallback: "#FFD591", harmonized: false },
+
+      { name: "purpleTagText", color: "#722ED1", description: "purple tag text color", fallback: "#722ED1", harmonized: false },
+      { name: "purpleTagBackground", color: "#F9F0FF", description: "purple tag background color", fallback: "#F9F0FF", harmonized: false },
+      { name: "purpleTagBorder", color: "#D3ADF7", description: "purple tag border color", fallback: "#D3ADF7", harmonized: false },
+
+      { name: "redTagText", color: "#D32029", description: "red tag text color", fallback: "#D32029", harmonized: false },
+      { name: "redTagBackground", color: "#FFF2F0", description: "red tag background color", fallback: "#FFF2F0", harmonized: false },
+      { name: "redTagBorder", color: "#FFCCC7", description: "red tag border color", fallback: "#FFCCC7", harmonized: false },
+
+      { name: "volcanoTagText", color: "#D84A1B", description: "volcano tag text color", fallback: "#D84A1B", harmonized: false },
+      { name: "volcanoTagBackground", color: "#FFF2E8", description: "volcano tag background color", fallback: "#FFF2E8", harmonized: false },
+      { name: "volcanoTagBorder", color: "#FFBB96", description: "volcano tag border color", fallback: "#FFBB96", harmonized: false },
+    ];
+
+    setExtendedColors(newExtendedColors);
 
     setLightTheme(newLightTheme);
     setDarkTheme(newDarkTheme);
@@ -589,6 +644,7 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
     updateColor,
     updateExtendedColor,
     getExtendedColorValue,
+    getExtendedHex, // Add this line
     setThemeName,
     setSeedColor,
     generatePalette,
