@@ -7,10 +7,27 @@ const args = process.argv.slice(2);
 const isDry = args.includes('--dry');
 const root = process.cwd();
 
-const TAG_SUFFIXES = ['TagText', 'TagBackground', 'TagBorder'];
+const EXTENDED_TOKENS = [
+  'warningText', 'warningBackground', 'warningBorder',
+  'informationText', 'informationBackground', 'informationBorder',
+  'successText', 'successBackground', 'successBorder',
+  'defaultText', 'defaultBackground', 'defaultBorder',
+  'errorText', 'errorBackground', 'errorBorder',
+  'blueTagText', 'blueTagBackground', 'blueTagBorder',
+  'cyanTagText', 'cyanTagBackground', 'cyanTagBorder',
+  'geekblueTagText', 'geekblueTagBackground', 'geekblueTagBorder',
+  'goldTagText', 'goldTagBackground', 'goldTagBorder',
+  'greenTagText', 'greenTagBackground', 'greenTagBorder',
+  'limeTagText', 'limeTagBackground', 'limeTagBorder',
+  'magentaTagText', 'magentaTagBackground', 'magentaTagBorder',
+  'orangeTagText', 'orangeTagBackground', 'orangeTagBorder',
+  'purpleTagText', 'purpleTagBackground', 'purpleTagBorder',
+  'redTagText', 'redTagBackground', 'redTagBorder',
+  'volcanoTagText', 'volcanoTagBackground', 'volcanoTagBorder'
+];
 
-function isTagToken(token) {
-  return TAG_SUFFIXES.some(s => token.endsWith(s));
+function isExtendedToken(token) {
+  return EXTENDED_TOKENS.includes(token);
 }
 
 function ensureImport(code) {
@@ -37,12 +54,12 @@ function ensureImport(code) {
 function processFile(filePath, summary) {
   const src = fs.readFileSync(filePath, 'utf8');
 
-  // Matches theme.schemes.(light|dark).<AnyTagToken>, with optional chaining variants
-  const pattern = /(theme)\.(schemes)\??\.(light|dark)\??\.([a-zA-Z]+Tag(?:Text|Background|Border))/g;
+  // Matches theme.schemes.(light|dark).<AnyExtendedToken>, with optional chaining variants
+  const pattern = /(theme)\.(schemes)\?\?\.(light|dark)\?\?\.([a-zA-Z]+)/g;
 
   let replacedCount = 0;
   let out = src.replace(pattern, (match, theme, schemes, mode, token) => {
-    if (!isTagToken(token)) return match;
+    if (!isExtendedToken(token)) return match;
     replacedCount++;
     return `getExtendedHex(${theme}, "${token}")`;
   });

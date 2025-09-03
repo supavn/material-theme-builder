@@ -107,6 +107,111 @@
   },
   "extendedColors": [
     {
+      "name": "warningText",
+      "color": "#FBBF24",
+      "description": "warning text color token",
+      "fallback": "warning text color token",
+      "harmonized": false
+    },
+    {
+      "name": "warningBackground",
+      "color": "#92400E",
+      "description": "warning background color token",
+      "fallback": "warning background color token",
+      "harmonized": false
+    },
+    {
+      "name": "warningBorder",
+      "color": "#FEF3C7",
+      "description": "warning border color token",
+      "fallback": "warning border color token",
+      "harmonized": false
+    },
+    {
+      "name": "informationText",
+      "color": "#e5ebd5",
+      "description": "information text color token",
+      "fallback": "information text color token",
+      "harmonized": false
+    },
+    {
+      "name": "informationBackground",
+      "color": "#353d1e",
+      "description": "information background color token",
+      "fallback": "information background color token",
+      "harmonized": false
+    },
+    {
+      "name": "informationBorder",
+      "color": "#ffffff",
+      "description": "information border color token",
+      "fallback": "information border color token",
+      "harmonized": false
+    },
+    {
+      "name": "successText",
+      "color": "#047857",
+      "description": "success text color token",
+      "fallback": "success text color token",
+      "harmonized": false
+    },
+    {
+      "name": "successBackground",
+      "color": "#D1FAE5",
+      "description": "success background color token",
+      "fallback": "success background color token",
+      "harmonized": false
+    },
+    {
+      "name": "successBorder",
+      "color": "#065F46",
+      "description": "success border color token",
+      "fallback": "success border color token",
+      "harmonized": false
+    },
+    {
+      "name": "defaultText",
+      "color": "#6750A4",
+      "description": "default text color token",
+      "fallback": "default text color token",
+      "harmonized": false
+    },
+    {
+      "name": "defaultBackground",
+      "color": "#d0cdda",
+      "description": "default background color token",
+      "fallback": "default background color token",
+      "harmonized": false
+    },
+    {
+      "name": "defaultBorder",
+      "color": "#110d1b",
+      "description": "default border color token",
+      "fallback": "default border color token",
+      "harmonized": false
+    },
+    {
+      "name": "errorText",
+      "color": "#EF4444",
+      "description": "error text color token",
+      "fallback": "error text color token",
+      "harmonized": false
+    },
+    {
+      "name": "errorBackground",
+      "color": "#7F1D1D",
+      "description": "error background color token",
+      "fallback": "error background color token",
+      "harmonized": false
+    },
+    {
+      "name": "errorBorder",
+      "color": "#F87171",
+      "description": "error border color token",
+      "fallback": "error border color token",
+      "harmonized": false
+    },
+    {
       "name": "blueTagText",
       "color": "#1668DC",
       "description": "blue tag text color",
@@ -338,5 +443,5 @@
       "harmonized": false
     }
   ],
-  "timestamp": "2025-08-29T08:03:11.918Z"
+  "timestamp": "2025-09-03T03:30:07.660Z"
 }

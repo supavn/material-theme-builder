@@ -1,4 +1,13 @@
 // Schema types for theme builder
+import type { ExtendedTagName } from '../theme/extended-tags.generated';
+
+export interface ExtendedColor {
+  name: ExtendedTagName;
+  color: string;
+  description: string;
+  fallback: string;
+  harmonized: false;
+}
 
 export interface ColorScheme {
   // Primary colors
@@ -45,62 +54,7 @@ export interface ColorScheme {
   outline: string;
   outlineVariant: string;
   
-  // Custom semantic tokens
-  defaultColor: string;
-  onDefault: string;
-  defaultContainer: string;
-  onDefaultContainer: string;
-  success: string;
-  onSuccess: string;
-  successContainer: string;
-  onSuccessContainer: string;
-  warning: string;
-  onWarning: string;
-  warningContainer: string;
-  onWarningContainer: string;
-  information: string;
-  onInformation: string;
-  informationContainer: string;
-  onInformationContainer: string;
-  critical: string;
-  onCritical: string;
-  criticalContainer?: string;
-  onCriticalContainer?: string;
-  
-  // Tag color tokens
-  blueTagText: string;
-  blueTagBackground: string;
-  blueTagBorder: string;
-  cyanTagText: string;
-  cyanTagBackground: string;
-  cyanTagBorder: string;
-  geekblueTagText: string;
-  geekblueTagBackground: string;
-  geekblueTagBorder: string;
-  goldTagText: string;
-  goldTagBackground: string;
-  goldTagBorder: string;
-  greenTagText: string;
-  greenTagBackground: string;
-  greenTagBorder: string;
-  limeTagText: string;
-  limeTagBackground: string;
-  limeTagBorder: string;
-  magentaTagText: string;
-  magentaTagBackground: string;
-  magentaTagBorder: string;
-  orangeTagText: string;
-  orangeTagBackground: string;
-  orangeTagBorder: string;
-  purpleTagText: string;
-  purpleTagBackground: string;
-  purpleTagBorder: string;
-  redTagText: string;
-  redTagBackground: string;
-  redTagBorder: string;
-  volcanoTagText: string;
-  volcanoTagBackground: string;
-  volcanoTagBorder: string;
+
 }
 
 export interface ThemeSchemes {
@@ -112,6 +66,7 @@ export interface ThemeExport {
   themeName: string;
   seed: string;
   schemes: ThemeSchemes;
+  extendedColors: ExtendedColor[];
   timestamp: string;
 }
 
