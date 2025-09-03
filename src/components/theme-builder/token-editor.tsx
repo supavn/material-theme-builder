@@ -759,280 +759,280 @@ export function TokenEditor() {
           <Separator className="my-3" />
 
           {/* Tag Colors */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tag Colors</h3>
             
             {/* Blue Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Blue</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Blue</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="blueTagText"
-                  value={currentTheme.blueTagText}
-                  onChange={(value) => handleColorChange("blueTagText", value)}
+                  tokenName="blueTagText"
+                  value={getExtendedColorValue("blueTagText")}
+                  onChange={(value) => handleExtendedColorChange("blueTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="blueTagBackground"
-                  value={currentTheme.blueTagBackground}
-                  onChange={(value) => handleColorChange("blueTagBackground", value)}
+                  tokenName="blueTagBackground"
+                  value={getExtendedColorValue("blueTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("blueTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="blueTagBorder"
-                  value={currentTheme.blueTagBorder}
-                  onChange={(value) => handleColorChange("blueTagBorder", value)}
+                  tokenName="blueTagBorder"
+                  value={getExtendedColorValue("blueTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("blueTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Cyan Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Cyan</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Cyan</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="cyanTagText"
-                  value={currentTheme.cyanTagText}
-                  onChange={(value) => handleColorChange("cyanTagText", value)}
+                  tokenName="cyanTagText"
+                  value={getExtendedColorValue("cyanTagText")}
+                  onChange={(value) => handleExtendedColorChange("cyanTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="cyanTagBackground"
-                  value={currentTheme.cyanTagBackground}
-                  onChange={(value) => handleColorChange("cyanTagBackground", value)}
+                  tokenName="cyanTagBackground"
+                  value={getExtendedColorValue("cyanTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("cyanTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="cyanTagBorder"
-                  value={currentTheme.cyanTagBorder}
-                  onChange={(value) => handleColorChange("cyanTagBorder", value)}
+                  tokenName="cyanTagBorder"
+                  value={getExtendedColorValue("cyanTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("cyanTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Geekblue Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Geekblue</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Geekblue</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="geekblueTagText"
-                  value={currentTheme.geekblueTagText}
-                  onChange={(value) => handleColorChange("geekblueTagText", value)}
+                  tokenName="geekblueTagText"
+                  value={getExtendedColorValue("geekblueTagText")}
+                  onChange={(value) => handleExtendedColorChange("geekblueTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="geekblueTagBackground"
-                  value={currentTheme.geekblueTagBackground}
-                  onChange={(value) => handleColorChange("geekblueTagBackground", value)}
+                  tokenName="geekblueTagBackground"
+                  value={getExtendedColorValue("geekblueTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("geekblueTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="geekblueTagBorder"
-                  value={currentTheme.geekblueTagBorder}
-                  onChange={(value) => handleColorChange("geekblueTagBorder", value)}
+                  tokenName="geekblueTagBorder"
+                  value={getExtendedColorValue("geekblueTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("geekblueTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Gold Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Gold</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Gold</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="goldTagText"
-                  value={currentTheme.goldTagText}
-                  onChange={(value) => handleColorChange("goldTagText", value)}
+                  tokenName="goldTagText"
+                  value={getExtendedColorValue("goldTagText")}
+                  onChange={(value) => handleExtendedColorChange("goldTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="goldTagBackground"
-                  value={currentTheme.goldTagBackground}
-                  onChange={(value) => handleColorChange("goldTagBackground", value)}
+                  tokenName="goldTagBackground"
+                  value={getExtendedColorValue("goldTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("goldTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="goldTagBorder"
-                  value={currentTheme.goldTagBorder}
-                  onChange={(value) => handleColorChange("goldTagBorder", value)}
+                  tokenName="goldTagBorder"
+                  value={getExtendedColorValue("goldTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("goldTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Green Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Green</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Green</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="greenTagText"
-                  value={currentTheme.greenTagText}
-                  onChange={(value) => handleColorChange("greenTagText", value)}
+                  tokenName="greenTagText"
+                  value={getExtendedColorValue("greenTagText")}
+                  onChange={(value) => handleExtendedColorChange("greenTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="greenTagBackground"
-                  value={currentTheme.greenTagBackground}
-                  onChange={(value) => handleColorChange("greenTagBackground", value)}
+                  tokenName="greenTagBackground"
+                  value={getExtendedColorValue("greenTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("greenTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="greenTagBorder"
-                  value={currentTheme.greenTagBorder}
-                  onChange={(value) => handleColorChange("greenTagBorder", value)}
+                  tokenName="greenTagBorder"
+                  value={getExtendedColorValue("greenTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("greenTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Lime Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Lime</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lime</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="limeTagText"
-                  value={currentTheme.limeTagText}
-                  onChange={(value) => handleColorChange("limeTagText", value)}
+                  tokenName="limeTagText"
+                  value={getExtendedColorValue("limeTagText")}
+                  onChange={(value) => handleExtendedColorChange("limeTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="limeTagBackground"
-                  value={currentTheme.limeTagBackground}
-                  onChange={(value) => handleColorChange("limeTagBackground", value)}
+                  tokenName="limeTagBackground"
+                  value={getExtendedColorValue("limeTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("limeTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="limeTagBorder"
-                  value={currentTheme.limeTagBorder}
-                  onChange={(value) => handleColorChange("limeTagBorder", value)}
+                  tokenName="limeTagBorder"
+                  value={getExtendedColorValue("limeTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("limeTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Magenta Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Magenta</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Magenta</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="magentaTagText"
-                  value={currentTheme.magentaTagText}
-                  onChange={(value) => handleColorChange("magentaTagText", value)}
+                  tokenName="magentaTagText"
+                  value={getExtendedColorValue("magentaTagText")}
+                  onChange={(value) => handleExtendedColorChange("magentaTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="magentaTagBackground"
-                  value={currentTheme.magentaTagBackground}
-                  onChange={(value) => handleColorChange("magentaTagBackground", value)}
+                  tokenName="magentaTagBackground"
+                  value={getExtendedColorValue("magentaTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("magentaTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="magentaTagBorder"
-                  value={currentTheme.magentaTagBorder}
-                  onChange={(value) => handleColorChange("magentaTagBorder", value)}
+                  tokenName="magentaTagBorder"
+                  value={getExtendedColorValue("magentaTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("magentaTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Orange Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Orange</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Orange</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="orangeTagText"
-                  value={currentTheme.orangeTagText}
-                  onChange={(value) => handleColorChange("orangeTagText", value)}
+                  tokenName="orangeTagText"
+                  value={getExtendedColorValue("orangeTagText")}
+                  onChange={(value) => handleExtendedColorChange("orangeTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="orangeTagBackground"
-                  value={currentTheme.orangeTagBackground}
-                  onChange={(value) => handleColorChange("orangeTagBackground", value)}
+                  tokenName="orangeTagBackground"
+                  value={getExtendedColorValue("orangeTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("orangeTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="orangeTagBorder"
-                  value={currentTheme.orangeTagBorder}
-                  onChange={(value) => handleColorChange("orangeTagBorder", value)}
+                  tokenName="orangeTagBorder"
+                  value={getExtendedColorValue("orangeTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("orangeTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Purple Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Purple</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Purple</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="purpleTagText"
-                  value={currentTheme.purpleTagText}
-                  onChange={(value) => handleColorChange("purpleTagText", value)}
+                  tokenName="purpleTagText"
+                  value={getExtendedColorValue("purpleTagText")}
+                  onChange={(value) => handleExtendedColorChange("purpleTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="purpleTagBackground"
-                  value={currentTheme.purpleTagBackground}
-                  onChange={(value) => handleColorChange("purpleTagBackground", value)}
+                  tokenName="purpleTagBackground"
+                  value={getExtendedColorValue("purpleTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("purpleTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="purpleTagBorder"
-                  value={currentTheme.purpleTagBorder}
-                  onChange={(value) => handleColorChange("purpleTagBorder", value)}
+                  tokenName="purpleTagBorder"
+                  value={getExtendedColorValue("purpleTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("purpleTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Red Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Red</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Red</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="redTagText"
-                  value={currentTheme.redTagText}
-                  onChange={(value) => handleColorChange("redTagText", value)}
+                  tokenName="redTagText"
+                  value={getExtendedColorValue("redTagText")}
+                  onChange={(value) => handleExtendedColorChange("redTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="redTagBackground"
-                  value={currentTheme.redTagBackground}
-                  onChange={(value) => handleColorChange("redTagBackground", value)}
+                  tokenName="redTagBackground"
+                  value={getExtendedColorValue("redTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("redTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="redTagBorder"
-                  value={currentTheme.redTagBorder}
-                  onChange={(value) => handleColorChange("redTagBorder", value)}
+                  tokenName="redTagBorder"
+                  value={getExtendedColorValue("redTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("redTagBorder", value)}
                 />
               </div>
             </div>
 
             {/* Volcano Tag */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-muted-foreground">Volcano</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Volcano</h4>
               <div className="grid grid-cols-3 gap-2">
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Text"
-                  colorKey="volcanoTagText"
-                  value={currentTheme.volcanoTagText}
-                  onChange={(value) => handleColorChange("volcanoTagText", value)}
+                  tokenName="volcanoTagText"
+                  value={getExtendedColorValue("volcanoTagText")}
+                  onChange={(value) => handleExtendedColorChange("volcanoTagText", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Background"
-                  colorKey="volcanoTagBackground"
-                  value={currentTheme.volcanoTagBackground}
-                  onChange={(value) => handleColorChange("volcanoTagBackground", value)}
+                  tokenName="volcanoTagBackground"
+                  value={getExtendedColorValue("volcanoTagBackground")}
+                  onChange={(value) => handleExtendedColorChange("volcanoTagBackground", value)}
                 />
-                <CompactColorInput
+                <ExtendedColorInput
                   label="Border"
-                  colorKey="volcanoTagBorder"
-                  value={currentTheme.volcanoTagBorder}
-                  onChange={(value) => handleColorChange("volcanoTagBorder", value)}
+                  tokenName="volcanoTagBorder"
+                  value={getExtendedColorValue("volcanoTagBorder")}
+                  onChange={(value) => handleExtendedColorChange("volcanoTagBorder", value)}
                 />
               </div>
             </div>
