@@ -287,7 +287,15 @@ export function ThemeEditor() {
   const handleDuplicateTheme = async (id: string) => {
     try {
       const theme = savedThemes.find(t => t.id === id);
-      const newId = await duplicateTheme(id, `${getThemeNameFromExport(theme)} (Copy)`);
+    if (!theme) {
+      toast({
+        title: "Error",
+        description: "Theme not found",
+        variant: "destructive",
+      });
+      return;
+    }
+    const newId = await duplicateTheme(id, `${getThemeNameFromExport(theme)} (Copy)`);
       toast({
         title: "Success",
         description: "Theme duplicated successfully!",

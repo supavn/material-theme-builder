@@ -13,6 +13,12 @@ export function CodeEditor() {
   const { toast } = useToast();
 
   const theme = exportTheme();
+  
+  // Helper function to get extended color from ThemeExport
+  const getExtendedHexFromExport = (name: string): string => {
+    const found = theme.extendedColors.find(ec => ec.name === name);
+    return found?.color || '#FFFFFF';
+  };
 
   const generateJSONCode = () => {
     return JSON.stringify(theme, null, 2);
@@ -70,27 +76,27 @@ class CustomMaterialTheme {
 
   // Custom Colors Extension for Warning, Success, Information
   static const CustomColors lightCustomColors = CustomColors(
-    warningText: Color(0xFF${getExtendedHex(theme, "warningText")?.substring(1)}),
-    warningBackground: Color(0xFF${getExtendedHex(theme, "warningBackground")?.substring(1)}),
-    warningBorder: Color(0xFF${getExtendedHex(theme, "warningBorder")?.substring(1)}),
-    successText: Color(0xFF${getExtendedHex(theme, "successText")?.substring(1)}),
-    successBackground: Color(0xFF${getExtendedHex(theme, "successBackground")?.substring(1)}),
-    successBorder: Color(0xFF${getExtendedHex(theme, "successBorder")?.substring(1)}),
-    informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
-    informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
-    informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
+    warningText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    warningBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    warningBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
   );
 
   static const CustomColors darkCustomColors = CustomColors(
-    warningText: Color(0xFF${getExtendedHex(theme, "warningText")?.substring(1)}),
-    warningBackground: Color(0xFF${getExtendedHex(theme, "warningBackground")?.substring(1)}),
-    warningBorder: Color(0xFF${getExtendedHex(theme, "warningBorder")?.substring(1)}),
-    successText: Color(0xFF${getExtendedHex(theme, "successText")?.substring(1)}),
-    successBackground: Color(0xFF${getExtendedHex(theme, "successBackground")?.substring(1)}),
-    successBorder: Color(0xFF${getExtendedHex(theme, "successBorder")?.substring(1)}),
-    informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
-    informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
-    informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
+    warningText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    warningBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    warningBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    successBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationText: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationBackground: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
+    informationBorder: Color(0xFF${getExtendedHexFromExport("$1")?.substring(1)}),
   );
 
   static ThemeData get lightTheme => ThemeData(

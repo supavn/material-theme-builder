@@ -2,6 +2,8 @@
  * Color conversion utilities for hex, HSV, and HCT color spaces
  */
 
+import type { ColorScheme } from '../types/schema';
+
 export interface HSVColor {
   h: number; // 0-360
   s: number; // 0-100
@@ -245,7 +247,7 @@ export function generateTonalPalette(seedHex: string): { "0": string; "5": strin
     palette[tone.toString()] = hctToHex(hct.h, adjustedChroma, tone);
   });
 
-  return palette;
+  return palette as { "0": string; "5": string; "10": string; "15": string; "20": string; "25": string; "30": string; "35": string; "40": string; "50": string; "60": string; "70": string; "80": string; "90": string; "95": string; "98": string; "99": string; "100": string; };
 }
 
 /**
@@ -264,7 +266,7 @@ export function generateAllPalettes(primarySeed: string, secondarySeed: string, 
 /**
  * Generate contrast scheme variants based on base light/dark schemes
  */
-export function generateContrastSchemes(lightScheme: any, darkScheme: any) {
+export function generateContrastSchemes(lightScheme: ColorScheme, darkScheme: ColorScheme) {
   // Helper function to adjust color brightness
   const adjustBrightness = (hex: string, factor: number): string => {
     const hct = hexToHct(hex);
@@ -289,33 +291,138 @@ export function generateContrastSchemes(lightScheme: any, darkScheme: any) {
     return hctToHex(hct.h, hct.c, newTone);
   };
 
-  const lightMediumContrast = Object.fromEntries(
-    Object.entries(lightScheme).map(([key, value]) => [
-      key,
-      increaseContrast(value as string, true, 0.5)
-    ])
-  );
+  // Create properly typed ColorScheme objects
+  const lightMediumContrast: ColorScheme = {
+    primary: increaseContrast(lightScheme.primary, true, 0.5),
+    onPrimary: increaseContrast(lightScheme.onPrimary, true, 0.5),
+    primaryContainer: increaseContrast(lightScheme.primaryContainer, true, 0.5),
+    onPrimaryContainer: increaseContrast(lightScheme.onPrimaryContainer, true, 0.5),
+    secondary: increaseContrast(lightScheme.secondary, true, 0.5),
+    onSecondary: increaseContrast(lightScheme.onSecondary, true, 0.5),
+    secondaryContainer: increaseContrast(lightScheme.secondaryContainer, true, 0.5),
+    onSecondaryContainer: increaseContrast(lightScheme.onSecondaryContainer, true, 0.5),
+    tertiary: increaseContrast(lightScheme.tertiary, true, 0.5),
+    onTertiary: increaseContrast(lightScheme.onTertiary, true, 0.5),
+    tertiaryContainer: increaseContrast(lightScheme.tertiaryContainer, true, 0.5),
+    onTertiaryContainer: increaseContrast(lightScheme.onTertiaryContainer, true, 0.5),
+    error: increaseContrast(lightScheme.error, true, 0.5),
+    onError: increaseContrast(lightScheme.onError, true, 0.5),
+    errorContainer: increaseContrast(lightScheme.errorContainer, true, 0.5),
+    onErrorContainer: increaseContrast(lightScheme.onErrorContainer, true, 0.5),
+    surface: increaseContrast(lightScheme.surface, true, 0.5),
+    onSurface: increaseContrast(lightScheme.onSurface, true, 0.5),
+    surfaceVariant: increaseContrast(lightScheme.surfaceVariant, true, 0.5),
+    onSurfaceVariant: increaseContrast(lightScheme.onSurfaceVariant, true, 0.5),
+    surfaceDim: increaseContrast(lightScheme.surfaceDim, true, 0.5),
+    surfaceBright: increaseContrast(lightScheme.surfaceBright, true, 0.5),
+    surfaceContainer: increaseContrast(lightScheme.surfaceContainer, true, 0.5),
+    surfaceContainerLow: increaseContrast(lightScheme.surfaceContainerLow, true, 0.5),
+    surfaceContainerHigh: increaseContrast(lightScheme.surfaceContainerHigh, true, 0.5),
+    surfaceContainerHighest: increaseContrast(lightScheme.surfaceContainerHighest, true, 0.5),
+    background: increaseContrast(lightScheme.background, true, 0.5),
+    onBackground: increaseContrast(lightScheme.onBackground, true, 0.5),
+    outline: increaseContrast(lightScheme.outline, true, 0.5),
+    outlineVariant: increaseContrast(lightScheme.outlineVariant, true, 0.5),
+  };
 
-  const lightHighContrast = Object.fromEntries(
-    Object.entries(lightScheme).map(([key, value]) => [
-      key,
-      increaseContrast(value as string, true, 1.0)
-    ])
-  );
+  const lightHighContrast: ColorScheme = {
+    primary: increaseContrast(lightScheme.primary, true, 1.0),
+    onPrimary: increaseContrast(lightScheme.onPrimary, true, 1.0),
+    primaryContainer: increaseContrast(lightScheme.primaryContainer, true, 1.0),
+    onPrimaryContainer: increaseContrast(lightScheme.onPrimaryContainer, true, 1.0),
+    secondary: increaseContrast(lightScheme.secondary, true, 1.0),
+    onSecondary: increaseContrast(lightScheme.onSecondary, true, 1.0),
+    secondaryContainer: increaseContrast(lightScheme.secondaryContainer, true, 1.0),
+    onSecondaryContainer: increaseContrast(lightScheme.onSecondaryContainer, true, 1.0),
+    tertiary: increaseContrast(lightScheme.tertiary, true, 1.0),
+    onTertiary: increaseContrast(lightScheme.onTertiary, true, 1.0),
+    tertiaryContainer: increaseContrast(lightScheme.tertiaryContainer, true, 1.0),
+    onTertiaryContainer: increaseContrast(lightScheme.onTertiaryContainer, true, 1.0),
+    error: increaseContrast(lightScheme.error, true, 1.0),
+    onError: increaseContrast(lightScheme.onError, true, 1.0),
+    errorContainer: increaseContrast(lightScheme.errorContainer, true, 1.0),
+    onErrorContainer: increaseContrast(lightScheme.onErrorContainer, true, 1.0),
+    surface: increaseContrast(lightScheme.surface, true, 1.0),
+    onSurface: increaseContrast(lightScheme.onSurface, true, 1.0),
+    surfaceVariant: increaseContrast(lightScheme.surfaceVariant, true, 1.0),
+    onSurfaceVariant: increaseContrast(lightScheme.onSurfaceVariant, true, 1.0),
+    surfaceDim: increaseContrast(lightScheme.surfaceDim, true, 1.0),
+    surfaceBright: increaseContrast(lightScheme.surfaceBright, true, 1.0),
+    surfaceContainer: increaseContrast(lightScheme.surfaceContainer, true, 1.0),
+    surfaceContainerLow: increaseContrast(lightScheme.surfaceContainerLow, true, 1.0),
+    surfaceContainerHigh: increaseContrast(lightScheme.surfaceContainerHigh, true, 1.0),
+    surfaceContainerHighest: increaseContrast(lightScheme.surfaceContainerHighest, true, 1.0),
+    background: increaseContrast(lightScheme.background, true, 1.0),
+    onBackground: increaseContrast(lightScheme.onBackground, true, 1.0),
+    outline: increaseContrast(lightScheme.outline, true, 1.0),
+    outlineVariant: increaseContrast(lightScheme.outlineVariant, true, 1.0),
+  };
 
-  const darkMediumContrast = Object.fromEntries(
-    Object.entries(darkScheme).map(([key, value]) => [
-      key,
-      increaseContrast(value as string, false, 0.5)
-    ])
-  );
+  const darkMediumContrast: ColorScheme = {
+    primary: increaseContrast(darkScheme.primary, false, 0.5),
+    onPrimary: increaseContrast(darkScheme.onPrimary, false, 0.5),
+    primaryContainer: increaseContrast(darkScheme.primaryContainer, false, 0.5),
+    onPrimaryContainer: increaseContrast(darkScheme.onPrimaryContainer, false, 0.5),
+    secondary: increaseContrast(darkScheme.secondary, false, 0.5),
+    onSecondary: increaseContrast(darkScheme.onSecondary, false, 0.5),
+    secondaryContainer: increaseContrast(darkScheme.secondaryContainer, false, 0.5),
+    onSecondaryContainer: increaseContrast(darkScheme.onSecondaryContainer, false, 0.5),
+    tertiary: increaseContrast(darkScheme.tertiary, false, 0.5),
+    onTertiary: increaseContrast(darkScheme.onTertiary, false, 0.5),
+    tertiaryContainer: increaseContrast(darkScheme.tertiaryContainer, false, 0.5),
+    onTertiaryContainer: increaseContrast(darkScheme.onTertiaryContainer, false, 0.5),
+    error: increaseContrast(darkScheme.error, false, 0.5),
+    onError: increaseContrast(darkScheme.onError, false, 0.5),
+    errorContainer: increaseContrast(darkScheme.errorContainer, false, 0.5),
+    onErrorContainer: increaseContrast(darkScheme.onErrorContainer, false, 0.5),
+    surface: increaseContrast(darkScheme.surface, false, 0.5),
+    onSurface: increaseContrast(darkScheme.onSurface, false, 0.5),
+    surfaceVariant: increaseContrast(darkScheme.surfaceVariant, false, 0.5),
+    onSurfaceVariant: increaseContrast(darkScheme.onSurfaceVariant, false, 0.5),
+    surfaceDim: increaseContrast(darkScheme.surfaceDim, false, 0.5),
+    surfaceBright: increaseContrast(darkScheme.surfaceBright, false, 0.5),
+    surfaceContainer: increaseContrast(darkScheme.surfaceContainer, false, 0.5),
+    surfaceContainerLow: increaseContrast(darkScheme.surfaceContainerLow, false, 0.5),
+    surfaceContainerHigh: increaseContrast(darkScheme.surfaceContainerHigh, false, 0.5),
+    surfaceContainerHighest: increaseContrast(darkScheme.surfaceContainerHighest, false, 0.5),
+    background: increaseContrast(darkScheme.background, false, 0.5),
+    onBackground: increaseContrast(darkScheme.onBackground, false, 0.5),
+    outline: increaseContrast(darkScheme.outline, false, 0.5),
+    outlineVariant: increaseContrast(darkScheme.outlineVariant, false, 0.5),
+  };
 
-  const darkHighContrast = Object.fromEntries(
-    Object.entries(darkScheme).map(([key, value]) => [
-      key,
-      increaseContrast(value as string, false, 1.0)
-    ])
-  );
+  const darkHighContrast: ColorScheme = {
+    primary: increaseContrast(darkScheme.primary, false, 1.0),
+    onPrimary: increaseContrast(darkScheme.onPrimary, false, 1.0),
+    primaryContainer: increaseContrast(darkScheme.primaryContainer, false, 1.0),
+    onPrimaryContainer: increaseContrast(darkScheme.onPrimaryContainer, false, 1.0),
+    secondary: increaseContrast(darkScheme.secondary, false, 1.0),
+    onSecondary: increaseContrast(darkScheme.onSecondary, false, 1.0),
+    secondaryContainer: increaseContrast(darkScheme.secondaryContainer, false, 1.0),
+    onSecondaryContainer: increaseContrast(darkScheme.onSecondaryContainer, false, 1.0),
+    tertiary: increaseContrast(darkScheme.tertiary, false, 1.0),
+    onTertiary: increaseContrast(darkScheme.onTertiary, false, 1.0),
+    tertiaryContainer: increaseContrast(darkScheme.tertiaryContainer, false, 1.0),
+    onTertiaryContainer: increaseContrast(darkScheme.onTertiaryContainer, false, 1.0),
+    error: increaseContrast(darkScheme.error, false, 1.0),
+    onError: increaseContrast(darkScheme.onError, false, 1.0),
+    errorContainer: increaseContrast(darkScheme.errorContainer, false, 1.0),
+    onErrorContainer: increaseContrast(darkScheme.onErrorContainer, false, 1.0),
+    surface: increaseContrast(darkScheme.surface, false, 1.0),
+    onSurface: increaseContrast(darkScheme.onSurface, false, 1.0),
+    surfaceVariant: increaseContrast(darkScheme.surfaceVariant, false, 1.0),
+    onSurfaceVariant: increaseContrast(darkScheme.onSurfaceVariant, false, 1.0),
+    surfaceDim: increaseContrast(darkScheme.surfaceDim, false, 1.0),
+    surfaceBright: increaseContrast(darkScheme.surfaceBright, false, 1.0),
+    surfaceContainer: increaseContrast(darkScheme.surfaceContainer, false, 1.0),
+    surfaceContainerLow: increaseContrast(darkScheme.surfaceContainerLow, false, 1.0),
+    surfaceContainerHigh: increaseContrast(darkScheme.surfaceContainerHigh, false, 1.0),
+    surfaceContainerHighest: increaseContrast(darkScheme.surfaceContainerHighest, false, 1.0),
+    background: increaseContrast(darkScheme.background, false, 1.0),
+    onBackground: increaseContrast(darkScheme.onBackground, false, 1.0),
+    outline: increaseContrast(darkScheme.outline, false, 1.0),
+    outlineVariant: increaseContrast(darkScheme.outlineVariant, false, 1.0),
+  };
 
   return {
     "light-medium-contrast": lightMediumContrast,
