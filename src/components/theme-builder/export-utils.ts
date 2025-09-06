@@ -34,7 +34,7 @@ function generateDartCode(theme: ThemeExport): string {
   // Helper function to get extended color by name
   const getExtendedHex = (name: string): string => {
     const found = theme.extendedColors.find(ec => ec.name === name);
-    return found?.color || '#000000';
+    return found?.color || '#FFFFFF';
   };
 
   // Generate tag colors for Dart code

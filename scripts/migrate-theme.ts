@@ -35,7 +35,7 @@ const ExtendedColorSchema = z.object({
 
 const TargetSchema = z.object({
   themeName: z.string().optional().default(""),
-  seed: ColorHex.optional().default("#000000"),
+  seed: ColorHex.optional().default("#FFFFFF"),
   schemes: SchemesWithTags,
   extendedColors: z.array(ExtendedColorSchema).optional().default([]),
   timestamp: z.string().optional().default(new Date().toISOString()),

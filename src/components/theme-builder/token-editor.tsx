@@ -56,7 +56,13 @@ function ColorInput({ label, colorKey, value, onChange, showContrast, contrastWi
 // Enhanced compact color input for extended colors
 function ExtendedColorInput({ label, tokenName, value, onChange }: ExtendedColorInputProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const displayValue = value || "#000000";
+  // Always provide a valid hex value - don't fallback to black if undefined
+  const displayValue = value && isValidHex(value) ? value : "";
+
+  const handleChange = (newValue: string) => {
+    // Always call onChange with the new value, even if it was previously undefined
+    onChange(newValue);
+  };
 
   return (
     <div className="space-y-1">
@@ -65,7 +71,7 @@ function ExtendedColorInput({ label, tokenName, value, onChange }: ExtendedColor
         <ColorPicker
           label=""
           value={displayValue}
-          onChange={onChange}
+          onChange={handleChange}
         />
       </div>
     </div>
@@ -88,6 +94,9 @@ function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps
       const newHct = hexToHct(value);
       if (newHsv) setHsv(newHsv);
       if (newHct) setHct(newHct);
+    } else if (value === "") {
+      // Handle empty value case
+      setTempHex("");
     }
   }, [value]);
 
@@ -143,7 +152,7 @@ function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps
                 <TabsContent value="native" className="space-y-3 mt-3">
                   <input
                     type="color"
-                    value={isValidHex(value) ? value : "#000000"}
+                    value={isValidHex(value) ? value : "#FFFFFF"}
                     onChange={(e) => onChange(e.target.value)}
                     className="w-full h-10 border border-border rounded-md cursor-pointer"
                   />
@@ -155,7 +164,7 @@ function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps
                     <Input
                       value={tempHex}
                       onChange={(e) => handleHexChange(e.target.value)}
-                      placeholder="#000000"
+                      placeholder="#FFFFFF"
                       className={`font-mono text-sm ${
                         !isValidHex(tempHex) && tempHex !== "" 
                           ? "border-destructive focus:border-destructive" 
@@ -321,7 +330,7 @@ function CompactColorInput({ label, colorKey, value, onChange }: ColorInputProps
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="flex-1 text-xs h-6 px-1"
-          placeholder="#000000"
+          placeholder="#FFFFFF"
         />
       </div>
     </div>

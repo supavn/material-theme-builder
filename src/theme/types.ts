@@ -72,5 +72,5 @@ export function getExtendedHex(theme: ThemeTarget, name: ExtendedTagName): strin
 }
 
 export function getTagHex(theme: ThemeTarget, token: ExtendedTagName): string {
-  return getExtendedHex(theme, token) ?? "#000000";
+  return getExtendedHex(theme, token) ?? "#FFFFFF";
 }
