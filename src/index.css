@@ -35,7 +35,6 @@
   --material-warning-container: hsl(36, 100%, 94%);
   --material-success: hsl(122, 39%, 49%);
   --material-success-container: hsl(122, 39%, 91%);
-  --material-critical: hsl(4, 90%, 58%);
 }
 
 .dark {
@@ -70,7 +69,6 @@
   --material-warning-container: hsl(36, 100%, 20%);
   --material-success: hsl(122, 39%, 70%);
   --material-success-container: hsl(122, 39%, 20%);
-  --material-critical: hsl(4, 90%, 70%);
 }
 
 @layer base {

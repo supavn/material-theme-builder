@@ -67,7 +67,7 @@ class CustomMaterialTheme {
     onBackground: Color(0xFF${theme.schemes.dark.onBackground.substring(1)}),
   );
 
-  // Custom Colors Extension for Warning, Success, Information, Critical
+  // Custom Colors Extension for Warning, Success, Information
   static const CustomColors lightCustomColors = CustomColors(
     warningText: Color(0xFF${getExtendedHex(theme, "warningText")?.substring(1)}),
     warningBackground: Color(0xFF${getExtendedHex(theme, "warningBackground")?.substring(1)}),
@@ -78,9 +78,6 @@ class CustomMaterialTheme {
     informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
     informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
     informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
-    criticalText: Color(0xFF${getExtendedHex(theme, "criticalText")?.substring(1)}),
-    criticalBackground: Color(0xFF${getExtendedHex(theme, "criticalBackground")?.substring(1)}),
-    criticalBorder: Color(0xFF${getExtendedHex(theme, "criticalBorder")?.substring(1)}),
   );
 
   static const CustomColors darkCustomColors = CustomColors(
@@ -93,9 +90,6 @@ class CustomMaterialTheme {
     informationText: Color(0xFF${getExtendedHex(theme, "informationText")?.substring(1)}),
     informationBackground: Color(0xFF${getExtendedHex(theme, "informationBackground")?.substring(1)}),
     informationBorder: Color(0xFF${getExtendedHex(theme, "informationBorder")?.substring(1)}),
-    criticalText: Color(0xFF${getExtendedHex(theme, "criticalText")?.substring(1)}),
-    criticalBackground: Color(0xFF${getExtendedHex(theme, "criticalBackground")?.substring(1)}),
-    criticalBorder: Color(0xFF${getExtendedHex(theme, "criticalBorder")?.substring(1)}),
   );
 
   static ThemeData get lightTheme => ThemeData(
@@ -123,9 +117,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
     required this.informationText,
     required this.informationBackground,
     required this.informationBorder,
-    required this.criticalText,
-    required this.criticalBackground,
-    required this.criticalBorder,
   });
 
   final Color warningText;
@@ -137,9 +128,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
   final Color informationText;
   final Color informationBackground;
   final Color informationBorder;
-  final Color criticalText;
-  final Color criticalBackground;
-  final Color criticalBorder;
 
   @override
   CustomColors copyWith({
@@ -152,9 +140,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
     Color? informationText,
     Color? informationBackground,
     Color? informationBorder,
-    Color? criticalText,
-    Color? criticalBackground,
-    Color? criticalBorder,
   }) {
     return CustomColors(
       warningText: warningText ?? this.warningText,
@@ -166,9 +151,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
       informationText: informationText ?? this.informationText,
       informationBackground: informationBackground ?? this.informationBackground,
       informationBorder: informationBorder ?? this.informationBorder,
-      criticalText: criticalText ?? this.criticalText,
-      criticalBackground: criticalBackground ?? this.criticalBackground,
-      criticalBorder: criticalBorder ?? this.criticalBorder,
     );
   }
 
@@ -185,9 +167,6 @@ class CustomColors extends ThemeExtension<CustomColors> {
       informationText: Color.lerp(informationText, other.informationText, t)!,
       informationBackground: Color.lerp(informationBackground, other.informationBackground, t)!,
       informationBorder: Color.lerp(informationBorder, other.informationBorder, t)!,
-      criticalText: Color.lerp(criticalText, other.criticalText, t)!,
-      criticalBackground: Color.lerp(criticalBackground, other.criticalBackground, t)!,
-      criticalBorder: Color.lerp(criticalBorder, other.criticalBorder, t)!,
     );
   }
 }`;

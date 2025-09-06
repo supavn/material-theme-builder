@@ -746,33 +746,6 @@ export function TokenEditor() {
 
           <Separator className="my-3" />
 
-          {/* Critical Colors */}
-          <div className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Critical</h3>
-            <div className="grid grid-cols-3 gap-2">
-              <ExtendedColorInput
-                label="Text"
-                tokenName="criticalText"
-                value={getExtendedColorValue("criticalText")}
-                onChange={(value) => handleExtendedColorChange("criticalText", value)}
-              />
-              <ExtendedColorInput
-                label="Background"
-                tokenName="criticalBackground"
-                value={getExtendedColorValue("criticalBackground")}
-                onChange={(value) => handleExtendedColorChange("criticalBackground", value)}
-              />
-              <ExtendedColorInput
-                label="Border"
-                tokenName="criticalBorder"
-                value={getExtendedColorValue("criticalBorder")}
-                onChange={(value) => handleExtendedColorChange("criticalBorder", value)}
-              />
-            </div>
-          </div>
-
-          <Separator className="my-3" />
-
           {/* Error (Extended) */}
           <div className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Error (Extended)</h3>
