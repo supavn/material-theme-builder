@@ -107,7 +107,7 @@ export function MobilePreview() {
     { id: 7, title: "Sprint planning", completed: false, priority: "medium", category: "planning", dueDate: "Monday" },
     { id: 8, title: "Code review process", completed: true, priority: "low", category: "review", dueDate: "Last week" },
     { id: 9, title: "Server maintenance", completed: false, priority: "high", category: "maintenance", dueDate: "Tonight" },
-    { id: 10, title: "Production deployment", completed: false, priority: "critical", category: "deployment", dueDate: "Friday" },
+    
     { id: 11, title: "Research user needs", completed: true, priority: "medium", category: "research", dueDate: "Last month" },
     { id: 12, title: "Client work tasks", completed: false, priority: "low", category: "work", dueDate: "Next month" },
   ]);
@@ -123,11 +123,6 @@ export function MobilePreview() {
   const getPriorityColor = (priority: string) => {
     const { getExtendedColorValue } = useTheme();
     switch (priority) {
-      case 'critical': return { 
-        bg: getExtendedColorValue("criticalBackground") || theme.errorContainer, 
-        text: getExtendedColorValue("criticalText") || theme.onError, 
-        border: getExtendedColorValue("criticalBorder") || theme.error 
-      };
       case 'high': return { 
         bg: getExtendedColorValue("errorBackground") || theme.errorContainer, 
         text: getExtendedColorValue("errorText") || theme.error, 
@@ -451,16 +446,7 @@ export function MobilePreview() {
           >
             <span>Done ({tasks.filter(t => t.completed).length})</span>
           </div>
-          <div 
-            className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium cursor-pointer border whitespace-nowrap"
-            style={{ 
-              backgroundColor: getExtendedColorValue("criticalBackground"),
-              color: getExtendedColorValue("criticalText"),
-              borderColor: getExtendedColorValue("criticalBorder") 
-            }}
-          >
-            <span>Critical ({tasks.filter(t => t.priority === 'critical').length})</span>
-          </div>
+          
         </div>
 
         {/* Tasks List */}

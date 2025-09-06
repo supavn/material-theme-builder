@@ -24,6 +24,7 @@ import {
   Star
 } from "lucide-react";
 import { copyToClipboard } from "./export-utils";
+import { themeStorage } from "@/lib/theme-storage";
 import { useToast } from "@/hooks/use-toast";
 import { ThemeExport } from "@/types/schema";
 
@@ -43,7 +44,9 @@ export function ThemeEditor() {
     duplicateTheme,
     renameTheme,
     exportThemeToFile,
-    importThemeFromFile
+    importThemeFromFile,
+    resetToDefaults,
+    refreshSavedThemes
   } = useTheme();
   const [activeTab, setActiveTab] = useState<"tokens" | "json" | "saved">("tokens");
   const [jsonCode, setJsonCode] = useState("");
@@ -343,6 +346,32 @@ export function ThemeEditor() {
     }
   };
 
+  const handleDeleteAllThemes = async () => {
+    const confirmed = window.confirm("Delete all saved themes and reset to defaults? This cannot be undone.");
+    if (!confirmed) return;
+    try {
+      await themeStorage.clearAllThemes();
+      // Clear persisted working theme state
+      localStorage.removeItem("materialThemeBuilder_lightTheme");
+      localStorage.removeItem("materialThemeBuilder_darkTheme");
+      localStorage.removeItem("materialThemeBuilder_extendedColors");
+      localStorage.removeItem("materialThemeBuilder_themeName");
+      localStorage.removeItem("materialThemeBuilder_seedColor");
+      resetToDefaults();
+      await refreshSavedThemes();
+      toast({
+        title: "Cleared",
+        description: "All themes deleted and theme reset to defaults.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to clear all themes",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-card">
       {/* Header with Import Button */}
@@ -569,6 +598,17 @@ export function ThemeEditor() {
               <div className="flex-1 space-y-2">
                 <h3 className="text-sm font-medium flex items-center justify-between">
                   <span>All Saved Themes ({savedThemes.length})</span>
+                  {savedThemes.length > 0 && (
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={handleDeleteAllThemes}
+                      title="Delete all saved themes and reset"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete All
+                    </Button>
+                  )}
                 </h3>
                 
                 <div className="space-y-2 overflow-y-auto">
