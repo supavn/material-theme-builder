@@ -26,7 +26,7 @@ import {
 import { copyToClipboard } from "./export-utils";
 import { themeStorage } from "@/lib/theme-storage";
 import { useToast } from "@/hooks/use-toast";
-import { ThemeExport } from "@/types/schema";
+import { ThemeExport, getThemeNameFromExport } from "@/types/schema";
 
 export function ThemeEditor() {
   const { 
@@ -135,7 +135,7 @@ export function ThemeEditor() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${theme.themeName || "theme"}.json`;
+    a.download = `${getThemeNameFromExport(theme) || "theme"}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -180,7 +180,7 @@ export function ThemeEditor() {
         
         toast({
           title: "Success",
-          description: `Theme "${parsedTheme.themeName || 'Imported Theme'}" loaded successfully!`,
+          description: `Theme "${getThemeNameFromExport(parsedTheme) || 'Imported Theme'}" loaded successfully!`,
         });
       } catch (error) {
         toast({
@@ -287,7 +287,7 @@ export function ThemeEditor() {
   const handleDuplicateTheme = async (id: string) => {
     try {
       const theme = savedThemes.find(t => t.id === id);
-      const newId = await duplicateTheme(id, `${theme?.themeName} (Copy)`);
+      const newId = await duplicateTheme(id, `${getThemeNameFromExport(theme)} (Copy)`);
       toast({
         title: "Success",
         description: "Theme duplicated successfully!",
@@ -573,7 +573,7 @@ export function ThemeEditor() {
                       <Card key={theme.id} className="p-3">
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <p className="font-medium text-sm">{theme.themeName}</p>
+                            <p className="font-medium text-sm">{getThemeNameFromExport(theme)}</p>
                             <p className="text-xs text-muted-foreground">
                               {new Date(theme.updatedAt).toLocaleDateString()}
                             </p>
@@ -624,7 +624,7 @@ export function ThemeEditor() {
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
                             <div className="flex items-center space-x-2">
-                              <p className="font-medium text-sm">{theme.themeName}</p>
+                              <p className="font-medium text-sm">{getThemeNameFromExport(theme)}</p>
                               {theme.isAutoSave && (
                                 <Badge variant="secondary" className="text-xs">
                                   Auto-save
@@ -662,7 +662,7 @@ export function ThemeEditor() {
                               size="sm"
                               onClick={() => {
                                 setRenameThemeId(theme.id);
-                                setRenameName(theme.themeName || "");
+                                setRenameName(getThemeNameFromExport(theme) || "");
                                 setRenameDialogOpen(true);
                               }}
                               title="Rename theme"

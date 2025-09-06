@@ -193,3 +193,134 @@ export function normalizeHex(hex: string): string {
   }
   return hex;
 }
+
+/**
+ * Generate a tonal palette for a given seed color
+ * Creates a Material Design 3 compliant tonal palette with tones from 0-100
+ */
+export function generateTonalPalette(seedHex: string): { "0": string; "5": string; "10": string; "15": string; "20": string; "25": string; "30": string; "35": string; "40": string; "50": string; "60": string; "70": string; "80": string; "90": string; "95": string; "98": string; "99": string; "100": string; } {
+  const hct = hexToHct(seedHex);
+  if (!hct) {
+    // Fallback palette if color conversion fails
+    return {
+      "0": "#000000",
+      "5": "#0D0D0D",
+      "10": "#1A1A1A",
+      "15": "#262626",
+      "20": "#333333",
+      "25": "#404040",
+      "30": "#4D4D4D",
+      "35": "#595959",
+      "40": "#666666",
+      "50": "#808080",
+      "60": "#999999",
+      "70": "#B3B3B3",
+      "80": "#CCCCCC",
+      "90": "#E6E6E6",
+      "95": "#F2F2F2",
+      "98": "#FAFAFA",
+      "99": "#FDFDFD",
+      "100": "#FFFFFF"
+    } as const;
+  }
+
+  // Generate tonal palette using HCT color space
+  // Keep hue and chroma constant, vary tone
+  const palette: { [key: string]: string } = {};
+  const tones = [0, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
+  
+  tones.forEach(tone => {
+    // Adjust chroma based on tone for better color harmony
+    let adjustedChroma = hct.c;
+    
+    // Reduce chroma at extreme tones for better perceptual uniformity
+    if (tone <= 10 || tone >= 95) {
+      adjustedChroma = Math.max(0, hct.c * 0.1);
+    } else if (tone <= 20 || tone >= 90) {
+      adjustedChroma = Math.max(0, hct.c * 0.3);
+    } else if (tone <= 30 || tone >= 80) {
+      adjustedChroma = Math.max(0, hct.c * 0.6);
+    }
+    
+    palette[tone.toString()] = hctToHex(hct.h, adjustedChroma, tone);
+  });
+
+  return palette;
+}
+
+/**
+ * Generate all palettes needed for Material Theme Builder format
+ */
+export function generateAllPalettes(primarySeed: string, secondarySeed: string, tertiarySeed: string, neutralSeed: string) {
+  return {
+    primary: generateTonalPalette(primarySeed),
+    secondary: generateTonalPalette(secondarySeed),
+    tertiary: generateTonalPalette(tertiarySeed),
+    neutral: generateTonalPalette(neutralSeed),
+    "neutral-variant": generateTonalPalette(neutralSeed) // Use neutral seed for neutral-variant
+  };
+}
+
+/**
+ * Generate contrast scheme variants based on base light/dark schemes
+ */
+export function generateContrastSchemes(lightScheme: any, darkScheme: any) {
+  // Helper function to adjust color brightness
+  const adjustBrightness = (hex: string, factor: number): string => {
+    const hct = hexToHct(hex);
+    if (!hct) return hex;
+    
+    const newTone = Math.max(0, Math.min(100, hct.t * factor));
+    return hctToHex(hct.h, hct.c, newTone);
+  };
+
+  // Helper function to increase contrast
+  const increaseContrast = (hex: string, isLight: boolean, factor: number): string => {
+    const hct = hexToHct(hex);
+    if (!hct) return hex;
+    
+    let newTone = hct.t;
+    if (isLight) {
+      newTone = Math.max(0, hct.t - (factor * 20));
+    } else {
+      newTone = Math.min(100, hct.t + (factor * 20));
+    }
+    
+    return hctToHex(hct.h, hct.c, newTone);
+  };
+
+  const lightMediumContrast = Object.fromEntries(
+    Object.entries(lightScheme).map(([key, value]) => [
+      key,
+      increaseContrast(value as string, true, 0.5)
+    ])
+  );
+
+  const lightHighContrast = Object.fromEntries(
+    Object.entries(lightScheme).map(([key, value]) => [
+      key,
+      increaseContrast(value as string, true, 1.0)
+    ])
+  );
+
+  const darkMediumContrast = Object.fromEntries(
+    Object.entries(darkScheme).map(([key, value]) => [
+      key,
+      increaseContrast(value as string, false, 0.5)
+    ])
+  );
+
+  const darkHighContrast = Object.fromEntries(
+    Object.entries(darkScheme).map(([key, value]) => [
+      key,
+      increaseContrast(value as string, false, 1.0)
+    ])
+  );
+
+  return {
+    "light-medium-contrast": lightMediumContrast,
+    "light-high-contrast": lightHighContrast,
+    "dark-medium-contrast": darkMediumContrast,
+    "dark-high-contrast": darkHighContrast
+  };
+}

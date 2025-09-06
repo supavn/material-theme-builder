@@ -1,4 +1,5 @@
 import { useTheme } from "./theme-context";
+import { getThemeNameFromExport } from "@/types/schema";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Copy, Download, FileText, Code2 } from "lucide-react";
@@ -19,7 +20,7 @@ export function CodeEditor() {
 
   const generateDartCode = () => {
     return `// Generated Material Theme for Flutter
-// Theme: ${theme.themeName || 'Custom Theme'}
+// Theme: ${getThemeNameFromExport(theme) || 'Custom Theme'}
 // Seed: ${theme.seed}
 
 import 'package:flutter/material.dart';
@@ -246,7 +247,7 @@ class CustomColors extends ThemeExtension<CustomColors> {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `${theme.themeName || "theme"}.json`;
+                a.download = `${getThemeNameFromExport(theme) || "theme"}.json`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -256,7 +257,7 @@ class CustomColors extends ThemeExtension<CustomColors> {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `${theme.themeName || "theme"}.dart`;
+                a.download = `${getThemeNameFromExport(theme) || "theme"}.dart`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
