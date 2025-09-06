@@ -2,7 +2,7 @@
  * Local storage utilities for managing saved themes
  */
 
-import { ThemeExport, SavedTheme } from "@/types/schema";
+import { ThemeExport, SavedTheme, getThemeNameFromExport } from "@/types/schema";
 
 const STORAGE_PREFIX = "materialThemeBuilder_";
 const SAVED_THEMES_KEY = `${STORAGE_PREFIX}savedThemes`;
@@ -94,7 +94,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
       const savedTheme: SavedTheme = {
         ...theme,
         id,
-        themeName: name || theme.themeName || "Unnamed Theme",
+        themeName: name || getThemeNameFromExport(theme) || "Unnamed Theme",
         createdAt: now,
         updatedAt: now,
         timestamp: now,
@@ -120,7 +120,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
         // Update existing auto-save
         autoSaveTheme.schemes = theme.schemes;
         autoSaveTheme.seed = theme.seed;
-        autoSaveTheme.themeName = theme.themeName;
+        autoSaveTheme.themeName = getThemeNameFromExport(theme);
         autoSaveTheme.updatedAt = now;
         autoSaveTheme.timestamp = now;
         autoSaveTheme.extendedColors = theme.extendedColors;
@@ -155,7 +155,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
 
     async loadThemeByName(name: string): Promise<SavedTheme | null> {
       const themes = getSavedThemes();
-      const theme = themes.find(t => t.themeName === name);
+      const theme = themes.find(t => getThemeNameFromExport(t) === name);
       
       if (theme) {
         updateRecentThemes(theme.id);
@@ -216,7 +216,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
       }
       
       const duplicatedTheme: ThemeExport = {
-        themeName: newName || `${theme.themeName} (Copy)`,
+        themeName: newName || `${getThemeNameFromExport(theme)} (Copy)`,
         seed: theme.seed,
         schemes: { ...theme.schemes },
         extendedColors: theme.extendedColors, // Add this line
@@ -257,7 +257,7 @@ export function createThemeStorageManager(): ThemeStorageManager {
       
       const link = document.createElement("a");
       link.href = URL.createObjectURL(dataBlob);
-      link.download = `${(theme.themeName || "theme").replace(/[^a-z0-9]/gi, "_").toLowerCase()}.json`;
+      link.download = `${(getThemeNameFromExport(theme) || "theme").replace(/[^a-z0-9]/gi, "_").toLowerCase()}.json`;
       link.click();
       
       URL.revokeObjectURL(link.href);

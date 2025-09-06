@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { ColorScheme, ThemeExport, SavedTheme, ExtendedColor } from "@/types/schema";
+import { ColorScheme, ThemeExport, SavedTheme, ExtendedColor, CoreColors, Palettes, LegacyThemeExport } from "@/types/schema";
 import targetTheme from "../../../target.generated.json";
 import { getTagHex, getExtendedHex, ThemeTarget, ExtendedTagName } from "@/theme";
+import { generateAllPalettes, generateContrastSchemes } from "@/lib/color-utils";
 import { themeStorage } from "@/lib/theme-storage";
 import { getDefaultTheme } from "./theme-defaults";
 
@@ -434,34 +435,85 @@ export function ThemeProvider({ children, appDarkMode, onThemeModeChange }: Them
   };
 
   const exportTheme = (): ThemeExport => {
+    // Generate core colors from current seed and theme colors
+    const coreColors: CoreColors = {
+      primary: seedColor,
+      secondary: lightTheme.secondary,
+      tertiary: lightTheme.tertiary, 
+      neutral: "#FFFFFF" // Default neutral
+    };
+
+    // Generate all tonal palettes
+    const palettes = generateAllPalettes(
+      coreColors.primary,
+      coreColors.secondary,
+      coreColors.tertiary,
+      coreColors.neutral
+    );
+
+    // Generate contrast schemes
+    const contrastSchemes = generateContrastSchemes(lightTheme, darkTheme);
+
+    // Create Material Theme Builder format
+    const currentDate = new Date();
+    const description = `TYPE: CUSTOM
+Material Theme Builder export ${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}`;
+
     return {
-      themeName,
+      description,
       seed: seedColor,
+      coreColors,
+      extendedColors,
       schemes: {
         light: lightTheme,
         dark: darkTheme,
+        ...contrastSchemes
       },
-      extendedColors,
-      timestamp: new Date().toISOString(),
+      palettes,
+      timestamp: currentDate.toISOString(),
     };
   };
 
   const importTheme = (theme: any) => {
-    // Import base schemes (without extended colors)
-    if (theme.schemes?.light) {
-      setLightTheme(prev => ({ ...prev, ...theme.schemes.light }));
-    }
-    if (theme.schemes?.dark) {
-      setDarkTheme(prev => ({ ...prev, ...theme.schemes.dark }));
-    }
+    // Check if this is the new Material Theme Builder format or legacy format
+    const isNewFormat = theme.description && theme.coreColors && theme.palettes;
+    
+    if (isNewFormat) {
+      // Import from Material Theme Builder format
+      if (theme.schemes?.light) {
+        setLightTheme(prev => ({ ...prev, ...theme.schemes.light }));
+      }
+      if (theme.schemes?.dark) {
+        setDarkTheme(prev => ({ ...prev, ...theme.schemes.dark }));
+      }
+      
+      // Import extended colors
+      if (Array.isArray(theme.extendedColors)) {
+        setExtendedColors(theme.extendedColors);
+      }
+      
+      // Extract theme name from description or use default
+      const descriptionMatch = theme.description?.match(/TYPE:\s*(\w+)/);
+      const themeType = descriptionMatch ? descriptionMatch[1] : "CUSTOM";
+      setThemeName(`${themeType} Theme`);
+      setSeedColor(theme.seed || "#6750A4");
+    } else {
+      // Import from legacy format
+      if (theme.schemes?.light) {
+        setLightTheme(prev => ({ ...prev, ...theme.schemes.light }));
+      }
+      if (theme.schemes?.dark) {
+        setDarkTheme(prev => ({ ...prev, ...theme.schemes.dark }));
+      }
 
-    // Import extended colors separately
-    if (Array.isArray(theme.extendedColors)) {
-      setExtendedColors(theme.extendedColors);
-    }
+      // Import extended colors separately
+      if (Array.isArray(theme.extendedColors)) {
+        setExtendedColors(theme.extendedColors);
+      }
 
-    setThemeName(theme.themeName || "Imported Theme");
-    setSeedColor(theme.seed || "#6750A4");
+      setThemeName(theme.themeName || "Imported Theme");
+      setSeedColor(theme.seed || "#6750A4");
+    }
   };
 
   const resetToDefaults = () => {
