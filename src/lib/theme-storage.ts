@@ -216,10 +216,12 @@ export function createThemeStorageManager(): ThemeStorageManager {
       }
       
       const duplicatedTheme: ThemeExport = {
-        themeName: newName || `${getThemeNameFromExport(theme)} (Copy)`,
+        description: theme.description,
         seed: theme.seed,
+        coreColors: theme.coreColors,
+        extendedColors: theme.extendedColors,
         schemes: { ...theme.schemes },
-        extendedColors: theme.extendedColors, // Add this line
+        palettes: theme.palettes,
         timestamp: new Date().toISOString(),
       };
       
